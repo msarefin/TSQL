@@ -1524,3 +1524,6 @@ from Sales.OrderValues
 
 select custid, orderid, orderdate, val, SUM(val) over (partition by custid order by orderdate, orderid rows between unbounded preceding  and current row) as RunningTotal
 from sales.Ordervalues;
+
+---- This is the message I want Git to see---
+
