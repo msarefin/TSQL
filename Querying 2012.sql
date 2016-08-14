@@ -1527,3 +1527,25 @@ from sales.Ordervalues;
 
 ---- This is the message I want Git to see---
 
+use TSQL2012
+go 
+
+select custid,orderid, orderdate, val,
+sum(val) over(partition by custid 
+order by orderdate, orderid 
+rows between unbounded preceding 
+and current row) as runningtotal
+from Sales.OrderValues;
+
+----------------------------------
+select custid, orderid, val, 
+SUM(val) over(partition by custid) as custtotal, 
+sum(val) over() as grandtotal 
+from sales.OrderValues;
+
+-----------------------------------------
+
+select custid, orderid, orderdate, val, 
+sum(val) over (partition by custid order by orderdate, orderid) as RunningTotal
+from sales.OrderValues;
+ 
