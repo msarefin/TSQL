@@ -1546,6 +1546,12 @@ from sales.OrderValues;
 -----------------------------------------
 
 select custid, orderid, orderdate, val, 
-sum(val) over (partition by custid order by orderdate, orderid) as RunningTotal
+sum(val) over (partition by custid order by orderdate, orderid
+rows between unbounded preceding and current row) as RunningTotal,
+sum(val) over (partition by custid order by orderdate, orderid
+rows between unbounded preceding and unbounded following ) as Total,
+sum(val) over (partition by custid order by orderdate, orderid 
+rows between 2 preceding and current row) as non
 from sales.OrderValues;
  
+
