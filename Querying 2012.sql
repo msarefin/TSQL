@@ -1555,3 +1555,14 @@ rows between 2 preceding and current row) as non
 from sales.OrderValues;
  
 
+
+---------------------------
+
+use TSQL2012
+go 
+
+select ov.custid, ov.orderid, ov.orderdate, ov.val,
+sum (val) over(partition by custid order by orderdate, orderid
+rows between unbounded preceding and current row) as RunningTotal
+from Sales.OrderValues as ov
+
