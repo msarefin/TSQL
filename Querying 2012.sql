@@ -1562,7 +1562,8 @@ use TSQL2012
 go 
 
 select ov.custid, ov.orderid, ov.orderdate, ov.val,
-sum (val) over(partition by custid order by orderdate, orderid
-rows between unbounded preceding and current row) as RunningTotal
+sum(val) over(partition by custid order by orderdate, orderid rows between unbounded preceding and current row) as RunningTotal,
+sum(val) over(partition by custid order by orderdate, orderid rows between unbounded preceding and unbounded following) as WindowGrandTotal
+
 from Sales.OrderValues as ov
 
