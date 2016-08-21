@@ -1555,6 +1555,7 @@ rows between 2 preceding and current row) as non
 from sales.OrderValues;
  
 
+<<<<<<< HEAD
  -----------------------------------
 
  select serverproperty('isfulltextinstalled');
@@ -1564,4 +1565,15 @@ from sales.OrderValues;
 -------------
 
 select document_type, path from sys.fulltext_document_types;
+=======
+
+---------------------------
+
+use TSQL2012
+go 
+
+select ov.custid, ov.orderid, ov.orderdate, ov.val,
+sum(val) over(partition by custid order by orderdate, orderid rows between unbounded preceding and current row) as RunningTotal,
+sum(val) over(partition by custid order by orderdate, orderid rows between unbounded preceding and unbounded following) as WindowGrandTotal
+
 
