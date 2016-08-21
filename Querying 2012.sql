@@ -1555,3 +1555,13 @@ rows between 2 preceding and current row) as non
 from sales.OrderValues;
  
 
+ -----------------------------------
+
+ select serverproperty('isfulltextinstalled');
+
+ exec sys.sp_help_fulltext_system_components 'filter';
+
+-------------
+
+select document_type, path from sys.fulltext_document_types;
+
