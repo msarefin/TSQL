@@ -1603,3 +1603,23 @@ from sys.fulltext_languages
 order by name;
 
 
+--To check the current stopwords or stoplists 
+
+select stoplist_id, name
+from sys.fulltext_stoplists
+select stoplist_id, stopword, language
+from sys.fulltext_stopwords
+
+exec sys.sp_fulltext_load_thesaurus_file 1033;
+  
+select serverproperty('isfulltextinstalled');
+
+create table dbo.Documents
+(
+id int identity(1,1) not null,
+title nvarchar(100) not null,
+doctype nchar(4) not null,
+docexcerpt nvarchar(1000) not null,
+doccontent varbinary(max) not null,
+constraint pk_Documents primary key clustered(id)
+);
