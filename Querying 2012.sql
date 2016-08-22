@@ -1623,3 +1623,4 @@ docexcerpt nvarchar(1000) not null,
 doccontent varbinary(max) not null,
 constraint pk_Documents primary key clustered(id)
 );
+
