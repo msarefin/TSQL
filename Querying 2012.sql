@@ -1577,3 +1577,4 @@ sum(val) over(partition by custid order by orderdate, orderid rows between unbou
 sum(val) over(partition by custid order by orderdate, orderid rows between unbounded preceding and unbounded following) as WindowGrandTotal
 
 
+select serverproperty('isfulltextinstalled')
