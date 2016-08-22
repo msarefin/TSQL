@@ -1577,4 +1577,29 @@ sum(val) over(partition by custid order by orderdate, orderid rows between unbou
 sum(val) over(partition by custid order by orderdate, orderid rows between unbounded preceding and unbounded following) as WindowGrandTotal
 
 
+--chapter 6 
+use TSQL2012
+go 
+
+-- To check if full text search is installed run the following query
+
 select serverproperty('isfulltextinstalled')
+
+
+-- To check what filters are installed in your instance by using the following query 
+
+exec sys.sp_help_fulltext_system_components 'filter';
+
+
+--You can also use the following query to do the same
+
+select document_type, path
+from sys.fulltext_document_types;
+
+-- To check which languages are supported in SQL Server 
+
+select lcid, name
+from sys.fulltext_languages
+order by name;
+
+
