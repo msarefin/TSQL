@@ -1640,7 +1640,7 @@ insert into dbo.Documents(title, doctype, docexcerpt, doccontent)
 select N'introduction to data mining',
 N'docx',
 N'Using data mining is becoming more a necessity for every company and not an advantage for dome rare companies anymore.',
-bulkcolumn from openrowset (bulk 'C:\TK70461Chapter 06\Introductiontodatamining.docx', single_blob) as doc;
+bulkcolumn from openrowset (bulk 'C:\TK70461\Chapter 06\IntroductionToDataMining.docx', single_blob) as doc;
 
 insert into dbo.Documents (title, doctype, docexcerpt, doccontent)
 select N'Why is Bleeding Edge a Different Conference',
@@ -1655,3 +1655,30 @@ N'Aditivity of measure is not exactly a data  waredhouse design problem. However
 bulkcolumn from openrowset(bulk 'C:\TK70461\Chapter 06\additivityofmeasures.docx', single_blob) as doc;
 
 select * from dbo.Documents
+----------------------------------------------------------------
+
+
+create SEARCH PROPERTY LIST WordSearchPropertyList;
+go 
+alter SEARCH PROPERTY LIST WordSearchPropertyList
+add 'Authors'
+with 
+(property_set_guid = 'F29F85E0-4FF9-1068-AB91-08002B27B3D9',
+property_int_id = 4,
+property_Description = 'System.Authors - authors of a given item.');
+
+----------------------------------------------------------------
+
+CREATE FULLTEXT STOPLIST SQLStopList;
+go 
+ALTER FULLTEXT STOPLIST SQLStopList
+add 'SQL' LANGUAGE 'English';
+
+----------------------------------------------------------------
+
+select w.stoplist_id, l.name, w.stopword, w.language 
+from sys.fulltext_stopwords as w 
+inner join 
+sys.fulltext_stoplists as l 
+on w.stoplist_id = l.stoplist_id;
+
