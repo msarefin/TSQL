@@ -1603,6 +1603,8 @@ from sys.fulltext_languages
 order by name;
 
 
+
+
 --To check the current stopwords or stoplists 
 
 select stoplist_id, name
@@ -1624,6 +1626,7 @@ doccontent varbinary(max) not null,
 constraint pk_Documents primary key clustered(id)
 );
 
+select * from dbo.Documents
 -------------------------Adding data ------------------------------
 
 insert into dbo.Documents
@@ -1631,22 +1634,24 @@ insert into dbo.Documents
 select N'columnstore Indices and Batch processing',
 N'docx',
 N'You should use a columnstore index on your fact tables, putting all columns of a fact table in a columnstone index. In addition to fact tables, very large dimensions could benefit from columnstore indices as well. Do not use columnstore indices for small dimensions.', 
-bulkcolumn from openrowset(bulk 'F:\SQL\TK70461-20130524\Chapter 06\columnstoreindicesandbatchprocessing.docx', single_blob) as doc;
+bulkcolumn from openrowset(bulk 'C:\TK70461\Chapter 06\columnstoreindicesandbatchprocessing.docx', single_blob) as doc;
 
 insert into dbo.Documents(title, doctype, docexcerpt, doccontent)
 select N'introduction to data mining',
 N'docx',
 N'Using data mining is becoming more a necessity for every company and not an advantage for dome rare companies anymore.',
-bulkcolumn from openrowset (bulk 'F:\SQL\TK70461-20130524\Chapter 06\Introductiontodatamining.docx', single_blob) as doc;
+bulkcolumn from openrowset (bulk 'C:\TK70461Chapter 06\Introductiontodatamining.docx', single_blob) as doc;
 
 insert into dbo.Documents (title, doctype, docexcerpt, doccontent)
 select N'Why is Bleeding Edge a Different Conference',
 N'docx',
 N'During high elevel presentations attendees encounter many questions. For the third year, we are continuing with the breakfast Q&A session. It is very popular , and for two years now, we could not accomodate enough time for all questions and discussions!',
-bulkcolumn from openrowset(bulk 'F:\SQL\TK70461-20130524\Chapter 06\Whyisbleedingedgeadifferentconference.docx', single_blob) as doc;
+bulkcolumn from openrowset(bulk 'C:\TK70461\Chapter 06\Whyisbleedingedgeadifferentconference.docx', single_blob) as doc;
 
 insert into dbo.documents (title, doctype, docexcerpt, doccontent)
 select N'Additivity of Measures',
 N'docx',
 N'Aditivity of measure is not exactly a data  waredhouse design problem. However, you have to realize which aggrigate functions you will use when aggregating overwhich dimension.',
-bulkcolumn from openrowset(bulk 'F:\SQL\TK70461-20130524\Chapter 06\additivityofmeasures.docx', single_blob) as doc;
+bulkcolumn from openrowset(bulk 'C:\TK70461\Chapter 06\additivityofmeasures.docx', single_blob) as doc;
+
+select * from dbo.Documents
