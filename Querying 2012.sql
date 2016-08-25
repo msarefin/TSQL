@@ -1681,4 +1681,12 @@ from sys.fulltext_stopwords as w
 inner join 
 sys.fulltext_stoplists as l 
 on w.stoplist_id = l.stoplist_id;
+------------------------------------------
 
+
+select * 
+from sys.dm_fts_parser
+(N'"Additivity of measure is not exactly a data warehouse design problem. However , you have to realize which aggrigate functions you will use in report for which measure, and which aggrigate functions you will use when aggrigating over which dimension."', 1033, 5,0 );
+
+select * 
+from sys.dm_fts_parser('FORMSOF (INFLECTIONAL,'+'function'+')', 1033,5,0);
