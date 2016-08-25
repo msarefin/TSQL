@@ -1701,3 +1701,4 @@ sys.fulltext_semantic_language_statistics_database;
 
 --Skipped chapter 6 to work on other chapters
 
+-- is git not working?
