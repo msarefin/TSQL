@@ -1607,6 +1607,8 @@ order by name;
 
 --To check the current stopwords or stoplists 
 
+-- Exercise 1 
+
 select stoplist_id, name
 from sys.fulltext_stoplists
 select stoplist_id, stopword, language
@@ -1690,3 +1692,12 @@ from sys.dm_fts_parser
 
 select * 
 from sys.dm_fts_parser('FORMSOF (INFLECTIONAL,'+'function'+')', 1033,5,0);
+
+--Exerceise 2 
+
+select * 
+from 
+sys.fulltext_semantic_language_statistics_database;
+
+--Skipped chapter 6 to work on other chapters
+
