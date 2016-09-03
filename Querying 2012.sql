@@ -1704,4 +1704,21 @@ sys.fulltext_semantic_language_statistics_database;
 
 ---------------------------Chapter 7 -------------------------------------
 
+use TSQL2012
+go
+
+with xmlnamespaces('tk461-CustomersOrders' as co)
+select 
+[co:Customer].custid as [co:custid],
+[co:Customer].companyname as [co:companyname],
+[co:Order].orderid as [co:custid],
+[co:order].orderdate as [co:orderdate]
+from Sales.Customers as [co:Customer]
+inner join sales.Orders as [co:Order]
+on [co:Customer].custid = [co:Order].custid
+where [co:Customer].custid<=2
+and [co:Order].orderid %2 =0
+order by [co:Customer].custid, [co:Order].orderid
+for xml auto, elements, root('CustomerOrders');
+
 
