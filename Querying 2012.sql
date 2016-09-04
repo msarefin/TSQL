@@ -1713,6 +1713,7 @@ select
 [co:Customer].companyname as [co:companyname],
 [co:Order].orderid as [co:custid],
 [co:order].orderdate as [co:orderdate]
+
 from Sales.Customers as [co:Customer]
 inner join sales.Orders as [co:Order]
 on [co:Customer].custid = [co:Order].custid
@@ -1721,3 +1722,6 @@ and [co:Order].orderid %2 =0
 order by [co:Customer].custid, [co:Order].orderid
 for xml auto, elements, root('CustomerOrders');
 
+
+select * 
+from sales.Customers as 
