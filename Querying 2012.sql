@@ -1721,8 +1721,3 @@ and [co:Order].orderid %2 =0
 order by [co:Customer].custid, [co:Order].orderid
 for xml auto, elements, root('CustomerOrders');
 
-
-
---git is not responding 
-
-
