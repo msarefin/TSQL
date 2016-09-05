@@ -1744,3 +1744,4 @@ from sales.Customers as Customer
 where Customer.custid<=2
 order by Customer.custid
 for xml path ('customer'), root ('customers');
+
