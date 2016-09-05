@@ -1722,6 +1722,25 @@ and [co:Order].orderid %2 =0
 order by [co:Customer].custid, [co:Order].orderid
 for xml auto, elements, root('CustomerOrders');
 
+---------------------------------------
 
-select * 
-from sales.Customers as 
+
+select [Customer].custid as [Custid],
+[Customer].companyname as [CompanyName],
+[Order].orderid as [OrderID],
+[Order].orderdate as [Orderdate]
+from sales.Customers as [Customer]
+inner join 
+sales.Orders as [Order]
+on [Customer].custid = [Order].custid
+where 1=2 
+for xml auto, elements,xmlschema('tk461-CustomerOrders');
+
+------------------------------XML Xpath----------------------------------
+
+select Customer.custid as [@custid],
+Customer.companyname as [companyname]
+from sales.Customers as Customer
+where Customer.custid<=2
+order by Customer.custid
+for xml path ('customer'), root ('customers');
