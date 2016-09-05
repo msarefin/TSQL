@@ -1737,6 +1737,8 @@ where 1=2
 for xml auto, elements,xmlschema('tk461-CustomerOrders');
 
 ------------------------------XML Xpath----------------------------------
+-- The Folowing code will generate XPATH XML file 
+
 
 select Customer.custid as [@custid],
 Customer.companyname as [companyname]
@@ -1744,4 +1746,5 @@ from sales.Customers as Customer
 where Customer.custid<=2
 order by Customer.custid
 for xml path ('customer'), root ('customers');
+
 
