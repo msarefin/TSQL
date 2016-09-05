@@ -1,0 +1,30 @@
+<CustomersOrders xmlns:co="TK461-CustomersOrders"> 
+	<co:Customer> 
+		<co:custid>1</co:custid> 
+		<co:companyname>Customer NRZBB</co:companyname> 
+		<co:Order> 
+			<co:orderid>10692</co:orderid> 
+			<co:orderdate>2007-10-03T00:00:00</co:orderdate> 
+		</co:Order> 
+	<co:Order> 
+		<co:orderid>10702</co:orderid> 
+		<co:orderdate>2007-10-13T00:00:00</co:orderdate> 
+	</co:Order> 
+	<co:Order> 
+		<co:orderid>10952</co:orderid> 
+		<co:orderdate>2008-03-16T00:00:00</co:orderdate> 
+	</co:Order> 
+	</co:Customer> 
+	<co:Customer> 
+		<co:custid>2</co:custid> 
+		<co:companyname>Customer MLTDN</co:companyname> 
+	<co:Order> 
+		<co:orderid>10308</co:orderid> 
+		<co:orderdate>2006-09-18T00:00:00</co:orderdate> 
+	</co:Order> 
+	<co:Order> 
+		<co:orderid>10926</co:orderid> 
+		<co:orderdate>2008-03-04T00:00:00</co:orderdate> 
+	</co:Order> 
+	</co:Customer> 
+</CustomersOrders>

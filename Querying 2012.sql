@@ -1704,5 +1704,54 @@ sys.fulltext_semantic_language_statistics_database;
 
 ---------------------------Chapter 7 -------------------------------------
 
+use TSQL2012
+go
+
+with xmlnamespaces('tk461-CustomersOrders' as co)
+select 
+[co:Customer].custid as [co:custid],
+[co:Customer].companyname as [co:companyname],
+[co:Order].orderid as [co:custid],
+[co:order].orderdate as [co:orderdate]
+from Sales.Customers as [co:Customer]
+inner join sales.Orders as [co:Order]
+on [co:Customer].custid = [co:Order].custid
+where [co:Customer].custid<=2
+and [co:Order].orderid %2 =0
+order by [co:Customer].custid, [co:Order].orderid
+for xml auto, elements, root('CustomerOrders');
+
+
+select * from sales.Customers as c inner join sales.orders as d on c.custid = d.custid
+---------------------------------------
+
+
+select [Customer].custid as [Custid],
+[Customer].companyname as [CompanyName],
+[Order].orderid as [OrderID],
+[Order].orderdate as [Orderdate]
+from sales.Customers as [Customer]
+inner join 
+sales.Orders as [Order]
+on [Customer].custid = [Order].custid
+where 1=2 
+for xml auto, elements,xmlschema('tk461-CustomerOrders');
+
+------------------------------XML Xpath----------------------------------
+-- The Folowing code will generate XPATH XML file 
+
+
+select Customer.custid as [@custid],
+Customer.companyname as [companyname]
+from sales.Customers as Customer
+where Customer.custid<=2
+order by Customer.custid
+for xml path ('customer'), root ('customers');
+
+select custid, companyname
+from Sales.Customers
+where custid <=2
+order by custid;
+
 
 x
