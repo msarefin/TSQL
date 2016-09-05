@@ -1713,7 +1713,6 @@ select
 [co:Customer].companyname as [co:companyname],
 [co:Order].orderid as [co:custid],
 [co:order].orderdate as [co:orderdate]
-
 from Sales.Customers as [co:Customer]
 inner join sales.Orders as [co:Order]
 on [co:Customer].custid = [co:Order].custid
@@ -1722,6 +1721,8 @@ and [co:Order].orderid %2 =0
 order by [co:Customer].custid, [co:Order].orderid
 for xml auto, elements, root('CustomerOrders');
 
+
+select * from sales.Customers as c inner join sales.orders as d on c.custid = d.custid
 ---------------------------------------
 
 
@@ -1746,5 +1747,10 @@ from sales.Customers as Customer
 where Customer.custid<=2
 order by Customer.custid
 for xml path ('customer'), root ('customers');
+
+select custid, companyname
+from Sales.Customers
+where custid <=2
+order by custid;
 
 
