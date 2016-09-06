@@ -1754,3 +1754,54 @@ where custid <=2
 order by custid;
 
 
+-----------------------XML shredding to SQL 
+
+
+Go
+
+
+declare @DocHandle as int;
+declare @XmlDocument as nvarchar(1000);
+set @XmlDocument = N'
+<CustomerOrders>
+	<Customer Custid ="1">
+		<companyname>Customer NRZBB</companyname>
+		<Order orderid ="10692">
+			<orderdate>2007-10-03T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10702">
+			<orderdate>2007-10-13T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10952">
+			<orderdate>2008-03-16T00:00:00</orderdate>
+		</Order>
+	</Customer>
+	<Customer custid = "2">
+		<companyname>Customer MLTDN</companyname>
+		<Order orderid = "10308">
+			<orderdate>2006-09-18T00:00:00</orderdate>
+		</Order>
+		<Order>
+			<orderdate>2008-03-04T00:00:00</orderdate>
+		</Order>
+	</Customer>
+</CustomerOrders>';
+--Create an internal representation
+exec sys.sp_xml_preparedocument @DocHandle OUTPUT, @xmldocumet;
+--Attribute-centric mapping 
+
+select * from openxml (@DocHandle, '/CustomerOrders/Customer', 1)
+	with (custid int, companyname nvarchar(40));
+--element-centriic mapping 
+select * 
+from openxml(@DocHanlde, '/CustomerOrders/Customer',2 )
+	with (custid int, companyname nvarchar(40));
+--attribute and element-centrice mapping
+--Combine flag * with flag 1 and 2 
+select * 
+from openxml(@DocHandle, '/CustomerOrders/Customer', 11)
+	with(custid int, companyname nvarchar(40));
+
+-- remove DOM
+exec sys.sp_removedocument @DocHandle;
+go 
