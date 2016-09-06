@@ -1704,8 +1704,26 @@ sys.fulltext_semantic_language_statistics_database;
 
 ---------------------------Chapter 7 -------------------------------------
 
+
+
 use TSQL2012
 go
+
+
+--XML Auto
+--Attribute centric
+
+select Customer.custid, Customer.companyname,
+[Order].orderid, [Order].orderdate
+from sales.Customers as [Customer]
+inner join sales.Orders as [Order]
+on Customer.custid = [Order].custid
+where Customer.custid <=2 
+and [Order].orderid %2 = 0
+order by customer.custid, [order].orderid
+for xml auto, root('CustomerOrders');
+
+go 
 
 with xmlnamespaces('tk461-CustomersOrders' as co)
 select 
@@ -1731,11 +1749,31 @@ select [Customer].custid as [Custid],
 [Order].orderid as [OrderID],
 [Order].orderdate as [Orderdate]
 from sales.Customers as [Customer]
-inner join 
-sales.Orders as [Order]
+inner join sales.Orders as [Order]
 on [Customer].custid = [Order].custid
 where 1=2 
 for xml auto, elements,xmlschema('tk461-CustomerOrders');
+
+------------------------for xml raw --------------------------------
+
+select customer.custid, customer.companyname, 
+Orders.orderid, orders.orderdate 
+from sales.Customers as [customer] inner join sales.Orders as [Orders]
+on customer.custid=Orders.custid
+where customer.custid<=2 and orders.orderid %2=0 
+order by customer.custid, orders.orderid
+for xml raw
+
+--Enhanced
+
+select customer.custid, customer.companyname, 
+Orders.orderid, orders.orderdate 
+from sales.Customers as [customer] inner join sales.Orders as [Orders]
+on customer.custid=Orders.custid
+where customer.custid<=2 and orders.orderid %2=0 
+order by customer.custid, orders.orderid
+for xml raw('Order'), root ('CustomerOrders');
+
 
 ------------------------------XML Xpath----------------------------------
 -- The Folowing code will generate XPATH XML file 
@@ -1760,48 +1798,3 @@ order by custid;
 Go
 
 
-declare @DocHandle as int;
-declare @XmlDocument as nvarchar(1000);
-set @XmlDocument = N'
-<CustomerOrders>
-	<Customer Custid ="1">
-		<companyname>Customer NRZBB</companyname>
-		<Order orderid ="10692">
-			<orderdate>2007-10-03T00:00:00</orderdate>
-		</Order>
-		<Order orderid ="10702">
-			<orderdate>2007-10-13T00:00:00</orderdate>
-		</Order>
-		<Order orderid ="10952">
-			<orderdate>2008-03-16T00:00:00</orderdate>
-		</Order>
-	</Customer>
-	<Customer custid = "2">
-		<companyname>Customer MLTDN</companyname>
-		<Order orderid = "10308">
-			<orderdate>2006-09-18T00:00:00</orderdate>
-		</Order>
-		<Order>
-			<orderdate>2008-03-04T00:00:00</orderdate>
-		</Order>
-	</Customer>
-</CustomerOrders>';
---Create an internal representation
-exec sys.sp_xml_preparedocument @DocHandle OUTPUT, @xmldocumet;
---Attribute-centric mapping 
-
-select * from openxml (@DocHandle, '/CustomerOrders/Customer', 1)
-	with (custid int, companyname nvarchar(40));
---element-centriic mapping 
-select * 
-from openxml(@DocHanlde, '/CustomerOrders/Customer',2 )
-	with (custid int, companyname nvarchar(40));
---attribute and element-centrice mapping
---Combine flag * with flag 1 and 2 
-select * 
-from openxml(@DocHandle, '/CustomerOrders/Customer', 11)
-	with(custid int, companyname nvarchar(40));
-
--- remove DOM
-exec sys.sp_removedocument @DocHandle;
-go 
