@@ -1754,4 +1754,13 @@ where custid <=2
 order by custid;
 
 
+<<<<<<< HEAD
 x
+=======
+-----------------------XML shredding to SQL 
+
+
+Go
+
+
+
