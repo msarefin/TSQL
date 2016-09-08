@@ -1792,9 +1792,15 @@ where custid <=2
 order by custid;
 
 
+<<<<<<< HEAD
 -----------------------XML shredding to SQL 
 
 
 Go
+=======
+--underdtanding XML from youtube videos
+
+go
+>>>>>>> 7a6c8bca911eab4d161dd783d0894c1c38bec100
 
 
