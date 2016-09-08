@@ -1796,18 +1796,109 @@ order by custid;
 -----------------------XML shredding to SQL 
 
 
---underdtanding XML from youtube videos
+--===============================================underdtanding XML from youtube videos=============================================
 
 go 
 
 use AdventureWorks2008R2
 go 
+--XML auto 
+--xml path 
+--xml raw 
+--xml explicit
+
+
+--XML auto
 
 Select 
-ProductID, 
-Name, 
-ProductNumber,
-ListPrice,
-ModifiedDate
+	ProductID, 
+	Name, 
+	ProductNumber,
+	ListPrice,
+	ModifiedDate
 from Production.Product
-for xml auto
+for xml auto --- Each column is an attribute
+
+--XML path 
+
+Select 
+	ProductID, 
+	Name, 
+	ProductNumber,
+	ListPrice,
+	ModifiedDate
+from Production.Product
+for xml path ('Product') --- This does not include root but creates only XML fragments. ANd each column is an element
+
+
+-- XML Path with Root 
+
+select	
+	ProductID,
+	Name, 
+	ListPrice, 
+	ModifiedDate 
+from Production.Product
+for XML path ('Product'), root('PRODUCTS'); -- This creates XML fragments within a root
+
+
+-------------------
+
+select	
+	ProductID AS [@PRODUCTID],
+	Name AS [ProductInfo/Name], 
+	ListPrice as [ProductInfo/ListPrice], 
+	ModifiedDate 
+from Production.Product
+for XML path ('Product'), root('PRODUCTS');
+
+select 
+	ProductID as [@ProductID],
+	Name as [ProductInfo/@Name],
+	ListPrice as [ProductInfo/Listprice],
+	ModifiedDate
+from Production.Product
+for xml path ('Product'), root('PRODUCTS');
+
+-- XML also supports subquerys 
+
+select * from Production.Product
+select * from Production.ProductSubcategory
+
+select 
+	psc.ProductSubcategoryID as [@ProductSubcategoryID],
+	psc.Name as [@Name],
+		(select
+			p.ProductID, 
+			p.Name, 
+			p.ProductNumber,
+			p.ListPrice,
+			p.ModifiedDate 
+		from Production.Product as p
+		where p.ProductSubcategoryID=psc.ProductSubcategoryID
+		for xml path ('Product'), root ('Products'), type)
+from Production.ProductSubcategory as psc
+for xml path ('SubCategory'), root ('Subcategories');
+
+
+-- The XML can be stored in a variable 
+
+declare @xml as xml 
+
+set @xml = 
+(select 
+	psc.ProductSubcategoryID as [@ProductSubcategoryID],
+	psc.Name as [@Name],
+		(select
+			p.ProductID, 
+			p.Name, 
+			p.ProductNumber,
+			p.ListPrice,
+			p.ModifiedDate 
+		from Production.Product as p
+		where p.ProductSubcategoryID=psc.ProductSubcategoryID
+		for xml path ('Product'), root ('Products'), type)
+from Production.ProductSubcategory as psc
+for xml path ('SubCategory'), root ('Subcategories'));
+
+select @xml
