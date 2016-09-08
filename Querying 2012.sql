@@ -1796,11 +1796,18 @@ order by custid;
 -----------------------XML shredding to SQL 
 
 
-Go
-=======
 --underdtanding XML from youtube videos
 
-go
->>>>>>> 7a6c8bca911eab4d161dd783d0894c1c38bec100
+go 
 
+use AdventureWorks2008R2
+go 
 
+Select 
+ProductID, 
+Name, 
+ProductNumber,
+ListPrice,
+ModifiedDate
+from Production.Product
+for xml auto
