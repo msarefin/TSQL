@@ -1883,8 +1883,8 @@ for xml path ('SubCategory'), root ('Subcategories');
 
 -- The XML can be stored in a variable 
 
-declare @xml as xml 
 
+declare @xml as xml 
 set @xml = 
 (select 
 	psc.ProductSubcategoryID as [@ProductSubcategoryID],
@@ -1902,3 +1902,4 @@ from Production.ProductSubcategory as psc
 for xml path ('SubCategory'), root ('Subcategories'));
 
 select @xml
+
