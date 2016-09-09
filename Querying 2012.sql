@@ -1792,7 +1792,7 @@ where custid <=2
 order by custid;
 
 
-<<<<<<< HEAD
+
 -----------------------XML shredding to SQL 
 
 
