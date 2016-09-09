@@ -1901,5 +1901,15 @@ set @xml =
 from Production.ProductSubcategory as psc
 for xml path ('SubCategory'), root ('Subcategories'));
 
-select @xml
+select @xml;
 
+---------------------------- retrive XML to SQL -----------------------------
+go 
+
+declare @x xml;
+ 
+
+select @x=p
+from openrowset (bulk 'c:\users\sunsh\documents\sql server management studio\products.xml', single_blob) as Products(p)
+
+select @x
