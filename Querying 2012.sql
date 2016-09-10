@@ -1935,7 +1935,7 @@ where c.custid <2 and d.orderid %2 = 0
 order by c.custid, d.orderid
 for xml auto
 ;
----------------------------------------------------------------------
+-------------------------Atribute Centric --------------------------------------------
 --<c custid="1" companyname="Customer NRZBB">
 --  <d orderid="10692" orderdate="2007-10-03T00:00:00" />
 --  <d orderid="10702" orderdate="2007-10-13T00:00:00" />
@@ -1951,7 +1951,7 @@ where c.custid<2 and d.orderid %2 = 0
 order by c.custid, d.orderid
 for xml auto,root('CustomerOrders');
 
---------------------------------XML output -------------------------------
+--------------------------------XML output -Attribute centric -------------------------------
 
 
 --<CustomerOrders>
@@ -1976,7 +1976,7 @@ order by c.custid, d.orderid
 for xml auto, elements, root('CustomerOrders')
 ;
 
---------------------------------------------------------------------------
+------------------------------Elememt Centric--------------------------------------------
 
 
 --<CustomerOrders>
@@ -1999,18 +1999,48 @@ for xml auto, elements, root('CustomerOrders')
 --</CustomerOrders>
 
 --============================================================--
+----------------------------------------------------------------------------------------
+
+select c.custid, c.companyname, 
+d.orderid, d.orderdate
+from sales.Customers as c inner join sales.Orders as d on c.custid = d.custid
+where c.custid<2 and d.orderid %2 =0
+order by c.custid
+for xml auto, elements, xmlschema('CustomerOrders') 
 
 ---------------------------- retrive XML to SQL -----------------------------
 go 
-
 declare @x xml;
- 
-
 select @x=p
 from openrowset (bulk 'c:\users\sunsh\documents\sql server management studio\products.xml', single_blob) as Products(p)
-
-select @x
-
+--select @x
+declare @hdoc int
+exec sp_xml_preparedocument @hdoc output, @x
 select * 
-from OPENXML (@hdoc, '',1)
- with ()
+from OPENXML (@hdoc,'/Subcategories/SubCategory',1)
+with (ProductSubcategoryID int, Name varchar(100))
+--order by  productsubcategoryid
+exec sp_xml_removedocument @hdoc;
+
+--=====================================================================================
+
+go 
+declare @x xml;
+select @x=p
+from openrowset (bulk 'c:\users\sunsh\documents\sql server management studio\products.xml', single_blob) as Products(p)
+--select @x
+
+declare @hdoc int
+
+exec sp_xml_preparedocument @hdoc output, @x
+select * 
+from OPENXML (@hdoc,'/Subcategories/SubCategory/Products/Product',2)
+with (
+ProductID int,
+Name varchar(100),
+ProductNumber varchar(100),
+ListPrice float,
+ModifiedDate datetime
+ )
+--order by  productsubcategoryid
+exec sp_xml_removedocument @hdoc;
