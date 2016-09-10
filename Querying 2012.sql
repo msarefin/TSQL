@@ -2073,7 +2073,10 @@ go
 go 
 
 select 
-c.custid,c.companyname,d.orderid,d.orderdate
+c.custid,
+c.companyname,
+d.orderid,
+d.orderdate
 from sales.Customers as c inner join Sales.Orders as d on c.custid=d.custid
 where c.custid <2 and d.orderid %2 = 0
 order by c.custid,d.orderid 
@@ -2085,6 +2088,58 @@ for xml raw ('Order'), root ('CustomersOrders')
 --  <Order custid="1" companyname="Customer NRZBB" orderid="10952" orderdate="2008-03-16T00:00:00" />
 --</CustomersOrders>
 
+-------------------------------XML AUTO ---------------------------------------------
+
+WITH XMLNAMESPACES('TK461-CustomersOrders' AS co)
+SELECT [co:Customer].custid AS [co:custid], 
+ [co:Customer].companyname AS [co:companyname], 
+ [co:Order].orderid AS [co:orderid], 
+ [co:Order].orderdate AS [co:orderdate]
+FROM Sales.Customers AS [co:Customer]
+ INNER JOIN Sales.Orders AS [co:Order]
+  ON [co:Customer].custid = [co:Order].custid
+WHERE [co:Customer].custid <= 2
+  AND [co:Order].orderid %2 = 0
+ORDER BY [co:Customer].custid, [co:Order].orderid
+FOR XML AUTO, ELEMENTS, ROOT('CustomersOrders');
+
+--<CustomersOrders xmlns:co="TK461-CustomersOrders">
+--  <co:Customer>
+--    <co:custid>1</co:custid>
+--    <co:companyname>Customer NRZBB</co:companyname>
+--    <co:Order>
+--      <co:orderid>10692</co:orderid>
+--      <co:orderdate>2007-10-03T00:00:00</co:orderdate>
+--    </co:Order>
+--    <co:Order>
+--      <co:orderid>10702</co:orderid>
+--      <co:orderdate>2007-10-13T00:00:00</co:orderdate>
+--    </co:Order>
+--    <co:Order>
+--      <co:orderid>10952</co:orderid>
+--      <co:orderdate>2008-03-16T00:00:00</co:orderdate>
+--    </co:Order>
+--  </co:Customer>
+--  <co:Customer>
+--    <co:custid>2</co:custid>
+--    <co:companyname>Customer MLTDN</co:companyname>
+--    <co:Order>
+--      <co:orderid>10308</co:orderid>
+--      <co:orderdate>2006-09-18T00:00:00</co:orderdate>
+--    </co:Order>
+--    <co:Order>
+--      <co:orderid>10926</co:orderid>
+--      <co:orderdate>2008-03-04T00:00:00</co:orderdate>
+--    </co:Order>
+--  </co:Customer>
+--</CustomersOrders>
+
+-----------------------------XML AUTO -------------------------------
+with xmlnamespace('CustomerOrder' as co)
+select * from Sales.Customers as c inner join sales.Orders as d on c.custid=d.custid
+where c.custid<2 and d.orderid %2=0
+order by c.custid, d.orderid
+for xml auto
 
 ---------------------------- retrive XML to SQL -----------------------------
 go 
