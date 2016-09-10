@@ -2153,7 +2153,26 @@ for xml auto, elements, root('CustomerOrders');
 
 ------------------------xml X-Path--------------------------------------------
 
+select 
+c.custid as [@custid], 
+c.companyname as [@companyname]
+from sales.Customers as c
+where c.custid <=2 
+order by c.custid
+for xml path ('Customer'), root('Customers')
+;
 
+
+--<Customers>
+--  <Customer>
+--    <custid>1</custid>
+--    <companyname>Customer NRZBB</companyname>
+--  </Customer>
+--  <Customer>
+--    <custid>2</custid>
+--    <companyname>Customer MLTDN</companyname>
+--  </Customer>
+--</Customers>
 
 ---------------------------- retrive XML to SQL -----------------------------
 go 
