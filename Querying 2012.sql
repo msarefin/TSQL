@@ -2008,6 +2008,84 @@ where c.custid<2 and d.orderid %2 =0
 order by c.custid
 for xml auto, elements, xmlschema('CustomerOrders') 
 
+--<xsd:schema targetNamespace="CustomerOrders" xmlns:schema="CustomerOrders" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqltypes="http://schemas.microsoft.com/sqlserver/2004/sqltypes" elementFormDefault="qualified">
+--  <xsd:import namespace="http://schemas.microsoft.com/sqlserver/2004/sqltypes" schemaLocation="http://schemas.microsoft.com/sqlserver/2004/sqltypes/sqltypes.xsd" />
+--  <xsd:element name="c">
+--    <xsd:complexType>
+--      <xsd:sequence>
+--        <xsd:element name="custid" type="sqltypes:int" />
+--        <xsd:element name="companyname">
+--          <xsd:simpleType>
+--            <xsd:restriction base="sqltypes:nvarchar" sqltypes:localeId="1033" sqltypes:sqlCompareOptions="IgnoreCase IgnoreKanaType IgnoreWidth" sqltypes:sqlSortId="52">
+--              <xsd:maxLength value="40" />
+--            </xsd:restriction>
+--          </xsd:simpleType>
+--        </xsd:element>
+--        <xsd:element ref="schema:d" minOccurs="0" maxOccurs="unbounded" />
+--      </xsd:sequence>
+--    </xsd:complexType>
+--  </xsd:element>
+--  <xsd:element name="d">
+--    <xsd:complexType>
+--      <xsd:sequence>
+--        <xsd:element name="orderid" type="sqltypes:int" />
+--        <xsd:element name="orderdate" type="sqltypes:datetime" />
+--      </xsd:sequence>
+--    </xsd:complexType>
+--  </xsd:element>
+--</xsd:schema>
+--<c xmlns="CustomerOrders">
+--  <custid>1</custid>
+--  <companyname>Customer NRZBB</companyname>
+--  <d>
+--    <orderid>10692</orderid>
+--    <orderdate>2007-10-03T00:00:00</orderdate>
+--  </d>
+--  <d>
+--    <orderid>10702</orderid>
+--    <orderdate>2007-10-13T00:00:00</orderdate>
+--  </d>
+--  <d>
+--    <orderid>10952</orderid>
+--    <orderdate>2008-03-16T00:00:00</orderdate>
+--  </d>
+--</c>
+
+---------------------------------XML RAW-----------------------------------
+go 
+
+use TSQL2012;
+go 
+
+select 
+c.custid, c.companyname, d.orderid, d.orderdate 
+from sales.Customers as c inner join Sales.Orders as d on c.custid=d.custid
+where c.custid<2 and d.orderid %2 =0
+order by c.custid, d.orderid 
+for xml raw;
+
+go 
+
+--<row custid="1" companyname="Customer NRZBB" orderid="10692" orderdate="2007-10-03T00:00:00" />
+--<row custid="1" companyname="Customer NRZBB" orderid="10702" orderdate="2007-10-13T00:00:00" />
+--<row custid="1" companyname="Customer NRZBB" orderid="10952" orderdate="2008-03-16T00:00:00" />
+
+go 
+
+select 
+c.custid,c.companyname,d.orderid,d.orderdate
+from sales.Customers as c inner join Sales.Orders as d on c.custid=d.custid
+where c.custid <2 and d.orderid %2 = 0
+order by c.custid,d.orderid 
+for xml raw ('Order'), root ('CustomersOrders') 
+
+--<CustomersOrders>
+--  <Order custid="1" companyname="Customer NRZBB" orderid="10692" orderdate="2007-10-03T00:00:00" />
+--  <Order custid="1" companyname="Customer NRZBB" orderid="10702" orderdate="2007-10-13T00:00:00" />
+--  <Order custid="1" companyname="Customer NRZBB" orderid="10952" orderdate="2008-03-16T00:00:00" />
+--</CustomersOrders>
+
+
 ---------------------------- retrive XML to SQL -----------------------------
 go 
 declare @x xml;
@@ -2044,3 +2122,4 @@ ModifiedDate datetime
  )
 --order by  productsubcategoryid
 exec sp_xml_removedocument @hdoc;
+
