@@ -1903,6 +1903,103 @@ for xml path ('SubCategory'), root ('Subcategories'));
 
 select @xml;
 
+---------------------------------------------------------------------------
+go 
+use AdventureWorks2008R2;
+go 
+
+select 
+	p.ProductID,
+	p.Name,
+	p.ListPrice,
+	p.ModifiedDate
+from Production.Product as p
+for xml raw
+;
+
+
+------------------------------XML from book ------------------------
+go
+use TSQL2012;
+go 
+
+
+---------------------------------------------------------------------
+select c.custid, c.companyname,
+d.orderid, d.orderdate
+from 
+sales.Customers as c 
+inner join 
+sales.Orders as d on c.custid=d.custid
+where c.custid <2 and d.orderid %2 = 0 
+order by c.custid, d.orderid
+for xml auto
+;
+---------------------------------------------------------------------
+--<c custid="1" companyname="Customer NRZBB">
+--  <d orderid="10692" orderdate="2007-10-03T00:00:00" />
+--  <d orderid="10702" orderdate="2007-10-13T00:00:00" />
+--  <d orderid="10952" orderdate="2008-03-16T00:00:00" />
+--</c>
+---------------------------------------------------------------------
+select 
+	c.custid, c.companyname,
+	d.orderid, d.orderdate
+from sales.Customers as c inner join sales.Orders as d 
+on c.custid= d.custid
+where c.custid<2 and d.orderid %2 = 0
+order by c.custid, d.orderid
+for xml auto,root('CustomerOrders');
+
+--------------------------------XML output -------------------------------
+
+
+--<CustomerOrders>
+--  <c custid="1" companyname="Customer NRZBB">
+--    <d orderid="10692" orderdate="2007-10-03T00:00:00" />
+--    <d orderid="10702" orderdate="2007-10-13T00:00:00" />
+--    <d orderid="10952" orderdate="2008-03-16T00:00:00" />
+--  </c>
+--</CustomerOrders>
+
+--------------------------------------------
+go 
+
+select c.custid, c.companyname,
+d.orderid, d.orderdate
+from 
+sales.Customers as c 
+inner join 
+sales.Orders as d on c.custid=d.custid
+where c.custid <2 and d.orderid %2 = 0 
+order by c.custid, d.orderid
+for xml auto, elements, root('CustomerOrders')
+;
+
+--------------------------------------------------------------------------
+
+
+--<CustomerOrders>
+--  <c>
+--    <custid>1</custid>
+--    <companyname>Customer NRZBB</companyname>
+--    <d>
+--      <orderid>10692</orderid>
+--      <orderdate>2007-10-03T00:00:00</orderdate>
+--    </d>
+--    <d>
+--      <orderid>10702</orderid>
+--      <orderdate>2007-10-13T00:00:00</orderdate>
+--    </d>
+--    <d>
+--      <orderid>10952</orderid>
+--      <orderdate>2008-03-16T00:00:00</orderdate>
+--    </d>
+--  </c>
+--</CustomerOrders>
+
+--============================================================--
+
 ---------------------------- retrive XML to SQL -----------------------------
 go 
 
@@ -1913,3 +2010,7 @@ select @x=p
 from openrowset (bulk 'c:\users\sunsh\documents\sql server management studio\products.xml', single_blob) as Products(p)
 
 select @x
+
+select * 
+from OPENXML (@hdoc, '',1)
+ with ()
