@@ -2134,12 +2134,26 @@ FOR XML AUTO, ELEMENTS, ROOT('CustomersOrders');
 --  </co:Customer>
 --</CustomersOrders>
 
------------------------------XML AUTO -------------------------------
-with xmlnamespace('CustomerOrder' as co)
-select * from Sales.Customers as c inner join sales.Orders as d on c.custid=d.custid
-where c.custid<2 and d.orderid %2=0
-order by c.custid, d.orderid
-for xml auto
+-----------------------------XMLnameSpaces-------------------------------
+
+with xmlnamespaces('CustomerOrder' AS co)
+select 
+[co:Customer].custid as [co:custid], 
+[co:Customer].companyname as [co:companyname], 
+[co:Orders].orderid as [co:orderid], 
+[co:Orders].orderdate as [co:orderdate]
+from 
+Sales.Customers as [co:Customer] 
+inner join 
+sales.Orders as [co:Orders]
+on [co:Customer].custid=[co:Orders].custid
+where [co:Customer].custid<2 and [co:Orders].orderid %2=0
+order by [co:Customer].custid, [co:Orders].orderid
+for xml auto, elements, root('CustomerOrders');
+
+------------------------xml X-Path--------------------------------------------
+
+
 
 ---------------------------- retrive XML to SQL -----------------------------
 go 
