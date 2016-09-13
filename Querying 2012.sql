@@ -2162,7 +2162,6 @@ order by c.custid
 for xml path ('Customer'), root('Customers')
 ;
 
-
 --<Customers>
 --  <Customer>
 --    <custid>1</custid>
@@ -2211,3 +2210,35 @@ ModifiedDate datetime
 --order by  productsubcategoryid
 exec sp_xml_removedocument @hdoc;
 
+
+   
+--------------------------------------------------------------------
+
+declare @DocHandle as int;
+declare @xmlDoc as nvarchar(1000);
+set @xmlDoc = 
+N'
+<CustomersOrders> 
+	<Customer custid="1"> 
+		<companyname>Customer NRZBB</companyname> 
+		<Order orderid="10692"> 
+		<orderdate>2007-10-03T00:00:00</orderdate> 
+		</Order> 
+		<Order orderid="10702"> 
+		<orderdate>2007-10-13T00:00:00</orderdate> 
+		</Order> <Order orderid="10952"> 
+		<orderdate>2008-03-16T00:00:00</orderdate> 
+		</Order> 
+	</Customer> 
+	<Customer custid="2"> 
+		<companyname>Customer MLTDN</companyname> 
+		<Order orderid="10308"> 
+		<orderdate>2006-09-18T00:00:00</orderdate> 
+		</Order>
+		<Order orderid="10926"> 
+		<orderdate>2008-03-04T00:00:00</orderdate> 
+		</Order> 
+	</Customer> 
+</CustomersOrders>';
+
+exec sys.sp_xml_preparedocument 
