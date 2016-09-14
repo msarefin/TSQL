@@ -2254,7 +2254,7 @@ set @xmlAuto =(
 
 select p.productid, p.productname,p.unitprice
 from Production.Products as p
-where p.productid <=10 for xml auto) 
+where p.productid <=5 for xml auto) 
 
 select @xmlAuto;
 
