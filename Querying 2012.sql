@@ -2213,7 +2213,7 @@ exec sp_xml_removedocument @hdoc;
 
    
 --------------------------------------------------------------------
-
+go 
 declare @DocHandle as int;
 declare @xmlDoc as nvarchar(1000);
 set @xmlDoc = 
@@ -2241,4 +2241,20 @@ N'
 	</Customer> 
 </CustomersOrders>';
 
-exec sys.sp_xml_preparedocument 
+exec sys.sp_xml_preparedocument @DocHandle output ,@xmlDoc;
+select * from openxml(@DocHandle,'/CustomersOrders/Customer',1)
+with(custid int, companyname nvarchar(40));
+
+
+----------
+go
+----XML Auto 
+declare @xmlAuto xml;
+set @xmlAuto =(
+
+select p.productid, p.productname,p.unitprice
+from Production.Products as p
+where p.productid <=10 for xml auto) 
+
+select @xmlAuto;
+
