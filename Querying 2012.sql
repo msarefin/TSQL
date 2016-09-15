@@ -2231,7 +2231,7 @@ N'
 		</Order> 
 	</Customer> 
 	<Customer custid="2"> 
-		<companyname>Customer MLTDN</companyname> 
+	                                                                                                                                                                              	<companyname>Customer MLTDN</companyname> 
 		<Order orderid="10308"> 
 		<orderdate>2006-09-18T00:00:00</orderdate> 
 		</Order>
@@ -2248,6 +2248,10 @@ with(custid int, companyname nvarchar(40));
 
 ----------
 go
+
+use TSQL2012
+go 
+
 ----XML Auto 
 declare @xmlAuto xml;
 set @xmlAuto =(
