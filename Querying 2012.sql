@@ -2252,13 +2252,30 @@ go
 use TSQL2012
 go 
 
-----XML Auto 
-declare @xmlAuto xml;
-set @xmlAuto =(
+----XML Auto
 
-select p.productid, p.productname,p.unitprice
-from Production.Products as p
-where p.productid <=5 for xml auto) 
+select 
+p.productid, p.productname, p.unitprice, p.discontinued 
+from Production.Products as p 
+where p.productid <=2
+for xml auto, elements, root ('Products')
+;
+------------------ The following is the reult set---------------
 
-select @xmlAuto;
+--<Products>
+--  <p>
+--    <productid>1</productid>
+--    <productname>Product HHYDP</productname>
+--    <unitprice>18.0000</unitprice>
+--    <discontinued>0</discontinued>
+--  </p>
+--  <p>
+--    <productid>2</productid>
+--    <productname>Product RECZE</productname>
+--    <unitprice>19.0000</unitprice>
+--    <discontinued>0</discontinued>
+--  </p>
+--</Products>
+
+------------
 
