@@ -1,0 +1,1056 @@
+﻿<row>
+  <StartDate>2016-01-05</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>87.0000</CashEarnings>
+  <CreditEarnings>132.0000</CreditEarnings>
+  <Gas>20.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>7.2000</STSRH>
+  <IMSRH>4.5000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>4</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-06</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>146.9000</CashEarnings>
+  <CreditEarnings>121.0000</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>13</CashTrips>
+  <CreditTrips>9</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-07</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>109.9000</CashEarnings>
+  <CreditEarnings>220.2800</CreditEarnings>
+  <Gas>8.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.5000</STSRH>
+  <IMSRH>7.5000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>17</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-08</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>114.1000</CashEarnings>
+  <CreditEarnings>283.6900</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>9.0000</STSRH>
+  <IMSRH>5.4000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>11</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-09</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>85.1000</CashEarnings>
+  <CreditEarnings>301.3600</CreditEarnings>
+  <Gas>18.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.5000</STSRH>
+  <IMSRH>7.5000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>18</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-10</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>161.7000</CashEarnings>
+  <CreditEarnings>112.6200</CreditEarnings>
+  <Gas>14.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.0000</STSRH>
+  <IMSRH>7.8000</IMSRH>
+  <CashTrips>14</CashTrips>
+  <CreditTrips>9</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-12</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>134.6000</CashEarnings>
+  <CreditEarnings>201.9400</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>9.0000</STSRH>
+  <IMSRH>5.4000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>11</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-13</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>106.6000</CashEarnings>
+  <CreditEarnings>152.9600</CreditEarnings>
+  <Gas>9.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.0000</STSRH>
+  <IMSRH>7.5000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>8</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-14</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>89.0000</CashEarnings>
+  <CreditEarnings>286.0000</CreditEarnings>
+  <Gas>18.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>16.8000</STSRH>
+  <IMSRH>10.5000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-15</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>86.6000</CashEarnings>
+  <CreditEarnings>241.4800</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>6.0000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-21</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>82.1000</CashEarnings>
+  <CreditEarnings>254.7400</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-22</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>108.2800</CashEarnings>
+  <CreditEarnings>411.4000</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>17.7800</Tolls>
+  <STSRH>7.5000</STSRH>
+  <IMSRH>4.5000</IMSRH>
+  <CashTrips>4</CashTrips>
+  <CreditTrips>11</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-01-25</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>53.0000</CashEarnings>
+  <CreditEarnings>209.0600</CreditEarnings>
+  <Gas>11.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>5.7000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-05</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>11.8000</CashEarnings>
+  <CreditEarnings>86.3500</CreditEarnings>
+  <Gas>0.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>3.0000</STSRH>
+  <IMSRH>1.8000</IMSRH>
+  <CashTrips>1</CashTrips>
+  <CreditTrips>5</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-10</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>89.2000</CashEarnings>
+  <CreditEarnings>174.5000</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>9</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-11</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>110.2000</CashEarnings>
+  <CreditEarnings>217.0000</CreditEarnings>
+  <Gas>14.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.5000</STSRH>
+  <IMSRH>6.9000</IMSRH>
+  <CashTrips>9</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-12</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>142.1000</CashEarnings>
+  <CreditEarnings>266.5100</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>14.5000</STSRH>
+  <IMSRH>8.7000</IMSRH>
+  <CashTrips>12</CashTrips>
+  <CreditTrips>17</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-13</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>76.6000</CashEarnings>
+  <CreditEarnings>248.1100</CreditEarnings>
+  <Gas>12.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.5000</STSRH>
+  <IMSRH>6.9000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-14</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>106.3000</CashEarnings>
+  <CreditEarnings>313.9000</CreditEarnings>
+  <Gas>12.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>15.5000</STSRH>
+  <IMSRH>9.3000</IMSRH>
+  <CashTrips>11</CashTrips>
+  <CreditTrips>20</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-15</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>48.0000</CashEarnings>
+  <CreditEarnings>292.7400</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.0000</STSRH>
+  <IMSRH>6.0000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-16</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>59.3000</CashEarnings>
+  <CreditEarnings>209.0100</CreditEarnings>
+  <Gas>13.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.5000</STSRH>
+  <IMSRH>6.9000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-24</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>77.3000</CashEarnings>
+  <CreditEarnings>254.0500</CreditEarnings>
+  <Gas>11.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-25</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>56.5000</CashEarnings>
+  <CreditEarnings>226.8000</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.0000</STSRH>
+  <IMSRH>6.0000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-28</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>74.3000</CashEarnings>
+  <CreditEarnings>234.2000</CreditEarnings>
+  <Gas>12.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>8.5000</STSRH>
+  <IMSRH>5.1000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>11</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-02-29</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>49.5000</CashEarnings>
+  <CreditEarnings>204.4000</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>5.7000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-01</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>77.8000</CashEarnings>
+  <CreditEarnings>228.6900</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>5.7000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-02</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>81.8000</CashEarnings>
+  <CreditEarnings>213.5100</CreditEarnings>
+  <Gas>12.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.5000</STSRH>
+  <IMSRH>7.5000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>17</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-03</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>93.2000</CashEarnings>
+  <CreditEarnings>234.7500</CreditEarnings>
+  <Gas>9.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.5000</STSRH>
+  <IMSRH>6.9000</IMSRH>
+  <CashTrips>9</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-04</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>97.6000</CashEarnings>
+  <CreditEarnings>340.7800</CreditEarnings>
+  <Gas>8.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>13.5000</STSRH>
+  <IMSRH>8.1000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>20</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-06</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>62.1000</CashEarnings>
+  <CreditEarnings>217.8500</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.5000</STSRH>
+  <IMSRH>6.9000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-12</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>53.3000</CashEarnings>
+  <CreditEarnings>315.6500</CreditEarnings>
+  <Gas>9.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-13</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>94.0000</CashEarnings>
+  <CreditEarnings>171.3000</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>5.7000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-14</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>97.7000</CashEarnings>
+  <CreditEarnings>197.1800</CreditEarnings>
+  <Gas>14.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>9</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-17</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>103.8000</CashEarnings>
+  <CreditEarnings>228.8700</CreditEarnings>
+  <Gas>14.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-20</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>88.1000</CashEarnings>
+  <CreditEarnings>223.5400</CreditEarnings>
+  <Gas>11.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>10.0000</STSRH>
+  <IMSRH>6.3000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-21</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>83.4000</CashEarnings>
+  <CreditEarnings>135.4700</CreditEarnings>
+  <Gas>7.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>8.0000</STSRH>
+  <IMSRH>4.8000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>8</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-22</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>63.6000</CashEarnings>
+  <CreditEarnings>292.0000</CreditEarnings>
+  <Gas>12.0000</Gas>
+  <Tolls>10.5000</Tolls>
+  <STSRH>9.0000</STSRH>
+  <IMSRH>5.7000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>12</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-30</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>55.5000</CashEarnings>
+  <CreditEarnings>229.5500</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>5.7000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-03-31</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>104.8000</CashEarnings>
+  <CreditEarnings>212.2000</CreditEarnings>
+  <Gas>13.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>6.0000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-03</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>164.0800</CashEarnings>
+  <CreditEarnings>236.5600</CreditEarnings>
+  <Gas>14.0000</Gas>
+  <Tolls>16.6200</Tolls>
+  <STSRH>11.5000</STSRH>
+  <IMSRH>6.9000</IMSRH>
+  <CashTrips>10</CashTrips>
+  <CreditTrips>12</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-04</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>64.0000</CashEarnings>
+  <CreditEarnings>310.0400</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>10.0000</STSRH>
+  <IMSRH>6.0000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-05</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>128.1000</CashEarnings>
+  <CreditEarnings>189.4500</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>5.7000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>12</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-06</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>72.6000</CashEarnings>
+  <CreditEarnings>238.5900</CreditEarnings>
+  <Gas>16.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-16</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>94.0000</CashEarnings>
+  <CreditEarnings>305.6500</CreditEarnings>
+  <Gas>20.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>14.0000</STSRH>
+  <IMSRH>8.4000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>22</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-17</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>98.2000</CashEarnings>
+  <CreditEarnings>157.6500</CreditEarnings>
+  <Gas>20.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.0000</STSRH>
+  <IMSRH>6.0000</IMSRH>
+  <CashTrips>9</CashTrips>
+  <CreditTrips>10</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-18</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>84.6000</CashEarnings>
+  <CreditEarnings>270.9500</CreditEarnings>
+  <Gas>12.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-26</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>132.4000</CashEarnings>
+  <CreditEarnings>132.6000</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>8.5000</STSRH>
+  <IMSRH>5.1000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>8</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-27</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>75.3000</CashEarnings>
+  <CreditEarnings>192.5600</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>8.0000</STSRH>
+  <IMSRH>5.1000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>11</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-28</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>44.5000</CashEarnings>
+  <CreditEarnings>326.6900</CreditEarnings>
+  <Gas>12.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>14.0000</STSRH>
+  <IMSRH>8.4000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>23</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-04-30</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>81.3000</CashEarnings>
+  <CreditEarnings>301.5300</CreditEarnings>
+  <Gas>16.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.5000</STSRH>
+  <IMSRH>7.5000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>19</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-05-01</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>119.1400</CashEarnings>
+  <CreditEarnings>194.5900</CreditEarnings>
+  <Gas>10.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.0000</STSRH>
+  <IMSRH>6.0000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>12</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-05-02</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>103.1000</CashEarnings>
+  <CreditEarnings>247.1300</CreditEarnings>
+  <Gas>16.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.5000</STSRH>
+  <IMSRH>6.3000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-05-03</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>96.2000</CashEarnings>
+  <CreditEarnings>312.1900</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>11.0800</Tolls>
+  <STSRH>13.0000</STSRH>
+  <IMSRH>7.8000</IMSRH>
+  <CashTrips>9</CashTrips>
+  <CreditTrips>17</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-05-04</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>130.7400</CashEarnings>
+  <CreditEarnings>173.0000</CreditEarnings>
+  <Gas>23.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>9</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-05-05</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>44.2000</CashEarnings>
+  <CreditEarnings>396.0500</CreditEarnings>
+  <Gas>24.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>13.5000</STSRH>
+  <IMSRH>8.1000</IMSRH>
+  <CashTrips>4</CashTrips>
+  <CreditTrips>22</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-05-18</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>140.8000</CashEarnings>
+  <CreditEarnings>166.7000</CreditEarnings>
+  <Gas>13.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>11</CashTrips>
+  <CreditTrips>11</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-05-19</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>85.3000</CashEarnings>
+  <CreditEarnings>237.5700</CreditEarnings>
+  <Gas>16.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-05-26</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>93.9000</CashEarnings>
+  <CreditEarnings>335.0200</CreditEarnings>
+  <Gas>14.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.5000</STSRH>
+  <IMSRH>7.5000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>17</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-05-27</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>160.3400</CashEarnings>
+  <CreditEarnings>241.7500</CreditEarnings>
+  <Gas>20.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>13.0000</STSRH>
+  <IMSRH>7.8000</IMSRH>
+  <CashTrips>11</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-03</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>118.3000</CashEarnings>
+  <CreditEarnings>229.5300</CreditEarnings>
+  <Gas>16.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.0000</STSRH>
+  <IMSRH>6.0000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-04</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>67.0000</CashEarnings>
+  <CreditEarnings>345.4900</CreditEarnings>
+  <Gas>18.0000</Gas>
+  <Tolls>11.0800</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>17</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-05</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>95.7000</CashEarnings>
+  <CreditEarnings>300.1500</CreditEarnings>
+  <Gas>13.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>16.0000</STSRH>
+  <IMSRH>9.6000</IMSRH>
+  <CashTrips>9</CashTrips>
+  <CreditTrips>22</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-16</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>110.8000</CashEarnings>
+  <CreditEarnings>292.7500</CreditEarnings>
+  <Gas>18.0700</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.5000</STSRH>
+  <IMSRH>6.3000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-17</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>141.3800</CashEarnings>
+  <CreditEarnings>249.6100</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>11.0800</Tolls>
+  <STSRH>12.0000</STSRH>
+  <IMSRH>7.2000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>18</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-18</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>93.5000</CashEarnings>
+  <CreditEarnings>252.9000</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.5000</STSRH>
+  <IMSRH>6.3000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-25</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>177.8400</CashEarnings>
+  <CreditEarnings>313.2000</CreditEarnings>
+  <Gas>14.0000</Gas>
+  <Tolls>11.0800</Tolls>
+  <STSRH>14.0000</STSRH>
+  <IMSRH>8.4000</IMSRH>
+  <CashTrips>11</CashTrips>
+  <CreditTrips>17</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-26</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>137.4000</CashEarnings>
+  <CreditEarnings>249.3500</CreditEarnings>
+  <Gas>22.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-27</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>74.2000</CashEarnings>
+  <CreditEarnings>324.3500</CreditEarnings>
+  <Gas>19.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.5000</STSRH>
+  <IMSRH>7.5000</IMSRH>
+  <CashTrips>4</CashTrips>
+  <CreditTrips>21</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-28</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>92.1000</CashEarnings>
+  <CreditEarnings>310.8900</CreditEarnings>
+  <Gas>20.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.0000</STSRH>
+  <IMSRH>5.4000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>11</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-06-29</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>121.2000</CashEarnings>
+  <CreditEarnings>246.2100</CreditEarnings>
+  <Gas>13.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.5000</STSRH>
+  <IMSRH>7.5000</IMSRH>
+  <CashTrips>9</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-07-10</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>100.5000</CashEarnings>
+  <CreditEarnings>234.6500</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.0000</STSRH>
+  <IMSRH>7.2000</IMSRH>
+  <CashTrips>10</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-07-11</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>102.4000</CashEarnings>
+  <CreditEarnings>231.9800</CreditEarnings>
+  <Gas>13.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>13.5000</STSRH>
+  <IMSRH>8.1000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>19</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-07-12</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>167.9000</CashEarnings>
+  <CreditEarnings>193.9100</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>13.5000</STSRH>
+  <IMSRH>8.1000</IMSRH>
+  <CashTrips>13</CashTrips>
+  <CreditTrips>12</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-07-22</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>81.6000</CashEarnings>
+  <CreditEarnings>299.9200</CreditEarnings>
+  <Gas>20.0000</Gas>
+  <Tolls>16.6200</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-07-23</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>56.9000</CashEarnings>
+  <CreditEarnings>247.7500</CreditEarnings>
+  <Gas>14.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>5.7000</IMSRH>
+  <CashTrips>3</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-07-25</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>118.6000</CashEarnings>
+  <CreditEarnings>246.0100</CreditEarnings>
+  <Gas>22.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.0000</STSRH>
+  <IMSRH>7.5000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-07-31</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>161.6000</CashEarnings>
+  <CreditEarnings>171.6600</CreditEarnings>
+  <Gas>8.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>6.2500</STSRH>
+  <IMSRH>3.6500</IMSRH>
+  <CashTrips>17</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-08-01</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>130.6000</CashEarnings>
+  <CreditEarnings>223.1000</CreditEarnings>
+  <Gas>23.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.2500</STSRH>
+  <IMSRH>5.4500</IMSRH>
+  <CashTrips>12</CashTrips>
+  <CreditTrips>19</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-08-02</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>88.1000</CashEarnings>
+  <CreditEarnings>195.3000</CreditEarnings>
+  <Gas>9.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>7</CashTrips>
+  <CreditTrips>15</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-08-17</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>54.5000</CashEarnings>
+  <CreditEarnings>250.1500</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.5000</STSRH>
+  <IMSRH>6.3000</IMSRH>
+  <CashTrips>5</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-08-18</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>74.3000</CashEarnings>
+  <CreditEarnings>302.0300</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>10.5000</STSRH>
+  <IMSRH>6.3000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>21</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-08-19</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>148.4000</CashEarnings>
+  <CreditEarnings>195.3000</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.0000</STSRH>
+  <IMSRH>6.6000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>13</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-08-30</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>79.9000</CashEarnings>
+  <CreditEarnings>223.0600</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.0000</STSRH>
+  <IMSRH>7.2000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-08-31</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>130.6000</CashEarnings>
+  <CreditEarnings>160.0500</CreditEarnings>
+  <Gas>17.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>11.5000</STSRH>
+  <IMSRH>6.9000</IMSRH>
+  <CashTrips>12</CashTrips>
+  <CreditTrips>11</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-09-01</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>64.9800</CashEarnings>
+  <CreditEarnings>220.0000</CreditEarnings>
+  <Gas>15.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>9.5000</STSRH>
+  <IMSRH>5.7000</IMSRH>
+  <CashTrips>4</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-09-02</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>98.7500</CashEarnings>
+  <CreditEarnings>241.2000</CreditEarnings>
+  <Gas>19.0000</Gas>
+  <Tolls>0.0000</Tolls>
+  <STSRH>12.0000</STSRH>
+  <IMSRH>7.2000</IMSRH>
+  <CashTrips>8</CashTrips>
+  <CreditTrips>16</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-09-15</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>246.8800</CashEarnings>
+  <CreditEarnings>84.0500</CreditEarnings>
+  <Gas>24.0000</Gas>
+  <Tolls>11.0800</Tolls>
+  <STSRH>7.5000</STSRH>
+  <IMSRH>4.5000</IMSRH>
+  <CashTrips>6</CashTrips>
+  <CreditTrips>6</CreditTrips>
+</row>
+<row>
+  <StartDate>2016-09-16</StartDate>
+  <LeaseID>4</LeaseID>
+  <CashEarnings>110.7400</CashEarnings>
+  <CreditEarnings>251.8800</CreditEarnings>
+  <Gas>20.0000</Gas>
+  <Tolls>5.5400</Tolls>
+  <STSRH>9.0000</STSRH>
+  <IMSRH>5.4000</IMSRH>
+  <CashTrips>4</CashTrips>
+  <CreditTrips>14</CreditTrips>
+</row>
