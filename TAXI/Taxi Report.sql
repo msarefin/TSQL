@@ -4,6 +4,7 @@
 select * from  TAXI.vTaxiWorksheet as vt order by vt.StartDate desc;
 
 --Monthly Report 
+go 
 
 select 
 COUNT(t.StartDate)'Days Worked', 
@@ -49,6 +50,8 @@ SUM(v.[Cash in Hand]) as 'Cash in Hand'
 from TAXI.vTaxiWorksheet as v where v.StartDate between @date and GETDATE())
 
 select * from cte_AmountOwed;
+go 
+
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ---------------------------------------------------------------
 --Yearly Income 
