@@ -48,9 +48,21 @@ foreign key (LeaseID)
 references TAXI.TaxiLease(ID)
 
 go 
+
+insert into TAXI.TaxiLease(ID, LeaseType, Sunday,Monday, Tuesday, Wednesday, Thursday,Friday,Saturday)
+values 
+(1,		'Day',			105,	105,	105,	105,	105,	105,	105),
+(2,		'Day Hybrid',	108,	108,	108,	108,	108,	108,	108),
+(3,		'Night',		115,	115,	115,	120,	129,	129,	129),
+(4,		'Night Hubrid',	118,	118,	115,	123,	132,	132,	132)
+
+go 
+insert into TAXI.ExtraExpense(ExpenseType,Amount)
+values
+('Credit Card',11),
+('Tax',	4.77)
+
+go 
 select * from TAXI.TaxiJournal;
 select * from TAXI.ExtraExpense
 select * from TAXI.TaxiLease
-
-
-
