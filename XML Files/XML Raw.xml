@@ -1,0 +1,14 @@
+﻿<!--
+select
+p.productid, 
+p.productname,
+p.unitprice,
+p.categoryid
+from Production.Products as p
+where p.productid <=2
+for xml raw
+;
+-->
+
+<row productid="1" productname="Product HHYDP" unitprice="18.0000" categoryid="1" />
+<row productid="2" productname="Product RECZE" unitprice="19.0000" categoryid="1" />

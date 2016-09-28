@@ -1,0 +1,26 @@
+﻿<!--
+select
+p.productid as [@productid], 
+p.productname as [ProductInfo/@productname],
+p.unitprice as [ProductInfo/unitprice], 
+p.categoryid [ProductInfo/categoryaid]
+from Production.Products as p
+where p.productid <=2
+for xml path ('Product'), root('Products')
+;
+-->
+
+<Products>
+  <Product productid="1">
+    <ProductInfo productname="Product HHYDP">
+      <unitprice>18.0000</unitprice>
+      <categoryaid>1</categoryaid>
+    </ProductInfo>
+  </Product>
+  <Product productid="2">
+    <ProductInfo productname="Product RECZE">
+      <unitprice>19.0000</unitprice>
+      <categoryaid>1</categoryaid>
+    </ProductInfo>
+  </Product>
+</Products>

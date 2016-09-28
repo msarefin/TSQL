@@ -1,0 +1,28 @@
+﻿<!--
+select
+p.productid as [@productid], Elements to Attributes
+p.productname as [ProductInfo/productname], Element hirerchy
+p.unitprice as [ProductInfo/unitprice], Element hirerchy
+p.categoryid [ProductInfo/categoryaid]  Element hirerchy
+from Production.Products as p
+where p.productid <=2
+for xml path ('Product'), root('Products')
+;
+-->
+
+<Products>
+  <Product productid="1">
+    <ProductInfo>
+      <productname>Product HHYDP</productname>
+      <unitprice>18.0000</unitprice>
+      <categoryaid>1</categoryaid>
+    </ProductInfo>
+  </Product>
+  <Product productid="2">
+    <ProductInfo>
+      <productname>Product RECZE</productname>
+      <unitprice>19.0000</unitprice>
+      <categoryaid>1</categoryaid>
+    </ProductInfo>
+  </Product>
+</Products>

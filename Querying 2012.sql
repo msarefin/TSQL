@@ -2279,3 +2279,50 @@ for xml auto, elements, root ('Products')
 
 ------------
 
+select p.productid, p.productname, p.unitprice, p.categoryid
+from Production.Products as p 
+where p.productid <=2
+for xml auto, elements, root('Products')
+;
+
+select
+p.productid as, 
+p.productname,
+p.unitprice,
+p.categoryid
+from Production.Products as p
+where p.productid <=2
+for xml raw ('Product'), elements, root ('Products')
+;
+
+select 
+p.productid as [@productid],
+p.productname,
+p.unitprice,
+p.categoryid 
+from Production.Products as p
+where p.productid<=2
+for xml path('Product'), root('products')
+;
+
+select
+p.productid as [@productid], 
+p.productname as [ProductInfo/@productname],
+p.unitprice as [ProductInfo/unitprice], 
+p.categoryid [ProductInfo/categoryaid]
+from Production.Products as p
+where p.productid <=2
+for xml path ('Product'), root('Products')
+;
+
+select  
+p.productid,
+p.productname, 
+p.unitprice, 
+p.categoryid
+from Production.Products  as p 
+where p.productid<=2
+;
+
+
+select * from Production.
