@@ -93,7 +93,6 @@ go
 
 select 
 v.Year,
---v.Months,
 v.DayOfWeek,
 AVG(v.Cash) as 'Avarage Cash',
 AVG(v.Credit) as 'Avarage Credit',
@@ -103,11 +102,11 @@ AVG(v.[Profit (Loss)]) as 'Average Profit/ Loss',
 AVG(v.[Cash in Hand]) as 'Average Cash in Hand'
 from taxi.vTaxiWorkSheet as v
 where v.Year  = 2016 --and v.[Month Number] = 1 and v.DayNumber = 1
-group by v.Year, 
+group by v.DayOfWeek, v.Year, 
 v.DayNumber,
 --v.Months,
 v.DayOfWeek
-order by [Average Profit/ Loss]--, v.Year, v.DayNumber ;
+order by v.DayOfWeek,[Average Profit/ Loss] desc;
 
 -- daily Average
 
@@ -117,6 +116,8 @@ AVG(v.Cash) 'Average cash', AVG(v.Credit) 'Aerage Credit', AVG(v.[Profit (Loss)]
 from taxi.vTaxiWorkSheet as v
 group by v.Year
 --
+---Current year Total
+
 
 select  
 SUM(v.Cash) as cash,
@@ -134,4 +135,36 @@ SUM(v.[Cash in Hand]) as 'Cash in Hand',
 SUM(v.[Cash Trips]) as 'Cash Trips',
 SUM(v.[Credit Trips]) as 'Credit Trips',
 SUM(v.[Total Trips]) as 'Total Trips'
-from TAXI.vTaxiWorksheet as v where v.Year = 2016
+from TAXI.vTaxiWorksheet as v where v.Year = YEAR(GETDATE())
+
+
+-------------------------------------No of days worked during the month of the current year and the total profit made each month-----------------------------------------------------------------
+
+use TaxiEarnings
+go 
+
+select 
+v.[Year],
+case v.[Month Number]
+when 1 then 'January'
+when 2 then 'February'
+when 3 then 'March'
+when 4 then 'April'
+when 5 then 'May'
+when 6 then 'June'
+when 7 then 'July'
+when 8 then 'August'
+when 9 then 'September'
+when 10 then 'October'
+when 11 then 'November'
+when 12 then 'December'
+end
+as Months,
+count(v.[Month Number]) as 'No. of days worked',
+SUM([Profit (Loss)]) as 'Total Profit'
+from TAXI.vTaxiWorkSheet as v where v.Year = YEAR(GETDATE())
+group by grouping sets  (v.[Month Number],v.Year)
+order by v.[Month Number] desc
+
+
+
