@@ -1,0 +1,24 @@
+﻿<!--
+select 
+p.productid as [@productid],  Element converted to attribute
+p.productname,
+p.unitprice,
+p.categoryid 
+from Production.Products as p
+where p.productid<=2
+for xml path('Product'), root('products')
+;
+-->
+
+<products>
+  <Product productid="1">
+    <productname>Product HHYDP</productname>
+    <unitprice>18.0000</unitprice>
+    <categoryid>1</categoryid>
+  </Product>
+  <Product productid="2">
+    <productname>Product RECZE</productname>
+    <unitprice>19.0000</unitprice>
+    <categoryid>1</categoryid>
+  </Product>
+</products>
