@@ -2325,4 +2325,28 @@ where p.productid<=2
 ;
 
 
-select * from Production.
+use AdventureWorks2008R2
+go 
+
+declare @xml xml 
+set @xml=
+(
+select 
+psc.ProductSubcategoryID as [@ProductSubcategoryID],
+psc.Name as [@Name],
+(
+	select 
+	p.ProductID,
+	p.Name,
+	p.ProductNumber,
+	p.ListPrice,
+	p.ModifiedDate
+	from Production.Product as p
+	where p.ProductSubcategoryID=psc.ProductSubcategoryID 
+	for xml path('Prodcut'), root('Products'), type
+)
+from Production.ProductSubcategory as psc
+for xml path ('subcategory'), root('subcategories')
+);
+
+select  @xml
