@@ -2343,10 +2343,13 @@ psc.Name as [@Name],
 	p.ModifiedDate
 	from Production.Product as p
 	where p.ProductSubcategoryID=psc.ProductSubcategoryID 
+	and p.ProductID <=2
 	for xml path('Prodcut'), root('Products'), type
 )
 from Production.ProductSubcategory as psc
+where psc.ProductSubcategoryID<=10
 for xml path ('subcategory'), root('subcategories')
 );
 
-select  @xml
+select  @xml as 'XML DATA'
+
