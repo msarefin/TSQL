@@ -2353,3 +2353,20 @@ for xml path ('subcategory'), root('subcategories')
 
 select  @xml as 'XML DATA'
 
+
+
+-------------------- XQuery Basics---------------------
+
+go
+
+declare @x as xml;
+set @x=N'
+<root>
+<a>1<c>3</c><d></d></a>
+<b>2</b>
+</root>
+';
+select 
+@x.query('*') as complete_Sequence,
+@x.query('data(*)')  as Complete_Data,
+@x.query('data(root/a/c)') as Element_c_Data;
