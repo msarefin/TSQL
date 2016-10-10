@@ -1,0 +1,32 @@
+﻿<!--
+use TSQL2012
+go 
+
+select p.productid, p.productname, p.unitprice, p.categoryid
+from Production.Products as p 
+where p.productid <=2
+for xml auto, root('PS');
+
+go 
+
+select p.productid, p.productname, p.unitprice, p.categoryid
+from Production.Products as p 
+where p.productid <=2
+for xml raw ('p'), root('PS');
+
+go 
+
+select 
+p.productid as [@productid], 
+p.productname as [@productname], 
+p.unitprice as [@unitprice], 
+p.categoryid as [@categoryid]
+from Production.Products as p 
+where p.productid <=2
+for xml path ('p'), root('PS');
+-->
+
+<PS>
+  <p productid="1" productname="Product HHYDP" unitprice="18.0000" categoryid="1" />
+  <p productid="2" productname="Product RECZE" unitprice="19.0000" categoryid="1" />
+</PS>
