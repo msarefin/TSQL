@@ -2370,3 +2370,30 @@ select
 @x.query('*') as complete_Sequence,
 @x.query('data(*)')  as Complete_Data,
 @x.query('data(root/a/c)') as Element_c_Data;
+
+
+use TSQL2012;
+go 
+
+select c.custid, c.companyname, 
+d.orderid, d.orderdate
+from sales.Customers as c inner join sales.Orders as d on c.custid = d.custid
+where c.custid<2 and d.orderid %2 =0
+order by c.custid
+for xml auto, elements, xmlschema('CustomerOrders') 
+-------------------------------------------------------------------
+
+go 
+
+
+declare @x xml;
+select @x=p
+from openrowset (bulk 'c:\users\sunsh\documents\sql server management studio\products.xml', single_blob) as Products(p)
+--select @x
+declare @hdoc int
+exec sp_xml_preparedocument @hdoc output, @x
+select * 
+from OPENXML (@hdoc,'/Subcategories/SubCategory',1)
+with (ProductSubcategoryID int, Name varchar(100))
+--order by  productsubcategoryid
+exec sp_xml_removedocument @hdoc;
