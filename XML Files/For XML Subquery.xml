@@ -1,0 +1,26 @@
+﻿<!--
+use AdventureWorks2008R2
+go
+select 
+	psc.ProductSubcategoryID as [@ProductSubcategoryID],
+	psc.Name as [@Name],
+		(select
+			p.ProductID, 
+			p.Name, 
+			p.ProductNumber,
+			p.ListPrice,
+			p.ModifiedDate 
+		from Production.Product as p
+		where p.ProductSubcategoryID=psc.ProductSubcategoryID
+		and p.ProductID<=2 
+		for xml path ('Product'), root ('Products'), type)
+from Production.ProductSubcategory as psc
+where psc.ProductSubcategoryID <=2
+for xml path ('SubCategory'), root ('Subcategories');
+
+-->
+
+<Subcategories>
+  <SubCategory ProductSubcategoryID="1" Name="Mountain Bikes" />
+  <SubCategory ProductSubcategoryID="2" Name="Road Bikes" />
+</Subcategories>
