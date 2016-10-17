@@ -1865,6 +1865,8 @@ for xml path ('Product'), root('PRODUCTS');
 select * from Production.Product
 select * from Production.ProductSubcategory
 
+use AdventureWorks2008R2
+go
 select 
 	psc.ProductSubcategoryID as [@ProductSubcategoryID],
 	psc.Name as [@Name],
@@ -1876,8 +1878,10 @@ select
 			p.ModifiedDate 
 		from Production.Product as p
 		where p.ProductSubcategoryID=psc.ProductSubcategoryID
+		and p.ProductID<=2 
 		for xml path ('Product'), root ('Products'), type)
 from Production.ProductSubcategory as psc
+where psc.ProductSubcategoryID <=2
 for xml path ('SubCategory'), root ('Subcategories');
 
 
@@ -2004,7 +2008,7 @@ for xml auto, elements, root('CustomerOrders')
 select c.custid, c.companyname, 
 d.orderid, d.orderdate
 from sales.Customers as c inner join sales.Orders as d on c.custid = d.custid
-where c.custid<2 and d.orderid %2 =0
+where c.custid<=1 and d.orderid %2 =0
 order by c.custid
 for xml auto, elements, xmlschema('CustomerOrders') 
 
@@ -2397,3 +2401,5 @@ from OPENXML (@hdoc,'/Subcategories/SubCategory',1)
 with (ProductSubcategoryID int, Name varchar(100))
 --order by  productsubcategoryid
 exec sp_xml_removedocument @hdoc;
+
+
