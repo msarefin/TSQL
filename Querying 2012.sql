@@ -2288,9 +2288,11 @@ from Production.Products as p
 where p.productid <=2
 for xml auto, elements, root('Products')
 ;
+use TSQL2012
+go 
 
 select
-p.productid as, 
+p.productid, 
 p.productname,
 p.unitprice,
 p.categoryid
@@ -2366,8 +2368,11 @@ go
 declare @x as xml;
 set @x=N'
 <root>
-<a>1<c>3</c><d></d></a>
-<b>2</b>
+	<a>1
+		<c>3</c>
+		<d></d>
+	</a>
+	<b>2</b>
 </root>
 ';
 select 
@@ -2389,7 +2394,8 @@ for xml auto, elements, xmlschema('CustomerOrders')
 
 go 
 
-
+use AdventureWorks2008R2
+go 
 declare @x xml;
 select @x=p
 from openrowset (bulk 'c:\users\sunsh\documents\sql server management studio\products.xml', single_blob) as Products(p)
