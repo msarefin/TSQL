@@ -2409,3 +2409,65 @@ with (ProductSubcategoryID int, Name varchar(100))
 exec sp_xml_removedocument @hdoc;
 
 
+use AdventureWorks2008R2
+go
+select 
+	psc.ProductSubcategoryID as [@ProductSubcategoryID],
+	psc.Name as [@Name],
+		(select
+			p.ProductID, 
+			p.Name, 
+			p.ProductNumber,
+			p.ListPrice,
+			p.ModifiedDate 
+		from Production.Product as p
+		where p.ProductSubcategoryID=psc.ProductSubcategoryID
+		and p.ProductID<=2 
+		for xml path ('Product'), root ('Products'), type)
+from Production.ProductSubcategory as psc
+where psc.ProductSubcategoryID <=2
+for xml path ('SubCategory'), root ('Subcategories');
+
+
+declare @Dochandle as int;
+Declare @XMLDocument as Nvarchar(1000);
+set @XMLDocument = N'
+<CustomersOrders>
+  <Customer custid="1">
+    <companyname>Customer NRZBB</companyname>
+    <Order orderid="10692">
+      <orderdate>2007-10-03T00:00:00</orderdate>
+    </Order>
+    <Order orderid="10702">
+      <orderdate>2007-10-13T00:00:00</orderdate>
+    </Order>
+    <Order orderid="10952">
+      <orderdate>2008-03-16T00:00:00</orderdate>
+    </Order>
+  </Customer>
+  <Customer custid="2">
+    <companyname>Customer MLTDN</companyname>
+    <Order orderid="10308">
+      <orderdate>2006-09-18T00:00:00</orderdate>
+    </Order>
+    <Order orderid="10926">
+      <orderdate>2008-03-04T00:00:00</orderdate>
+    </Order>
+  </Customer>
+</CustomersOrders>
+'
+;
+
+exec sys.sp_xml_preparedocument @Dochandle  output, @XMLDocument;
+-- Attribute centric Mapping 
+select * from openxml(@Dochandle,'/CustomersOrder/Customer',1)
+with(custid int, comopanyname varchar(40));
+-- Element centrice Mapping
+select * from openxml(@Dochandle, '/CustomerOrder/Customer',2)
+with(cust int, companyname varchar(40));
+-- Attribute and Element centric 
+select * from openxml(@Dochandle, '/CustomerOrder/Customer',11)
+with(custid int, compnayname varchar(40));
+
+exec sys.sp_xml_removedocument @Dochandle
+;
