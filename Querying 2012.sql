@@ -2471,3 +2471,60 @@ with(custid int, compnayname varchar(40));
 
 exec sys.sp_xml_removedocument @Dochandle
 ;
+
+
+use TSQL2012;
+go 
+with xmlnamespaces('TK461-CustomerOrders' as co)
+select 
+	[co:Customer].custid, 
+	[co:Customer].companyname, 
+	[co:Orders].orderid, 
+	[co:Orders].orderdate
+from 
+	sales.customers as [co:Customer] 
+	inner join 
+	sales.Orders as [co:Orders]
+on [co:Customer].custid=[co:Orders].custid 
+where	[co:Customer].custid<=2
+and		[co:Orders].orderid %2 = 0
+order by [co:Customer].custid, [co:Orders].orderid
+for xml auto, elements, root('CustomersOrders')
+;
+
+use TSQL2012;
+go 
+declare @Dochandle as int;
+declare @xmldoc	 as nvarchar(1000);
+set @xmldoc = 
+N'
+<CustomerOrders>
+	<Customer custid = "1">
+	<companyname>Customer NRZBB</companyname>
+	<Order orderid = "10692">
+		<orderdate>2007-10-03T00:00:00</orderdate>
+	</Order>
+	<Order orderid ="10702">
+		<orderdate>2007-10-13t00:00:00</orderdate>	
+	</Order>
+	<Order orderid="10592">
+		<orderdate>2008-03-16T00:00:00</orderdate>
+	</Order>
+	</Customer>
+
+	<Customer custid = "2">
+	<companyname>Customer MLTDN</companyname>
+	<Order orderid = "10308">
+		<orderdate>2006-09-18T00:00:00</orderdate>
+	</Order>
+	<Order orderid ="10926">aa
+		<orderdate>2008-03-04T00:00:00</orderdate>	
+	</Order>
+	</Customer>
+</CustomerOrders>
+'
+
+exec sys.sp_xml_preparedocument @DocHandle output, @xmldoc;
+select * from openxml(@DocHandle, '/CustomersOrders/Customer',1)
+with (custid int, campanyname nvarchar(40));
+exec sys.sp_xml_removedocument @DocHandle
