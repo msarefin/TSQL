@@ -2528,3 +2528,51 @@ exec sys.sp_xml_preparedocument @DocHandle output, @xmldoc;
 select * from openxml(@DocHandle, '/CustomersOrders/Customer',1)
 with (custid int, campanyname nvarchar(40));
 exec sys.sp_xml_removedocument @DocHandle
+
+---------------------------------------------------------------------
+
+go 
+use TSQL2012
+go 
+
+DECLARE @x AS XML;
+SET @x='
+<CustomersOrders xmlns:co="TK461-CustomersOrders">
+<co:Customer co:custid="1" co:companyname="Customer NRZBB">
+<co:Order co:orderid="10692" co:orderdate="2007-10-03T00:00:00" />
+<co:Order co:orderid="10702" co:orderdate="2007-10-13T00:00:00" />
+<co:Order co:orderid="10952" co:orderdate="2008-03-16T00:00:00" />
+</co:Customer>
+<co:Customer co:custid="2" co:companyname="Customer MLTDN">
+<co:Order co:orderid="10308" co:orderdate="2006-09-18T00:00:00" />
+<co:Order co:orderid="10926" co:orderdate="2008-03-04T00:00:00" />
+</co:Customer>
+</CustomersOrders>';
+-- Namespace in prolog of XQuery
+SELECT @x.query('
+(: explicit namespace :)
+declare namespace co="TK461-CustomersOrders";
+//co:Customer[1]/*') AS [Explicit namespace];
+-- Default namespace for all elements in prolog of XQuery
+SELECT @x.query('
+(: default namespace :)
+declare default element namespace "TK461-CustomersOrders";
+//Customer[1]/*') AS [Default element namespace];
+-- Namespace defined in WITH clause of T-SQL SELECT
+WITH XMLNAMESPACES('TK461-CustomersOrders' AS co)
+SELECT @x.query('
+(: namespace declared in T-SQL :)
+//co:Customer[1]/*') AS [Namespace in WITH clause];
+
+------------------------------------------
+go
+DECLARE @x AS XML;
+SET @x=N'
+<root>
+<a>1<c>3</c><d>4</d></a>
+<b>2</b>
+</root>';
+SELECT
+@x.query('*') AS Complete_Sequence,
+@x.query('data(*)') AS Complete_Data,
+@x.query('data(root/a/c)') AS Element_c_Data;
