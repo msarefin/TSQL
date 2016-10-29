@@ -2458,7 +2458,7 @@ set @XMLDocument = N'
 </CustomersOrders>
 '
 ;
-select @XMLDocument;
+--select @XMLDocument;
 
 exec sys.sp_xml_preparedocument @Dochandle  output, @XMLDocument;
 -- Attribute centric Mapping 
