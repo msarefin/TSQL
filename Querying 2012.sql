@@ -2428,6 +2428,7 @@ from Production.ProductSubcategory as psc
 where psc.ProductSubcategoryID <=2
 for xml path ('SubCategory'), root ('Subcategories');
 
+go 
 
 declare @Dochandle as int;
 Declare @XMLDocument as Nvarchar(1000);
@@ -2457,6 +2458,7 @@ set @XMLDocument = N'
 </CustomersOrders>
 '
 ;
+select @XMLDocument;
 
 exec sys.sp_xml_preparedocument @Dochandle  output, @XMLDocument;
 -- Attribute centric Mapping 
