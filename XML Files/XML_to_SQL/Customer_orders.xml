@@ -1,0 +1,26 @@
+﻿<!--
+select c.custid as [@custid],
+c.companyname, 
+d.orderid as [Order/@orderid], 
+d.orderdate as [Order/orderdate]
+from Sales.Customers as c inner join sales.Orders as d on c.custid=d.custid
+where c.custid <=2
+order by c.custid
+offset 0 rows fetch next 2 rows only
+for xml path('Customer'), root('CustomerOrders')
+-->
+
+<CustomerOrders>
+  <Customer custid="1">
+    <companyname>Customer NRZBB</companyname>
+    <Order orderid="10643">
+      <orderdate>2007-08-25T00:00:00</orderdate>
+    </Order>
+  </Customer>
+  <Customer custid="1">
+    <companyname>Customer NRZBB</companyname>
+    <Order orderid="10692">
+      <orderdate>2007-10-03T00:00:00</orderdate>
+    </Order>
+  </Customer>
+</CustomerOrders>
