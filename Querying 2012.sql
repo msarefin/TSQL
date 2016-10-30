@@ -2455,20 +2455,17 @@ set @XMLDocument = N'
       <orderdate>2008-03-04T00:00:00</orderdate>
     </Order>
   </Customer>
-</CustomersOrders>
-'
-;
---select @XMLDocument;
+</CustomersOrders>';
 
 exec sys.sp_xml_preparedocument @Dochandle  output, @XMLDocument;
 -- Attribute centric Mapping 
-select * from openxml(@Dochandle,'/CustomersOrder/Customer',1)
+select * from openxml(@Dochandle,'/CustomersOrders/Customer',1)
 with(custid int, comopanyname varchar(40));
 -- Element centrice Mapping
-select * from openxml(@Dochandle, '/CustomerOrder/Customer',2)
+select * from openxml(@Dochandle, '/CustomersOrders/Customer',2)
 with(cust int, companyname varchar(40));
 -- Attribute and Element centric 
-select * from openxml(@Dochandle, '/CustomerOrder/Customer',11)
+select * from openxml(@Dochandle, '/CustomersOrders/Customer',11)
 with(custid int, compnayname varchar(40));
 
 exec sys.sp_xml_removedocument @Dochandle
@@ -2578,3 +2575,25 @@ SELECT
 @x.query('*') AS Complete_Sequence,
 @x.query('data(*)') AS Complete_Data,
 @x.query('data(root/a/c)') AS Element_c_Data;
+
+
+go 
+
+use TSQL2012;
+go 
+declare @dochandle as int;
+declare @xmlDoc as varchar(1000);
+set @xmlDoc = (
+
+select c.custid as [@custid],
+c.companyname, 
+d.orderid as [Order/@orderid], 
+d.orderdate as [Order/orderdate]
+from Sales.Customers as c inner join sales.Orders as d on c.custid=d.custid
+where c.custid <=2
+order by c.custid
+offset 0 rows fetch next 2 rows only
+for xml path('Customer'), root('CustomerOrders')
+);
+
+exec sys.sp_xml_preparedocument @dochandle output, @xmlDoc
