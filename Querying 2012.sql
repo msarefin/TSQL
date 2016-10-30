@@ -2634,7 +2634,7 @@ go
 
 -----
 
-use AdventureWorks2012;
+use AdventureWorks2008R2;
 
 go 
 
@@ -2652,8 +2652,10 @@ from Production.Product as p
 
 go
 
+use AdventureWorks2008R2
+go 
 select 
-psc.ProductCategoryID, psc.Name, 
+psc.ProductCategoryID as  [@ProductCategoryID], psc.Name as [@Name], 
 (select 
 p.ProductID,
 p.Name, 
