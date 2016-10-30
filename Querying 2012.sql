@@ -2632,3 +2632,55 @@ exec sys.sp_xml_removedocument @doch
 
 go 
 
+-----
+
+use AdventureWorks2012;
+
+go 
+
+select * from Production.Product
+select * from Production.ProductSubcategory
+
+
+select 
+p.ProductID,
+p.Name, 
+p.ProductNumber,
+p.ListPrice, 
+p.ModifiedDate
+from Production.Product as p 
+
+go
+
+select 
+psc.ProductCategoryID, psc.Name, 
+(select 
+p.ProductID,
+p.Name, 
+p.ProductNumber,
+p.ListPrice, 
+p.ModifiedDate
+from Production.Product as p 
+where p.ProductSubcategoryID= psc.ProductSubcategoryID 
+for xml path ('Product'), root('Products'), type)
+from Production.ProductSubcategory as psc
+for xml path ('Subcategory'), root('Subcategories');
+
+
+----------------- Loading XML documents to SQL server -----------------
+declare @x as xml
+
+select @x=p from openrowset (bulk 'C:\Users\sun\Documents\SQL\SQL Practice and class\XML Files\XML_to_SQL\products.xml', single_blob) as products(p)
+
+select @x
+
+declare @dochandle as int 
+
+exec sp_xml_preparedocument @dochandle output, @x
+
+select * from openxml(@dochandle, 'Subcategories/Subcategory',11) with (ProductCategoryID	  int , Name varchar(30))
+select * from openxml(@dochandle, 'Subcategories/Subcategory/Products/Product',11) with (ProductID  int , Name varchar(30), ProductNumber varchar(100), ListPrice float, ModifiedDate datetime)
+select * from openxml(@dochandle, 'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID	  int  '../../@ProducrSubcategoryId', 
+productSubcategoryName varchar(30) '../../@Name',ProductID  int , Name varchar(30), ProductNumber varchar(100), ListPrice float, ModifiedDate datetime)
+
+exec sp_xml_removedocument @dochandle;
