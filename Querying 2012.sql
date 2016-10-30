@@ -2596,4 +2596,32 @@ offset 0 rows fetch next 2 rows only
 for xml path('Customer'), root('CustomerOrders')
 );
 
-exec sys.sp_xml_preparedocument @dochandle output, @xmlDoc
+exec sys.sp_xml_preparedocument @dochandle output, @xmlDoc;
+select * from openxml(@Dochandle, 'CustomerOrders/Customer',11) with (custid int, companyname varchar(100))
+
+exec sys.sp_xml_removedocument @dochandle;
+
+
+go 
+declare	@doch as int;
+declare @xmlD as varchar(1000);
+
+set @xmlD = N'
+<CustomerOrders>
+  <Customer custid="1">
+    <companyname>Customer NRZBB</companyname>
+    <Order orderid="10643">
+      <orderdate>2007-08-25T00:00:00</orderdate>
+    </Order>
+  </Customer>
+  <Customer custid="1">
+    <companyname>Customer NRZBB</companyname>
+    <Order orderid="10692">
+      <orderdate>2007-10-03T00:00:00</orderdate>
+    </Order>
+  </Customer>
+</CustomerOrders>
+';
+exec sys.sp_xml_preparedocument @doch output, @xmlD;
+select * from openxml(@doch, 'CustomerOrders/Customer', 2) with (custid int, companyname varchar(30))
+exec sys.sp_xml_removedocument @doch;
