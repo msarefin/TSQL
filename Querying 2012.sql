@@ -2625,3 +2625,10 @@ set @xmlD = N'
 exec sys.sp_xml_preparedocument @doch output, @xmlD;
 select * from openxml(@doch, 'CustomerOrders/Customer', 2) with (custid int, companyname varchar(30))
 exec sys.sp_xml_removedocument @doch;
+
+exec sys.sp_xml_preparedocument @doch output, @xmld;
+select * from openxml(@doch,'CustomerOrders/Customer',11) with (custid int, companyname varchar(30));
+exec sys.sp_xml_removedocument @doch
+
+go 
+
