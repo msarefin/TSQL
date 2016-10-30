@@ -2686,3 +2686,31 @@ select * from openxml(@dochandle, 'Subcategories/Subcategory/Products/Product',1
 productSubcategoryName varchar(30) '../../@Name',ProductID  int , Name varchar(30), ProductNumber varchar(100), ListPrice float, ModifiedDate datetime)
 
 exec sp_xml_removedocument @dochandle;
+go 
+
+use AdventureWorks2008R2
+go 
+declare @xml as xml 
+set @xml = 
+(
+select 
+psc.ProductCategoryID as  [@ProductCategoryID], psc.Name as [@Name], 
+(select 
+p.ProductID,
+p.Name, 
+p.ProductNumber,
+p.ListPrice, 
+p.ModifiedDate
+from Production.Product as p 
+where p.ProductSubcategoryID= psc.ProductSubcategoryID 
+for xml path ('Product'), root('Products'), type)
+from Production.ProductSubcategory as psc
+for xml path ('Subcategory'), root('Subcategories')
+);
+
+select @xml as XML_File ;
+declare @docHandle as int 
+
+exec sys.sp_xml_preparedocument @dochandle output, @xml;
+select * from openxml(@dochandle,'Subcategories/Subcategory', 2)
+exec sys.sp_xml_removedocument @dochandle;
