@@ -2690,27 +2690,27 @@ go
 
 use AdventureWorks2008R2
 go 
-declare @xml as xml 
-set @xml = 
-(
-select 
-psc.ProductCategoryID as  [@ProductCategoryID], psc.Name as [@Name], 
-(select 
-p.ProductID,
-p.Name, 
-p.ProductNumber,
-p.ListPrice, 
-p.ModifiedDate
-from Production.Product as p 
-where p.ProductSubcategoryID= psc.ProductSubcategoryID 
-for xml path ('Product'), root('Products'), type)
-from Production.ProductSubcategory as psc
-for xml path ('Subcategory'), root('Subcategories')
-);
+		declare @xml as xml 
+		set @xml = 
+		(
+		select 
+		psc.ProductCategoryID as  [@ProductCategoryID], psc.Name as [@Name], 
+		(select 
+		p.ProductID,
+		p.Name, 
+		p.ProductNumber,
+		p.ListPrice, 
+		p.ModifiedDate
+		from Production.Product as p 
+		where p.ProductSubcategoryID= psc.ProductSubcategoryID 
+		for xml path ('Product'), root('Products'), type)
+		from Production.ProductSubcategory as psc
+		for xml path ('Subcategory'), root('Subcategories')
+		);
 
-select @xml as XML_File ;
-declare @docHandle as int 
+		select @xml as XML_File ;
+		declare @docHandle as int 
 
-exec sys.sp_xml_preparedocument @dochandle output, @xml;
-select * from openxml(@dochandle,'Subcategories/Subcategory', 2)
-exec sys.sp_xml_removedocument @dochandle;
+		exec sys.sp_xml_preparedocument @dochandle output, @xml;
+		select * from openxml(@dochandle,'Subcategories/Subcategory', 1) with (ProductCategoryID int, Name varchar(100))
+		exec sys.sp_xml_removedocument @dochandle;
