@@ -2721,3 +2721,28 @@ exec sys.sp_xml_removedocument @dochandle;
 
 -------------------------
 
+go 
+use AdventureWorks2008R2
+go 
+
+declare @xml as xml;
+set @xml = (
+select 
+psc.ProductCategoryID as  [@ProductCategoryID], psc.Name as [@Name], 
+(select 
+p.ProductID,
+p.Name, 
+p.ProductNumber,
+p.ListPrice, 
+p.ModifiedDate
+from Production.Product as p 
+where p.ProductSubcategoryID= psc.ProductSubcategoryID 
+for xml path ('Product'), root('Products'), type)
+from Production.ProductSubcategory as psc
+for xml path ('Subcategory'), root('Subcategories')
+)
+
+declare @doch as int;
+exec sys.sp_xml_preparedocument @doch output, @xml
+select * from openxml(@doch,'Subquery')
+exec sys.sp_xml_removedocument @doch
