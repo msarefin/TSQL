@@ -2727,6 +2727,7 @@ go
 
 declare @xml as xml;
 set @xml = (
+
 select 
 psc.ProductCategoryID as  [@ProductCategoryID], psc.Name as [@Name], 
 (select 
@@ -2740,11 +2741,13 @@ where p.ProductSubcategoryID= psc.ProductSubcategoryID
 for xml path ('Product'), root('Products'), type)
 from Production.ProductSubcategory as psc
 for xml path ('Subcategory'), root('Subcategories')
+
 )
 
 declare @doch as int;
 exec sys.sp_xml_preparedocument @doch output, @xml
-select * from openxml(@doch,'Subcategories/Subcategory/Products/Product', 11) with (ProductCategoryID int, CategoryName varchar(40),ProductID int, Name varchar(40), ProductNumber varchar(40), ListPrice float, ModifiedDate datetime);
+--select * from openxml(@doch,'Subcategories/Subcategory', 1) with (ProductCategoryID int, CategoryName varchar(40),ProductID int, Name varchar(40), ProductNumber varchar(40), ListPrice float, ModifiedDate datetime);
+select * from openxml(@doch,'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID int '../../@ProductCategoryID', SubcategoryName varchar(100) '../../@Name',ProductID int, Name varchar(40),ProductNumber varchar(40), ListPrice float, ModifiedDate datetime)
 exec sys.sp_xml_removedocument @doch
 
 -------------
