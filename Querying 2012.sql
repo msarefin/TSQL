@@ -2746,8 +2746,53 @@ for xml path ('Subcategory'), root('Subcategories')
 
 declare @doch as int;
 exec sys.sp_xml_preparedocument @doch output, @xml
+select @doch 'Document handle number'
 --select * from openxml(@doch,'Subcategories/Subcategory', 1) with (ProductCategoryID int, CategoryName varchar(40),ProductID int, Name varchar(40), ProductNumber varchar(40), ListPrice float, ModifiedDate datetime);
-select * from openxml(@doch,'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID int '../../@ProductCategoryID', SubcategoryName varchar(100) '../../@Name',ProductID int, Name varchar(40),ProductNumber varchar(40), ListPrice float, ModifiedDate datetime)
+--select * from openxml(@doch,'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID int '../../@ProductCategoryID', SubcategoryName varchar(100) '../../@Name',ProductID int, Name varchar(40),ProductNumber varchar(40), ListPrice float, ModifiedDate datetime)
 exec sys.sp_xml_removedocument @doch
 
 -------------
+
+--
+
+go 
+
+declare @x as xml 
+set @x = '
+<Orders>
+	<Order OrderID="100" OrderDate="1/30/2012">
+		<OrderDetails ProductID="1" Quantity="3">
+			<Price>350</Price>
+		</OrderDetails>
+		<OrderDetails ProductID="2" Quantity="8">
+			<Price>500</Price>
+		</OrderDetails>
+		<OrderDetails ProductID="3" Quantity="10">
+			<Price>700</Price>
+		</OrderDetails>
+	</Order>
+	<Order OrderID="200" OrderDate="2/15/2012">
+		<OrderDetails ProductID="4" Quantity="5">
+			<Price>120</Price>
+		</OrderDetails>
+	</Order>
+</Orders>
+'
+select @x.query('/') as 'XQuery', 'Entire Document' as Details
+union all
+select @x.query('/Orders') as 'XQuery', 'Entire Document' as Details
+union all
+select @x.query('/Orders/Order/OrderDetails') as 'XQuery', 'OrderDetails Fragments' as Details
+union all 
+select @x.query('/Orders/Order/OrderDetails[2]') as 'XQuery', 'OrderDetails Fragments at the second position' as Details
+union all 
+select @x.query('/Orders/Order/OrderDetails[@ProductID="3"]') as 'XQuery', 'OrderDetails Fragments where productID = 3' as Details
+union all 
+select @x.query('/Orders/Order[@OrderID="100"]') as 'XQuery', 'Orders Where OrderID = 100' as Details
+union all 
+select @x.query('/Orders/Order[@OrderID="100"]/OrderDetails[Price>600]') as 'XQuery', 'Orders Where OrderID = 100 and price is greater than 600' as Details
+
+
+select @x.value('/Orders[1]/Order[@OrderID="100"][1]/OrderDetails[Price>600][1]', 'float') as XValue
+ 
+select @x.value('/Orders[1]/Order[@OrderID="200"][1]/@OrderDate', 'Datetime') as XValue

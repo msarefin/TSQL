@@ -1,0 +1,18 @@
+<Orders>
+	<Order OrderID="100" OrderDate="1/30/2012">
+		<OrderDetails ProductID="1" Quantity="3">
+			<Price>350</Price>
+		</OrderDetails>
+		<OrderDetails ProductID="2" Quantity="8">
+			<Price>500</Price>
+		</OrderDetails>
+		<OrderDetails ProductID="3" Quantity="10">
+			<Price>700</Price>
+		</OrderDetails>
+	</Order>
+	<Order OrderID="200" OrderDate="2/15/2012">
+		<OrderDetails ProductID="4" Quantity="5">
+			<Price>120</Price>
+		</OrderDetails>
+	</Order>
+</Orders>
