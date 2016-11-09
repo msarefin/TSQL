@@ -2778,6 +2778,8 @@ set @x = '
 	</Order>
 </Orders>
 '
+select @x.query('*') as 'XQuery', 'Entire Document' as Details
+union all
 select @x.query('/') as 'XQuery', 'Entire Document' as Details
 union all
 select @x.query('/Orders') as 'XQuery', 'Entire Document' as Details
@@ -2791,8 +2793,9 @@ union all
 select @x.query('/Orders/Order[@OrderID="100"]') as 'XQuery', 'Orders Where OrderID = 100' as Details
 union all 
 select @x.query('/Orders/Order[@OrderID="100"]/OrderDetails[Price>600]') as 'XQuery', 'Orders Where OrderID = 100 and price is greater than 600' as Details
-
-
+--===========================================================================================================================================================--
 select @x.value('/Orders[1]/Order[@OrderID="100"][1]/OrderDetails[Price>600][1]', 'float') as XValue
- 
+--===========================================================================================================================================================--
 select @x.value('/Orders[1]/Order[@OrderID="200"][1]/@OrderDate', 'Datetime') as XValue
+--===========================================================================================================================================================--
+
