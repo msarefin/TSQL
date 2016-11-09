@@ -2799,3 +2799,13 @@ select @x.value('/Orders[1]/Order[@OrderID="100"][1]/OrderDetails[Price>600][1]'
 select @x.value('/Orders[1]/Order[@OrderID="200"][1]/@OrderDate', 'Datetime') as XValue
 --===========================================================================================================================================================--
 
+
+go 
+
+declare @x as xml =N'';
+select @x.query('(1,2,3)=(2,4)');	--True
+select @x.query('(5,6)<(2,4)');
+select @x.query('(1,2,3)=1');
+select @x.query('(1,2,3)!=1');
+
+
