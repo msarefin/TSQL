@@ -2808,4 +2808,24 @@ select @x.query('(5,6)<(2,4)');
 select @x.query('(1,2,3)=1');
 select @x.query('(1,2,3)!=1');
 
+go 
 
+--	General	*	Value *	Description
+--================================
+--		=		eq		Equal
+--		!=		ne		not equal 
+--		<		lt		less than 
+--		<=		le		less than or equal to 
+--		>		gt		greater than 
+--		>=		ge		greater than or equal to
+
+
+declare @x as xml = N'';
+select @x.query('(5) lt (2)');
+select @x.query('(1) eq 1');
+select @x.query('(1) ne 1');
+go 
+
+declare @x as xml = N'';
+select @x.query('(2,2) eq (2,2)');
+go 
