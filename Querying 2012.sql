@@ -2829,3 +2829,69 @@ go
 declare @x as xml = N'';
 select @x.query('(2,2) eq (2,2)');
 go 
+
+--Conditionla expression 
+
+declare @x as xml = N'
+<Employee empid = "2">
+	<FirstName>fname</FirstName>
+	<LastName>lname</LastName>
+</Employee>
+'
+;
+
+declare @v as nvarchar(20) = N'FirstName';
+select @x.query('
+if(sql:variable("@v")= "FirstName") then 
+/Employee/FirstName
+else 
+/Employee/LastName
+') as FirstOrLastName;
+go 
+
+--FLWOR Expression 
+
+--For 
+--let 
+--where 
+--orderby 
+--return 
+go 
+
+
+declare @x as xml;
+set @x = N'
+<CustomersOrders>
+  <Customer custid="1">
+    <!-- Comment 111 -->
+    <companyname>Customer NRZBB</companyname>
+    <Order orderid="10692">
+      <orderdate>2007-10-03T00:00:00</orderdate>
+    </Order>
+    <Order orderid="10702">
+      <orderdate>2007-10-13T00:00:00</orderdate>
+    </Order>
+    <Order orderid="10952">
+      <orderdate>2008-03-16T00:00:00</orderdate>
+    </Order>
+  </Customer>
+  <Customer custid="2">
+    <!-- Comment 222 -->  
+    <companyname>Customer MLTDN</companyname>
+    <Order orderid="10308">
+      <orderdate>2006-09-18T00:00:00</orderdate>
+    </Order>
+    <Order orderid="10952">
+      <orderdate>2008-03-04T00:00:00</orderdate>
+    </Order>
+  </Customer>
+</CustomersOrders>';
+select @x.query('for $i in CustomersOrders/Customer/Order
+let $j :=$i/orderdate
+where $i/@orderid < 10900
+order by ($j)[1]
+return 
+<Order-orderid-element><orderid>{data($i/@orderid)}</orderid>
+{$j}
+</Order-orderid-element>')
+as [Filtered, sorted and refprmatted orders with let clause];
