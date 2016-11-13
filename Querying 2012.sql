@@ -2896,5 +2896,83 @@ return
 </Order-orderid-element>')
 as [Filtered, sorted and refprmatted orders with let clause];
 
--- This is to test the Git and github.com 
+--Exercise 
+go
+declare @x as xml 
+set @x = N'
+<CustomerOrders>
+	<Customer custid = "1">
+		<!--Comment 111-->
+		<companyname>Customer NRZBB</companyname>
+		<Order orderid ="10692">
+			<orderdate>2007-10-03T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10702">
+			<orderdate>2007-10-13T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10952">
+			<orderdate>2008-03-16T00:00:00</orderdate>
+		</Order>
+	</Customer>
+	<Customer custid = "2">
+		<!--Comment 222-->
+		<companyname>Customer MLTDN</companyname>
+		<Order orderid ="10308">
+			<orderdate>2006-09-18T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10952">
+			<orderdate>2008-03-04T00:00:00</orderdate>
+		</Order>
+	</Customer>
+</CustomerOrders>
+'
+;
 
+--Principal node 
+select @x.query('CustomerOrders/Customer/*') as 'Output', '1. Principal nodes' as 'Node Type'
+union all
+select @x.query('CustomerOrders/Customer/node()') as 'Output', '2. All nodes' as 'Node Type'
+union all 
+select @x.query('CustomerOrders/Customer/comment()')  as 'Output', '3. Comment nodes' as 'Node Type';
+
+
+
+--Xpath expression with predicates 
+
+go 
+
+declare @x as xml 
+set @x = N'
+<CustomersOrders>
+  <Customer custid="1">
+    <!-- Comment 111 -->
+    <companyname>Customer NRZBB</companyname>
+    <Order orderid="10692">
+      <orderdate>2007-10-03T00:00:00</orderdate>
+    </Order>
+    <Order orderid="10702">
+      <orderdate>2007-10-13T00:00:00</orderdate>
+    </Order>
+    <Order orderid="10952">
+      <orderdate>2008-03-16T00:00:00</orderdate>
+    </Order>
+  </Customer>
+  <Customer custid="2">
+    <!-- Comment 222 -->
+    <companyname>Customer MLTDN</companyname>
+    <Order orderid="10308">
+      <orderdate>2006-09-18T00:00:00</orderdate>
+    </Order>
+    <Order orderid="10952">
+      <orderdate>2008-03-04T00:00:00</orderdate>
+    </Order>
+  </Customer>
+</CustomersOrders>
+'
+;
+
+select @x.query('//Customer[@custid =2]/Order') as [4 Customer 2 orders]
+
+select @x.query('//Order[@orderid=10952]') as [5. orders with orderid=10952]
+
+select @x.query('(/CustomerOrders/Customer/Order/parent::Cstomer)[2]') as [6. 2nd Customer with at least one Order]
