@@ -9,7 +9,7 @@ select
 			p.Name, 
 			p.ProductNumber,
 			p.ListPrice,
-			p.ModifiedDate 
+			p.ModifiedDate `
 		from Production.Product as p
 		where p.ProductSubcategoryID=psc.ProductSubcategoryID
 		and p.ProductID<=2 
