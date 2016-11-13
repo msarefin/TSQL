@@ -2975,4 +2975,6 @@ select @x.query('//Customer[@custid =2]/Order') as [4 Customer 2 orders]
 
 select @x.query('//Order[@orderid=10952]') as [5. orders with orderid=10952]
 
-select @x.query('(/CustomerOrders/Customer/Order/parent::Cstomer)[2]') as [6. 2nd Customer with at least one Order]
+select @x.query('(/CustomersOrders/Customer/Order/parent::Customer)[2]') as [6. 2nd Customer with at least one Order]
+
+
