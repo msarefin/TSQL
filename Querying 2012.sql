@@ -2977,4 +2977,12 @@ select @x.query('//Order[@orderid=10952]') as [5. orders with orderid=10952]
 
 select @x.query('(/CustomersOrders/Customer/Order/parent::Customer)[2]') as [6. 2nd Customer with at least one Order]
 
+go 
+use TSQL2012
+go 
 
+Select c.country as [CustomerDetails/@country],c.companyname as [CustomerDetails/companyname], c.contacttitle as [CustomerDetails/contacttitle],c.contactname as [CustomerDetails/contactname], c.address as [CustomerDetails/address], c.city as [CustomerDetails/city]
+from Sales.Customers as c
+where c.country = 'USA'
+order by c.companyname
+for xml path ('Customer') ,root('Customers');
