@@ -201,7 +201,7 @@ from hr.Employees
 
 select empid, country, region, city, 
 concat(country+N','+city+N','+region) as location
-from hr.Employees
+from hr.Employees;
 
 --substring 
 
