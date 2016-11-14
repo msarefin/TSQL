@@ -1,5 +1,6 @@
 ﻿
-<!--go
+<!--
+go
 declare @x as xml 
 set @x = N'
 <CustomerOrders>
@@ -30,9 +31,10 @@ set @x = N'
 '
 ;
 
---Principal node
+"--"Principal node
 
-select @x.query('CustomerOrders/Customer/*') as [1. Principal node];-->
+select @x.query('CustomerOrders/Customer/*') as [1. Principal node];
+-->
 
 
 <companyname>Customer NRZBB</companyname>
