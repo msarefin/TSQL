@@ -3062,3 +3062,5 @@ go
 alter table production.products
 alter column additionalattributes
 xml(dbo.productadditionalAttributes);
+
+
