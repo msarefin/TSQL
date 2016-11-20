@@ -3037,6 +3037,7 @@ alter table production.products
 add additionalattributes xml null;
 
 select * from Production.products
+---------------------------------------------------------------------------------------
 
 --------- Auxilary table ----------
 
@@ -3049,8 +3050,11 @@ declare @mySchema as nvarchar(max);
 set @mySchema = N'';
 set @mySchema = @mySchema +
 (select * from Beverages for xml auto, elements, xmlschema('Beverages'));
+
 set @mySchema = @mySchema +
+
 (select * from Condiments for xml auto, elements, xmlschema('Condiments'));
+
 select cast(@mySchema as xml);
 create xml schema collection dbo.ProductsAdditionalAttributes as @mySchema;
 go 
