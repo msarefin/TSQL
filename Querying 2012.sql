@@ -3034,4 +3034,31 @@ as [Filtered, sorted and reformatted orders with let clause]
 go 
 
 alter table production.products
-add additionalattributes aml null;
+add additionalattributes xml null;
+
+select * from Production.products
+
+--------- Auxilary table ----------
+
+create table dbo.Beverages (percentvitaminsRDA int);
+create table dbo.Condiments (shortdescription nvarchar(50));
+go 
+--store the schema in a variable and create the collection
+
+declare @mySchema as nvarchar(max);
+set @mySchema = N'';
+set @mySchema = @mySchema +
+(select * from Beverages for xml auto, elements, xmlschema('Beverages'));
+set @mySchema = @mySchema +
+(select * from Condiments for xml auto, elements, xmlschema('Condiments'));
+select cast(@mySchema as xml);
+create xml schema collection dbo.ProductsAdditionalAttributes as @mySchema;
+go 
+--drop Auxilary table 
+drop table dbo.Beverages, dbo.Condiments;
+go
+
+
+alter table production.products
+alter column additionalattributes
+xml(dbo.productadditionalAttributes);
