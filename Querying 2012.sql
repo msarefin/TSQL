@@ -2986,3 +2986,49 @@ from Sales.Customers as c
 where c.country = 'USA'
 order by c.companyname
 for xml path ('Customer') ,root('Customers');
+
+-----
+go  
+
+declare @x as xml 
+set @x = N'
+<CustomersOrder>
+	<Customer custid ="1">
+		<!--Comment 111-->
+		<companyname>Customer NRZBB</companyname>
+		<Order orderid ="10692">
+			<orderdate>2007-10-03-16T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10702">
+			<orderdate>2007-10-13T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10952">
+			<orderdate>2008-03-16T00:00:00</orderdate>
+		</Order>
+	</Customer>
+	<Customer>
+		<!--Comment 222-->
+		<companyname>Customer MLTDN</companyname>
+		<Order orderid ="10308">
+			<orderdate>2006-09-18T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10952">
+			<orderdate>2008-03--04T00:00:00</orderdate>
+		</Order>
+	</Customer>
+</CustomersOrder>
+';
+select @x.query('for $i in CustomersOrder/Customer/Order
+				let $j := $i/orderdate
+				where $i/ @orderid < 10900
+				order by ($j)[1]
+				return 
+				<Order-orderid-element>
+					<orderid>{data($i/@orderid)}</orderid>
+					{$j}
+				</Order-orderid-element>')
+as [Filtered, sorted and reformatted orders with let clause]
+;
+---Manufacturing concent-------
+
+
