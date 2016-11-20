@@ -3031,4 +3031,7 @@ as [Filtered, sorted and reformatted orders with let clause]
 ;
 ---Manufacturing concent-------
 
+go 
 
+alter table production.products
+add additionalattributes aml null;
