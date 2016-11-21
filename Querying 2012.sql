@@ -3040,31 +3040,35 @@ select * from Production.products
 ---------------------------------------------------------------------------------------
 
 --------- Auxilary table ----------
+CREATE TABLE dbo.Beverages (percentvitaminsRDA int);
 
-create table dbo.Beverages (percentvitaminsRDA int);
-create table dbo.Condiments (shortdescription nvarchar(50));
+CREATE TABLE dbo.Condiments (shortdescription nvarchar(50));
 go 
---store the schema in a variable and create the collection
 
-declare @mySchema as nvarchar(max);
-set @mySchema = N'';
+--store the chema in a variable and create the collection
+
+DECLARE @mySchema nvarchar(max);
+set @mySchema = '';
 set @mySchema = @mySchema +
 (select * from Beverages for xml auto, elements, xmlschema('Beverages'));
 
 set @mySchema = @mySchema +
-
 (select * from Condiments for xml auto, elements, xmlschema('Condiments'));
 
 select cast(@mySchema as xml);
-create xml schema collection dbo.ProductsAdditionalAttributes as @mySchema;
-go 
---drop Auxilary table 
-drop table dbo.Beverages, dbo.Condiments;
-go
 
+create xml schema collection dbo.ProductsAdditionalAttributes as @mySchema;
+
+go 
+
+--Dorp Auxilary Tables
+drop table dbo.Beverages, dbo.Condiments;
+go 
 
 alter table production.products
 alter column additionalattributes
-xml(dbo.productadditionalAttributes);
+xml(dbo.ProductsAdditionalAttributes);
+
+select * from Production.Products;
 
 
