@@ -3045,7 +3045,7 @@ CREATE TABLE dbo.Beverages (percentvitaminsRDA int);
 CREATE TABLE dbo.Condiments (shortdescription nvarchar(50));
 go 
 
---store the chema in a variable and create the collection
+--store the schema in a variable and create the collection
 
 DECLARE @mySchema nvarchar(max);
 set @mySchema = '';
