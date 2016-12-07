@@ -2680,7 +2680,7 @@ declare @dochandle as int
 
 exec sp_xml_preparedocument @dochandle output, @x
 
-select * from openxml(@dochandle, 'Subcategories/Subcategory',11) with (ProductCategoryID	  int , Name varchar(30))
+select * from openxml(@dochandle, 'Subcategories/Subcategory',11) with (ProductCategoryID int , Name varchar(30))
 select * from openxml(@dochandle, 'Subcategories/Subcategory/Products/Product',11) with (ProductID  int , Name varchar(30), ProductNumber varchar(100), ListPrice float, ModifiedDate datetime)
 select * from openxml(@dochandle, 'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID	  int  '../../@ProducrSubcategoryId', 
 productSubcategoryName varchar(30) '../../@Name',ProductID  int , Name varchar(30), ProductNumber varchar(100), ListPrice float, ModifiedDate datetime)
@@ -2743,12 +2743,14 @@ from Production.ProductSubcategory as psc
 for xml path ('Subcategory'), root('Subcategories')
 
 )
+--select @xml
 
 declare @doch as int;
 exec sys.sp_xml_preparedocument @doch output, @xml
-select @doch 'Document handle number'
---select * from openxml(@doch,'Subcategories/Subcategory', 1) with (ProductCategoryID int, CategoryName varchar(40),ProductID int, Name varchar(40), ProductNumber varchar(40), ListPrice float, ModifiedDate datetime);
---select * from openxml(@doch,'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID int '../../@ProductCategoryID', SubcategoryName varchar(100) '../../@Name',ProductID int, Name varchar(40),ProductNumber varchar(40), ListPrice float, ModifiedDate datetime)
+--select @doch 'Document handle number'
+select * from openxml(@doch,'Subcategories/Subcategory', 1) with (ProductCategoryID int, CategoryName varchar(40),ProductID int, Name varchar(40), ProductNumber varchar(40), ListPrice float, ModifiedDate datetime);
+select * from openxml(@doch,'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID int '../../@ProductCategoryID', SubcategoryName varchar(100) '../../@Name',ProductID int, Name varchar(40),ProductNumber varchar(40), ListPrice float, ModifiedDate datetime)
+-- The path '../../@ProductCategoryID' and '../../@Name' points to <Subcategory ProductCategoryID="1" Name="Mountain Bikes"> in the XML document
 exec sys.sp_xml_removedocument @doch
 
 -------------
