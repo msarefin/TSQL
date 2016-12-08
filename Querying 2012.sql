@@ -3073,3 +3073,31 @@ select * from sys.xml_schema_collections;
 ------------------------------------------------------
 
 ---------------------------------------------------------
+go 
+--Function to retrive the namespace 
+
+create function dbo.GetnameSpace(@chkcol xml)
+returns nvarchar(15)
+as begin 
+return @chkco.value('namespace-uri((/*)[1])','nvarchar(15)')
+end;
+go 
+
+--fucntion to retrive the category 
+
+create function dbo.GetCategoryName(@catid int)
+returns nvarchar(15)
+as begin 
+return 
+(select categoryname from Production.Categories where categoryid = @catid)
+end;
+
+go 
+
+-- add the Constraint
+
+Alter Table Production.Products add Constraint ck_Namespce 
+check(dbo.GetNameSpace(additionalattributes)=dbo.GetCategoryName(Categoryid));
+
+go 
+
