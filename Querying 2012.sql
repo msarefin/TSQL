@@ -3060,3 +3060,16 @@ go
 drop table dbo.Beverages, dbo.Condiments;
 go 
 
+-------------------------------------
+
+alter table production.products
+alter column additionalattributes
+xml(dbo.ProductsAdditionalAttributes);
+
+select * from Production.Products;
+
+select * from sys.xml_schema_collections;
+
+------------------------------------------------------
+
+---------------------------------------------------------
