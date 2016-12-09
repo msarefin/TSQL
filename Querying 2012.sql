@@ -3120,3 +3120,32 @@ where productid = 3;
 select productid, productname, additionalattributes 
 from Production.Products;
 
+--Inserting invalid data 
+
+go 
+
+update production.products 
+set additionalattributes = N'
+<Beverages xmlns= "Beverages">
+<percentvitaminsRDA>twenty seven</percentvitaminsRDA>
+</Beverages>
+'
+where productid =1;
+
+update Production.products
+set additionalattributes = N'
+<Condiments xmlns>
+<shortdescription>very sweet </shortdescription>
+</Condiments>
+'
+where productid = 2;
+
+update Production.Products
+set additionalattributes = N'
+<Condiments xmlns= "Condiments">
+<unknownelement>very sweet</unknownelemnet>
+</Condiments>
+'
+where productid =3;
+
+
