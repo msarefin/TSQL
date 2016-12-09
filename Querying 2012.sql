@@ -3117,6 +3117,6 @@ set additionalattributes = N'
 </Condiments>'
 where productid = 3;
 
-select productid, productname, additionalattributes from Production.Products;
-
+select productid, productname, additionalattributes 
+from Production.Products;
 
