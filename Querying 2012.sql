@@ -3101,3 +3101,22 @@ check(dbo.GetNameSpace(additionalattributes)=dbo.GetCategoryName(Categoryid));
 
 go 
 
+--Inserting some valid data into the table
+
+update Production.Products 
+set additionalattributes = N'
+<Beverages xmlns="Beverages">
+<percentvitaminsRDA>27</percentvitaminsRDA>
+</Beverages>'
+where productid = 1;
+
+update Production.products
+set additionalattributes = N'
+<Condiments xmlns = "Condiments">
+<shortdescription>very sweet</shortdescription>
+</Condiments>'
+where productid = 3;
+
+select productid, productname, additionalattributes from Production.Products;
+
+
