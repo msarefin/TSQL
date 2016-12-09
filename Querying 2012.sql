@@ -3149,3 +3149,19 @@ set additionalattributes = N'
 where productid =3;
 
 
+-- cleanup the table 
+
+go 
+alter table production.products
+drop constraint ck_Namespace;
+
+alter table production.products 
+drop column additionalattributes;
+
+drop XML schema collection 
+dbo.productionattributes;
+drop function dbo.GetnameSpace;
+drop function dbo.GetCategoryName;
+go 
+
+--chapter 8 
