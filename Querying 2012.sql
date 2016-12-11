@@ -3164,4 +3164,14 @@ drop function dbo.GetnameSpace;
 drop function dbo.GetCategoryName;
 go 
 
---chapter 8 
+--chapter 8 creating table and enforcing data integrity 
+
+select TOP (10) categoryname
+from Production.Categories;
+
+
+--The following four builtin database aschema cannot be dropped
+--dbo - default schema for db_owner or db_ddl_admin
+--guest - schema used for objects that will be availble to guest users
+--INFORMATION_SCHEMA - 
+--sys - This scema is reserved for system objects such as system tables and views
