@@ -2986,3 +2986,5 @@ from Sales.Customers as c
 where c.country = 'USA'
 order by c.companyname
 for xml path ('Customer') ,root('Customers');
+
+
