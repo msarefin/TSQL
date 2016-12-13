@@ -3175,3 +3175,17 @@ from Production.Categories;
 --guest - schema used for objects that will be availble to guest users
 --INFORMATION_SCHEMA - 
 --sys - This scema is reserved for system objects such as system tables and views
+
+--GO
+--create database SQL_PRACTICE;
+
+use SQL_PRACTICE
+go 
+create schema Production;
+go 
+create table Production.Categories
+(categoryid int identity(1,1) not null, 
+categoryname nvarchar(15) not null, 
+description nvarchar(200) not null );
+
+
