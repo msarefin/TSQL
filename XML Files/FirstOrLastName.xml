@@ -1,0 +1,20 @@
+﻿<!--
+declare @x as xml = N'
+<Employee empid = "2">
+	<FirstName>fname</FirstName>
+	<LastName>lname</LastName>
+</Employee>
+'
+;
+
+declare @v as nvarchar(20) = N'FirstName';
+select @x.query('
+if(sql:variable("@v")= "FirstName") then 
+/Employee/FirstName
+else 
+/Employee/LastName
+') as FirstOrLastName;
+go 
+-->
+
+<FirstName>fname</FirstName>

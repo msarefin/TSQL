@@ -2680,7 +2680,7 @@ declare @dochandle as int
 
 exec sp_xml_preparedocument @dochandle output, @x
 
-select * from openxml(@dochandle, 'Subcategories/Subcategory',11) with (ProductCategoryID	  int , Name varchar(30))
+select * from openxml(@dochandle, 'Subcategories/Subcategory',11) with (ProductCategoryID int , Name varchar(30))
 select * from openxml(@dochandle, 'Subcategories/Subcategory/Products/Product',11) with (ProductID  int , Name varchar(30), ProductNumber varchar(100), ListPrice float, ModifiedDate datetime)
 select * from openxml(@dochandle, 'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID	  int  '../../@ProducrSubcategoryId', 
 productSubcategoryName varchar(30) '../../@Name',ProductID  int , Name varchar(30), ProductNumber varchar(100), ListPrice float, ModifiedDate datetime)
@@ -2743,12 +2743,14 @@ from Production.ProductSubcategory as psc
 for xml path ('Subcategory'), root('Subcategories')
 
 )
+--select @xml
 
 declare @doch as int;
 exec sys.sp_xml_preparedocument @doch output, @xml
-select @doch 'Document handle number'
---select * from openxml(@doch,'Subcategories/Subcategory', 1) with (ProductCategoryID int, CategoryName varchar(40),ProductID int, Name varchar(40), ProductNumber varchar(40), ListPrice float, ModifiedDate datetime);
---select * from openxml(@doch,'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID int '../../@ProductCategoryID', SubcategoryName varchar(100) '../../@Name',ProductID int, Name varchar(40),ProductNumber varchar(40), ListPrice float, ModifiedDate datetime)
+--select @doch 'Document handle number'
+select * from openxml(@doch,'Subcategories/Subcategory', 1) with (ProductCategoryID int, CategoryName varchar(40),ProductID int, Name varchar(40), ProductNumber varchar(40), ListPrice float, ModifiedDate datetime);
+select * from openxml(@doch,'Subcategories/Subcategory/Products/Product',11) with (ProductCategoryID int '../../@ProductCategoryID', SubcategoryName varchar(100) '../../@Name',ProductID int, Name varchar(40),ProductNumber varchar(40), ListPrice float, ModifiedDate datetime)
+-- The path '../../@ProductCategoryID' and '../../@Name' points to <Subcategory ProductCategoryID="1" Name="Mountain Bikes"> in the XML document
 exec sys.sp_xml_removedocument @doch
 
 -------------
@@ -2986,5 +2988,208 @@ from Sales.Customers as c
 where c.country = 'USA'
 order by c.companyname
 for xml path ('Customer') ,root('Customers');
+
+<<<<<<< HEAD
+=======
+-----
+go  
+
+declare @x as xml 
+set @x = N'
+<CustomersOrder>
+	<Customer custid ="1">
+		<!--Comment 111-->
+		<companyname>Customer NRZBB</companyname>
+		<Order orderid ="10692">
+			<orderdate>2007-10-03-16T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10702">
+			<orderdate>2007-10-13T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10952">
+			<orderdate>2008-03-16T00:00:00</orderdate>
+		</Order>
+	</Customer>
+	<Customer>
+		<!--Comment 222-->
+		<companyname>Customer MLTDN</companyname>
+		<Order orderid ="10308">
+			<orderdate>2006-09-18T00:00:00</orderdate>
+		</Order>
+		<Order orderid ="10952">
+			<orderdate>2008-03--04T00:00:00</orderdate>
+		</Order>
+	</Customer>
+</CustomersOrder>
+';
+select @x.query('for $i in CustomersOrder/Customer/Order
+				let $j := $i/orderdate
+				where $i/ @orderid < 10900
+				order by ($j)[1]
+				return 
+				<Order-orderid-element>
+					<orderid>{data($i/@orderid)}</orderid>
+					{$j}
+				</Order-orderid-element>')
+as [Filtered, sorted and reformatted orders with let clause]
+;
+---Manufacturing concent-------
+
+go 
+
+alter table production.products
+add additionalattributes xml null;
+
+select * from Production.products
+---------------------------------------------------------------------------------------
+
+--------- Auxilary table ----------
+
+create table dbo.Beverages (percentvitaminesRDA int);
+create table dbo.Condiments (shortdescription nvarchar(50));
+go 
+--Store the scema in a variable and create the collection
+
+declare @myScema nvarchar(max);
+set @myScema = N'';
+set @myScema = @myScema + 
+(select * from Beverages for xml auto, elements, xmlschema('Beverages'));
+set @myScema = @myScema+
+(select * from Condiments for xml auto, elements, xmlschema('Condiments'));
+create xml schema collection dbo.ProductsAdditionalAttributes as @myScema;
+go 
+--Drop the auxilary tables 
+drop table dbo.Beverages, dbo.Condiments;
+go 
+
+-------------------------------------
+
+alter table production.products
+alter column additionalattributes
+xml(dbo.ProductsAdditionalAttributes);
+
+select * from Production.Products;
+
+select * from sys.xml_schema_collections;
+
+------------------------------------------------------
+
+---------------------------------------------------------
+go 
+--Function to retrive the namespace 
+
+create function dbo.GetnameSpace(@chkcol xml)
+returns nvarchar(15)
+as begin 
+return @chkco.value('namespace-uri((/*)[1])','nvarchar(15)')
+end;
+go 
+
+--fucntion to retrive the category 
+
+create function dbo.GetCategoryName(@catid int)
+returns nvarchar(15)
+as begin 
+return 
+(select categoryname from Production.Categories where categoryid = @catid)
+end;
+
+go 
+
+-- add the Constraint
+
+Alter Table Production.Products add Constraint ck_Namespce 
+check(dbo.GetNameSpace(additionalattributes)=dbo.GetCategoryName(Categoryid));
+
+go 
+
+--Inserting some valid data into the table
+
+update Production.Products 
+set additionalattributes = N'
+<Beverages xmlns="Beverages">
+<percentvitaminsRDA>27</percentvitaminsRDA>
+</Beverages>'
+where productid = 1;
+
+update Production.products
+set additionalattributes = N'
+<Condiments xmlns = "Condiments">
+<shortdescription>very sweet</shortdescription>
+</Condiments>'
+where productid = 3;
+
+select productid, productname, additionalattributes 
+from Production.Products;
+
+--Inserting invalid data 
+
+go 
+
+update production.products 
+set additionalattributes = N'
+<Beverages xmlns= "Beverages">
+<percentvitaminsRDA>twenty seven</percentvitaminsRDA>
+</Beverages>
+'
+where productid =1;
+
+update Production.products
+set additionalattributes = N'
+<Condiments xmlns>
+<shortdescription>very sweet </shortdescription>
+</Condiments>
+'
+where productid = 2;
+
+update Production.Products
+set additionalattributes = N'
+<Condiments xmlns= "Condiments">
+<unknownelement>very sweet</unknownelemnet>
+</Condiments>
+'
+where productid =3;
+
+
+-- cleanup the table 
+
+go 
+alter table production.products
+drop constraint ck_Namespace;
+
+alter table production.products 
+drop column additionalattributes;
+
+drop XML schema collection 
+dbo.productionattributes;
+drop function dbo.GetnameSpace;
+drop function dbo.GetCategoryName;
+go 
+
+--chapter 8 creating table and enforcing data integrity 
+
+select TOP (10) categoryname
+from Production.Categories;
+
+
+--The following four builtin database aschema cannot be dropped
+--dbo - default schema for db_owner or db_ddl_admin
+--guest - schema used for objects that will be availble to guest users
+--INFORMATION_SCHEMA - 
+--sys - This scema is reserved for system objects such as system tables and views
+
+select name from master.dbo.sysdatabases
+
+GO
+create database SQL_PRACTICE;
+
+use SQL_PRACTICE
+go 
+create schema Production;
+go 
+create table Production.Categories
+(categoryid int identity(1,1) not null, 
+categoryname nvarchar(15) not null, 
+description nvarchar(200) not null );
 
 
