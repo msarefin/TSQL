@@ -3193,3 +3193,5 @@ categoryname nvarchar(15) not null,
 description nvarchar(200) not null );
 
 
+--Chapter 12
+
