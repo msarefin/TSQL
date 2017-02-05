@@ -3213,6 +3213,10 @@ print xact_state();
 -- '1' indicates that there an uncommited transaction that can be commited. No indication of nested tranacrion 
 -- '-1' indciates that there is an uncommited transaction which cannot be commited due to fatal error
 
+-- Transaction modes are either 
+--	Autocommit, Implicit transaction or Explicit transaction
+-- Auto commit transactions are commited as soon as they are executed successfully
+-- Implicit Transactions: This 
 
 
 -----------------
@@ -3233,3 +3237,4 @@ exec sp_executesql
 	@statement = @SQLString,
 	@parmas = N'@address nvarchr(60)',
 	@address =@address;
+
