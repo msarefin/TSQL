@@ -3216,7 +3216,11 @@ print xact_state();
 -- Transaction modes are either 
 --	Autocommit, Implicit transaction or Explicit transaction
 -- Auto commit transactions are commited as soon as they are executed successfully
--- Implicit Transactions: This 
+-- Implicit Transactions: This can be turned on by set implicit_transactions on;
+set implicit_transactions on; 
+-- from this foint all transactions need to be maunally commited 
+set ansi_defaults on;
+ 
 
 
 -----------------
@@ -3237,4 +3241,6 @@ exec sp_executesql
 	@statement = @SQLString,
 	@parmas = N'@address nvarchr(60)',
 	@address =@address;
+
+
 
