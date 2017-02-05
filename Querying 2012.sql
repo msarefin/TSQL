@@ -3194,5 +3194,42 @@ description nvarchar(200) not null );
 
 
 --Chapter 12
+--Lesson 1
+
+select * --user_transaction
+from sys.dm_tran_active_transactions;
+
 
 -- 
+select @@TRANCOUNT;
+print @@trancount; 
+-- 0 indicates that the the code is not within an transaction
+--level greater that 0 indicates that there is an active transaction, and number greater than 1 indicates nested transactions
+
+select XACT_STATE();
+print xact_state();
+
+-- '0' indicates that there is no active transaction
+-- '1' indicates that there an uncommited transaction that can be commited. No indication of nested tranacrion 
+-- '-1' indciates that there is an uncommited transaction which cannot be commited due to fatal error
+
+
+
+-----------------
+use TSQL2012;
+go 
+declare @SQLString as nvarchar(4000), @address as nvarchar(60); 
+set @SQLString = N'
+select 
+custid, 
+companyname, 
+contactname, 
+contacttitle, 
+address 
+from sales.Customers 
+where address= @address';
+set @address =N'5678 rue de l''Abbaye';
+exec sp_executesql 
+	@statement = @SQLString,
+	@parmas = N'@address nvarchr(60)',
+	@address =@address;
