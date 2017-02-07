@@ -3226,7 +3226,8 @@ set ansi_defaults on;
 -----------------
 use TSQL2012;
 go 
-declare @SQLString as nvarchar(4000), @address as nvarchar(60); 
+declare @SQLString as nvarchar(4000);
+declare @address as nvarchar(60); 
 set @SQLString = N'
 select 
 custid, 
