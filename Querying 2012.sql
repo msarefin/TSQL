@@ -3226,22 +3226,16 @@ set ansi_defaults on;
 -----------------
 use TSQL2012;
 go 
-declare @SQLString as nvarchar(4000);
-declare @address as nvarchar(60); 
+declare @SQLString as nvarchar(4000), @address as nvarchar(60);
 set @SQLString = N'
-select 
-custid, 
-companyname, 
-contactname, 
-contacttitle, 
-address 
-from sales.Customers 
-where address= @address';
-set @address =N'5678 rue de l''Abbaye';
-exec sp_executesql 
-	@statement = @SQLString,
-	@parmas = N'@address nvarchr(60)',
-	@address =@address;
 
+select custid, companyname, contactname, contacttitle, address
+from sales.Customers 
+where address = @address';
+set @address = N'5678 rue de l''Abbaye';
+exec sp_executesql 
+	@statement = @SQLstring,
+	@parms = N'@address nvarchar(60)',
+	@address = @address;
 
 
