@@ -3221,12 +3221,18 @@ set implicit_transactions on;
 -- from this foint all transactions need to be maunally commited 
 set ansi_defaults on;
  
-
-
+--------------------
+go 
+select 
+c.custid, c.companyname, c.contactname,c.contacttitle, c.address
+from sales.Customers as c 
+where c.address = N'5678 ru de l''Abbaye';
+go 
 -----------------
 use TSQL2012;
 go 
-declare @SQLString as nvarchar(4000), @address as nvarchar(60);
+declare @SQLString as nvarchar(4000), 
+		@address as nvarchar(60);
 set @SQLString = N'
 
 select custid, companyname, contactname, contacttitle, address
@@ -3239,4 +3245,4 @@ exec sp_executesql
 	@address = @address;
 
 
-
+------
