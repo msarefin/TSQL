@@ -3223,10 +3223,16 @@ set ansi_defaults on;
  
 --------------------
 go 
+select custid, companyname, contactname, contacttitle, address
+from sales.Customers 
+where address = N'5678 rue de l''Abbaye';
+------------------------------------------------------------------------------------------------------
+-- The second code is exactly the same as the first but the second code doesn't yield the same code -- 
+------------------------------------------------------------------------------------------------------
 select 
 c.custid, c.companyname, c.contactname,c.contacttitle, c.address
 from sales.Customers as c 
-where c.address = N'5678 ru de l''Abbaye';
+where c.address = '5678 ru de l''Abbaye';
 go 
 -----------------
 use TSQL2012;
