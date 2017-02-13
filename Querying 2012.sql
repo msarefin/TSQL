@@ -3232,7 +3232,7 @@ where address = N'5678 rue de l''Abbaye';
 select 
 c.custid, c.companyname, c.contactname,c.contacttitle, c.address
 from sales.Customers as c 
-where c.address = '5678 ru de l''Abbaye';
+where c.address = N'5678 ru de l''Abbaye';
 go 
 -----------------
 use TSQL2012;
