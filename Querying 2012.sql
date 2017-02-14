@@ -3240,7 +3240,6 @@ go
 declare @SQLString as nvarchar(4000), 
 		@address as nvarchar(60);
 set @SQLString = N'
-
 select custid, companyname, contactname, contacttitle, address
 from sales.Customers 
 where address = @address';
@@ -3249,8 +3248,15 @@ exec sp_executesql
 	@statement = @SQLstring,
 	@parms = N'@address nvarchar(60)',
 	@address = @address;
-
-
 ------
+ go 
 
- 
+ use TSQL2012;
+ go 
+ declare @sql nvarchar(200)
+ set @sql=
+N'select * from HR.Employees where lastname = @lastname'
+exec sp_executesql 
+@sql, 
+N'@lastname nvarchar(50)', 
+@lastname = 'Davis';
