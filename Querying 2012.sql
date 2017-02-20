@@ -3253,10 +3253,12 @@ exec sp_executesql
 
  use TSQL2012;
  go 
- declare @sql nvarchar(200)
- set @sql=
-N'select * from HR.Employees where lastname = @lastname'
-exec sp_executesql 
-@sql, 
-N'@lastname nvarchar(50)', 
-@lastname = 'Davis';
+ declare @sql as nvarchar(4000), @address as nvarchar(60);
+ set @sql = N'select custid, companyname, contactname, contacttitle, address from sales.Customers where address = @address';
+ set @address = N'5678 rue de l''Abbaye'
+ exec sp_executesql 
+ @sql, N'@address nvarchar(60)', @address;
+
+go 
+
+select * from hr.employees;
