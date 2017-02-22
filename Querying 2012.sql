@@ -3261,4 +3261,16 @@ exec sp_executesql
 
 go 
 
-select * from hr.employees;
+go 
+use TSQL2012
+declare @sql as nvarchar(4000), @city as nvarchar(60);
+
+set @sql = N'
+select e.title,e.firstname, e.lastname,e.address, e.city, e.country
+from hr.employees as e
+where e.city = @city;
+'
+set @city='London'
+exec sp_executesql
+@sql, N'@city nvarchar(60)', @city;
+
