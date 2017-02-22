@@ -3274,3 +3274,6 @@ set @city='London'
 exec sp_executesql
 @sql, N'@city nvarchar(60)', @city;
 
+go 
+-- Chapter 13 Design and implementing T-SQL Routeines
+
