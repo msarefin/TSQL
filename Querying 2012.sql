@@ -3275,5 +3275,24 @@ exec sp_executesql
 @sql, N'@city nvarchar(60)', @city;
 
 go 
+
+use TSQL2012;
+go 
+
+declare @sql nvarchar(4000),@title nvarchar(40)
+set @sql = N'
+select 
+e.empid, 
+e.firstname,
+e.lastname,
+e.address, 
+e.city, 
+e.country, 
+e.title
+from HR.Employees as e
+where e.title = @title';
+
+set @title = N'Sales Representative'
+exec sp_executesql @sql, N'@title nvarchar(30)', @title
 -- Chapter 13 Design and implementing T-SQL Routeines
 
