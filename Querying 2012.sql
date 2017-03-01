@@ -3277,3 +3277,37 @@ exec sp_executesql
 go 
 -- Chapter 13 Design and implementing T-SQL Routeines
 
+use TSQL2012;
+go
+
+select 
+d.orderid,
+d.custid,
+d.shipperid,
+d.orderdate,
+d.requireddate,
+d.shippeddate
+from Sales.Orders as d 
+where d.custid =37 and d.orderdate >= '2007-04-01' and d.orderdate <= '2007-07-01';
+
+
+-- Create stored procedures 
+
+
+use TSQL2012;
+go 
+declare @custid as int, @orderdatefrom as datetime, @orderdateto as datetime;
+set @custid = 37;
+set @orderdatefrom = '2007-04-01';
+set @orderdateto = '2007-07-01';
+
+select d.orderid, d.custid, d.shipperid, d.orderdate, d.requireddate, d.shippeddate
+from Sales.Orders as d
+where d.custid = @custid and d.orderdate >= @orderdatefrom and d.orderdate < @orderdateto;
+go 
+
+
+if OBJECT_ID('Sales.GetCustomerOrders', 'P') is not null 
+drop proc Sales.GetCustomerOrders;
+
+
