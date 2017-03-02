@@ -3326,8 +3326,36 @@ from Sales.Orders as d
 where d.custid = @custid and d.orderdate >= @orderdatefrom and d.orderdate < @orderdateto;
 go 
 
-
+use TSQL2012; 
+go 
 if OBJECT_ID('Sales.GetCustomerOrders', 'P') is not null 
 drop proc Sales.GetCustomerOrders;
+go 
+create proc Sales.GetCustomerOrders
+@custid as int,
+@orderdatefrom as datetime = '19000101',
+@orderdateto as datetime = '99991231',
+@numrows as int = 0 output 
 
+as 
+Begin 
+set nocount on;
+select 
+d.orderid, d.custid, d.shipperid, d.orderdate, d.requireddate, d.shippeddate 
+from Sales.Orders as d where d.custid = @custid and d.orderdate = @orderdatefrom and d.orderdate = @orderdateto;
+set @numrows = @@ROWCOUNT;
+return;
+End
+go 
 
+-------------
+
+declare @rowsreturned as int;
+execute sales.GetCustomerOrders
+@custid = 37,
+@orderdatefrom = '20070401',
+@orderdateto = '20070701',
+@numrows = @rowsreturned output;
+
+select @rowsreturned as "Rows Returned";
+go 
