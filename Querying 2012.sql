@@ -3369,5 +3369,9 @@ select @rowsreturned as "Rows Returned";
 go 
 
 declare @rowsreturned as int;
-exec sales.GetCustomerOrders @custid = 37, @orderdatefrom = '20070201', @orderdateto ='20070701', @numrows = @rowsreturned output;
+exec sales.GetCustomerOrders 
+@custid = 37, 
+@orderdatefrom = '20070201', 
+@orderdateto ='20070701', 
+@numrows = @rowsreturned output;
 
