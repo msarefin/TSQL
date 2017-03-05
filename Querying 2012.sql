@@ -3326,6 +3326,8 @@ from Sales.Orders as d
 where d.custid = @custid and d.orderdate >= @orderdatefrom and d.orderdate < @orderdateto;
 go 
 
+-------------------------
+
 use TSQL2012; 
 go 
 if OBJECT_ID('Sales.GetCustomerOrders', 'P') is not null 
@@ -3354,7 +3356,7 @@ return;
 End
 go 
 
--------------
+------------- Running the stored procedure
 
 declare @rowsreturned as int;
 execute sales.GetCustomerOrders
