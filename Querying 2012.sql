@@ -3370,3 +3370,5 @@ go
 
 declare @rowsreturned as int;
 exec sales.GetCustomerOrders @custid = 37, @orderdatefrom = '20070201', @orderdateto ='20070701', @numrows = @rowsreturned output;
+
+-- I wonder if this works with git hub 
