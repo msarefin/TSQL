@@ -3350,9 +3350,9 @@ from Sales.Orders as d
 where 
 d.custid = @custid 
 and 
-d.orderdate = @orderdatefrom 
+d.orderdate >= @orderdatefrom 
 and 
-d.orderdate = @orderdateto;
+d.orderdate < @orderdateto;
 set @numrows = @@ROWCOUNT;
 return;
 End
@@ -3370,10 +3370,4 @@ execute sales.GetCustomerOrders
 select @rowsreturned as "Rows Returned";
 go 
 
-declare @rowsreturned as int;
-exec sales.GetCustomerOrders 
-@custid = 37, 
-@orderdatefrom = '20070201', 
-@orderdateto ='20070701', 
-@numrows = @rowsreturned output;
 
