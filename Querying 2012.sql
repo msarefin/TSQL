@@ -3327,6 +3327,8 @@ where d.custid = @custid and d.orderdate >= @orderdatefrom and d.orderdate < @or
 go 
 
 -------------------------
+-- Create Stored procedure
+-------------------------
 
 use TSQL2012; 
 go 
