@@ -3339,7 +3339,7 @@ create proc Sales.GetCustomerOrders
 @custid as int, -- This parametre is required
 @orderdatefrom as datetime = '19000101', -- This parametre is optional with default values
 @orderdateto as datetime = '99991231',	-- This parametre is optional with values 
-@numrows as int = 0 output -- This is an output parametre
+@numrows as int = 0 output -- This is an output parametre and is always an optional parametre
 
 as 
 Begin 
@@ -3400,3 +3400,27 @@ print @counter
 
 select city from hr.Employees;
 
+--------------------
+
+use TSQL2012;
+go 
+if OBJECT_ID('HR.spEmp', 'P') is not null 
+drop proc HR.spEmp;
+go 
+
+create proc HR.spEmp
+@city as varchar(20), @num as int = 0 output
+
+as
+--Begin
+set nocount on
+select * 
+from HR.Employees as e 
+where e.city = @city;
+set @num = @@ROWCOUNT;
+return
+--End
+go 
+declare @nums int 
+exec HR.spEmp @city='London', @num =@nums output;
+select @nums 'Number of rows';
