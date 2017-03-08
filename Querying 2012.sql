@@ -3371,3 +3371,32 @@ select @rowsreturned as "Rows Returned";
 go 
 
 
+----Practice Stored procedure 
+use TSQL2012;
+go 
+if OBJECT_ID('HR.spEmplyee','P') is not null 
+drop proc HR.spEmplyee;
+
+go 
+
+create proc HR.spEmplyee
+@city as nvarchar(20), @rowcount as int = 0 output
+as 
+begin 
+
+select * 
+from HR.Employees as e 
+where e.city = @city;
+set @rowcount = @@rowcount; 
+return;
+end 
+
+go 
+
+
+declare @counter as int;
+execute hr.spEmplyee @city = 'London', @rowcount = @counter output;
+print @counter
+
+select city from hr.Employees;
+a
