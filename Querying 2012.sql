@@ -3422,5 +3422,7 @@ return
 --End
 go 
 declare @nums int 
+set nocount on 
 exec HR.spEmp @city='London', @num =@nums output;
 select @nums 'Number of rows';
+
