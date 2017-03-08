@@ -3336,10 +3336,10 @@ if OBJECT_ID('Sales.GetCustomerOrders', 'P') is not null
 drop proc Sales.GetCustomerOrders;
 go 
 create proc Sales.GetCustomerOrders
-@custid as int,
-@orderdatefrom as datetime = '19000101',
-@orderdateto as datetime = '99991231',
-@numrows as int = 0 output 
+@custid as int, -- This parametre is required
+@orderdatefrom as datetime = '19000101', -- This parametre is optional with default values
+@orderdateto as datetime = '99991231',	-- This parametre is optional with values 
+@numrows as int = 0 output -- This is an output parametre
 
 as 
 Begin 
@@ -3399,3 +3399,4 @@ execute hr.spEmplyee @city = 'London', @rowcount = @counter output;
 print @counter
 
 select city from hr.Employees;
+
