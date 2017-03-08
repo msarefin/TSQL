@@ -3399,4 +3399,3 @@ execute hr.spEmplyee @city = 'London', @rowcount = @counter output;
 print @counter
 
 select city from hr.Employees;
-a
