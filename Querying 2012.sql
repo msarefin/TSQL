@@ -3468,3 +3468,42 @@ exec spEmp @city ='London',@counter = @count output;
 select @count as 'Row count';
 
 
+----------------------------==================================================
+--Branching  Logic
+-- IF/Else
+go 
+declare @a as int, @b as int;
+set @a = 1; 
+set @b = 2;
+if @a = @b 
+	print 'The variables are equal'
+else if @a > @b 
+	print '@a > @b'
+else 
+	print '@a < @b';	
+go  
+
+----------------
+declare @a as int, @b as int;
+set @a = 1;
+set @b = 1;
+if @a = @b 
+print 'A = B';
+else 
+print 'A not equal to B ';
+print 'THIS LINE IS OUTSIDE THE IF STATEMENT!!!';
+GO
+
+----------------
+Declare @var1 int, @var2 int;
+set @var1 = 1;
+set @var2 = 2;
+if @var1 = @var2 
+begin 
+	print 'The variables are equal';
+end 
+else 
+begin 
+	print 'They are not equal';
+	print 'This line within the if statement';
+end 
