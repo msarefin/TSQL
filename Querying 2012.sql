@@ -3507,6 +3507,37 @@ begin
 	print 'They are not equal';
 	print 'This line within the if statement';
 end 
-
+go 
 -- While Loop
+
+set nocount on;
+declare @count as int = 1;
+while @count <= 10 
+begin 
+print cast(@count as nvarchar);
+set @count +=1;
+end 
+
+-- Fubunacci numbers
+go 
+Declare @a int = 0;
+Declare @b int = 1;
+Declare @c int = @a;
+Declare @counter int = 1;
+
+while @counter <=10
+begin 
+--print @a
+--print @b
+print @c
+set @c = @a + @b
+
+set @a=@b
+set @b=@c
+set @counter += 1;
+
+end 
+
+
+ 
 
