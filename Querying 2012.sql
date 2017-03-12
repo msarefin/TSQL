@@ -3520,12 +3520,13 @@ end
 
 -- Fubunacci numbers
 go 
+set nocount on;
 Declare @a int = 0;
 Declare @b int = 1;
 Declare @c int = @a;
-Declare @counter int = 1;
+--Declare @counter int = 1;
 
-while @counter <=10
+while @c <=100
 begin 
 --print @a
 --print @b
@@ -3534,10 +3535,26 @@ set @c = @a + @b
 
 set @a=@b
 set @b=@c
-set @counter += 1;
+--set @counter += 1;
 
 end 
 
 
  
+-- While loop with break and continue statement 
 
+go 
+set nocount on;
+declare @count as int = 1;
+while @count <= 100
+begin 
+if @count = 10 
+break; 
+if @count = 5 
+begin 
+set @count +=2;
+continue;
+end 
+print cast(@count as nvarchar);
+set @count +=1;
+end;
