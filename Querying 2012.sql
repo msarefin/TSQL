@@ -3426,3 +3426,45 @@ set nocount on
 exec HR.spEmp @city='London', @num =@nums output;
 select @nums 'Number of rows';
 
+-- Practice 
+
+use TSQL2012;
+go 
+
+if OBJECT_ID('spEmp','p') is not null drop proc spEmp;
+go
+create proc spEmp
+@country as nvarchar(20), @counter as int = 0 output 
+as
+set nocount on   
+select e.empid, e.firstname,e.lastname, e.address,e.city, e.country
+from HR.Employees as e
+where e.country = @country;
+set @counter = @@ROWCOUNT;
+return
+;
+go 
+declare @count as int 
+exec spEmp 'UK',@counter = @count output;
+select @count as 'Number of rows';
+
+---------- Practicing stored proc 
+
+if OBJECT_ID('spEmp','P') is not null drop proc spEmp;
+go 
+create proc spEmp
+@city as nvarchar(20), @counter as int  = 0 output
+as 
+Begin 
+set nocount on 
+select * from HR.Employees as e where e.city = @city;
+set @counter = @@ROWCOUNT;
+return;
+end ;
+
+go 
+declare @count as int;
+exec spEmp @city ='London',@counter = @count output; 
+select @count as 'Row count';
+
+
