@@ -3558,3 +3558,6 @@ end
 print cast(@count as nvarchar);
 set @count +=1;
 end;
+
+-- Fibunacci with brake and continue
+
