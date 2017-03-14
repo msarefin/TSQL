@@ -3561,3 +3561,32 @@ end;
 
 -- Fibunacci with brake and continue
 
+go 
+set nocount on;
+declare @a int, @b int, @c int;
+set @a = 0;
+set @b = 1;
+set @c = @a
+declare @counter int = 1;
+
+while @counter <=5 
+begin 
+if @c >=200 Break;
+print @c
+print 'This is the end of the line!'
+set @counter =+ 1
+if @c >10
+begin
+set @c = @a + @b 
+print @c;
+set @counter =+ 1
+continue
+end 
+else 
+begin 
+set @c = (@a + @b)* 2
+print @c;
+set @counter =+ 1
+continue
+end
+end 
