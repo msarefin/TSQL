@@ -3586,3 +3586,18 @@ end
 print cast(@count as nvarchar) +' Regular Fibunacci';
 set @count +=1;
 end;
+
+--------------------------
+
+
+use TSQL2012
+go 
+Declare @categoryid as int;
+set @categoryid = (select min(p.categoryid) from Production.Products as p);
+while @categoryid is not null 
+begin 
+	Print cast(@categoryid as nvarchar);
+	set @categoryid =(select min(c.categoryid) from Production.Categories as c 
+	where c.categoryid > @categoryid);
+end 
+go 
