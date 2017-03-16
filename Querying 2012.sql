@@ -3632,3 +3632,7 @@ select * from hr.Employees;
 
 --goto 
 
+Print 'First Print statement';
+GOTO MyLable;
+Print 'Second print statement';
+MyLable: print 'Third print statement';
