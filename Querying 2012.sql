@@ -3559,34 +3559,30 @@ print cast(@count as nvarchar);
 set @count +=1;
 end;
 
--- Fibunacci with brake and continue
+-- ****************** Fibunacci with brake and continue ********* This is more difficult than I thought.
 
 go 
 set nocount on;
-declare @a int, @b int, @c int;
-set @a = 0;
-set @b = 1;
-set @c = @a
-declare @counter int = 1;
-
-while @counter <=5 
+declare @a int = 0;
+declare @b int = 1; 
+declare @c int = @a;
+declare @count as int = 1;
+while @count <= 50
 begin 
-if @c >=200 Break;
 print @c
-print 'This is the end of the line!'
-set @counter =+ 1
-if @c >10
-begin
-set @c = @a + @b 
-print @c;
-set @counter =+ 1
-continue
-end 
-else 
+set @c = @a+@b
+set @a=@b
+set @b=@c
+if @count = 25
+break; 
+--print @c
+if @count >=5 
 begin 
-set @c = (@a + @b)* 2
-print @c;
-set @counter =+ 1
-continue
-end
+set @c = (@a + @b)*(@b-@a)
+Print cast(@count as nvarchar) + ' Irregular Fibunacci'
+set @count +=2;
+continue;
 end 
+print cast(@count as nvarchar) +' Regular Fibunacci';
+set @count +=1;
+end;
