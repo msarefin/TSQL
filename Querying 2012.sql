@@ -3601,3 +3601,19 @@ begin
 	where c.categoryid > @categoryid); -- This will simply set the value of @categoryid to values greated than the previous value 
 end  -- The while loop is designed to loop throgh all the values of categoryid
 go 
+
+----------------
+
+Use TSQL2012;
+go 
+
+declare @categoryname as nvarchar(15);
+set @categoryname = (select min(c.categoryname) from Production.Categories as c);
+while @categoryname is not null 
+begin
+print @categoryname;
+set @categoryname = (select min(d.categoryname) from Production.Categories as d where d.categoryname > @categoryname);
+end ;
+go 
+
+
