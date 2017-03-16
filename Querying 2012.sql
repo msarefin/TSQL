@@ -3593,11 +3593,11 @@ end;
 use TSQL2012
 go 
 Declare @categoryid as int;
-set @categoryid = (select min(p.categoryid) from Production.Products as p);
+set @categoryid = (select min(p.categoryid) from Production.Products as p); -- This will pcik up the categoryid wich is 1 and implement to @categoeyid
 while @categoryid is not null 
 begin 
-	Print cast(@categoryid as nvarchar);
+	Print cast(@categoryid as nvarchar); -- This will simply print the value 
 	set @categoryid =(select min(c.categoryid) from Production.Categories as c 
-	where c.categoryid > @categoryid);
-end 
+	where c.categoryid > @categoryid); -- This will simply set the value of @categoryid to values greated than the previous value 
+end  -- The while loop is designed to loop throgh all the values of categoryid
 go 
