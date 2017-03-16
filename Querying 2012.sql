@@ -3617,3 +3617,18 @@ end ;
 go 
 
 
+--Waitfor 
+
+
+use TSQL2012;
+go 
+
+waitfor delay	'00:00:20';
+
+select * from hr.Employees;
+
+waitfor time '21:20:00'
+select * from hr.Employees;
+
+--goto 
+
