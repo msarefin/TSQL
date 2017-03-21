@@ -3703,3 +3703,64 @@ set @databasename = (select min(name) from sys.databases where name not in ('mas
 end;
 go
 
+
+---- creating a stored procedure from th eabove script 
+
+if OBJECT_ID('dbo.BackupDatabase','P') is not null 
+drop proc dbo.BackupDatabase;
+
+go 
+
+create proc dbo.BackupDatabase
+
+as 
+begin 
+	Declare @databasename as nvarchar(128), @timecomponent as nvarchar(50),@sqlCommand as nvarchar(1000);
+	set @databasename = (select min(name) from sys.databases where name not in ('master','model','msdb','tempdb'));
+	while @databasename is not null
+	begin 
+	set @timecomponent = replace(replace(replace(convert(nvarchar, GETDATE(),120),' ', '_'),':',' '),'-',' ');
+	set @sqlCommand = 'BACKUP DATABASE ' + @databasename + ' TO DISK = ''C:\Backups\' + @databasename + '_' + @timecomponent + '.bak''';
+	print @sqlcommand;
+	--Exec (@sqlcommand);
+	set @databasename = (select min(name) from sys.databases where name not in ('master', 'model', 'msdb', 'temp') and name > @databasename);
+	end;
+	return;
+end
+
+go 
+
+exec dbo.BackupDatabase;
+
+----
+
+if OBJECT_ID('dbo.BackupDatabase','P') is not null 
+drop proc dbo.BackupDatabase
+
+go 
+
+create proc dbo.BackupDatabase 
+@database as nvarchar(30)
+as 
+begin 
+	Declare @databasename as nvarchar(128), @timecomponent as nvarchar(50),@sqlCommand as nvarchar(1000);
+	set @databasename = (select min(name) from sys.databases where name not in ('master','model','msdb','tempdb'));
+	while @databasename is not null
+	begin 
+	set @timecomponent = replace(replace(replace(convert(nvarchar, GETDATE(),120),' ', '_'),':',' '),'-',' ');
+	set @sqlCommand = 'BACKUP DATABASE ' + @databasename + ' TO DISK = ''C:\Backups\' + @databasename + '_' + @timecomponent + '.bak''';
+	print @sqlcommand;
+	--Exec (@sqlcommand);
+	set @databasename = (select min(name) from sys.databases where name not in ('master', 'model', 'msdb', 'temp') and name > @databasename);
+	end;
+	return;
+end
+
+--
+
+exec dbo.BackupDatabase;
+exec dbo.BackupDatabase 'User';
+exec dbo.BackupDatabase 'system';
+exec dbo.BackupDatabase 'unknown';
+
+
