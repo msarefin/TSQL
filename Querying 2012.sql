@@ -3636,3 +3636,70 @@ Print 'First Print statement';
 GOTO MyLable;
 Print 'Second print statement';
 MyLable: print 'Third print statement';
+
+-- Developing Stored procedure result 
+use TSQL2012;
+go
+IF object_id('Sales.ListSampleResultsSets','P') is not null 
+drop proc Sales.ListSampleResultsSets;
+
+go 
+create proc Sales.ListSampleResultsSets
+as 
+begin 
+	select top (1) p.productid, p.productname, p.supplierid, p.categoryid, p.unitprice, p.discontinued from Production.Products as p;
+	select top (1) d.orderid, d.productid, d.unitprice, d.qty, d.discount from sales.OrderDetails as d; 
+end 
+go 
+
+exec Sales.ListSampleResultsSets;
+
+-- Stored procecures can have multiple select statements in a single batch of code.
+-- You can also call other stored procedures in a store proceduere.
+
+
+-- Tracticing implementing stored procedures
+
+use TSQL2012;
+go 
+
+Declare @databasename as nvarchar(128);
+set @databasename = (Select min(name) from sys.databases where name not in('master', 'model','msdb','tempdb'));
+
+while @databasename is not null 
+begin 
+print @databasename;
+set @databasename = (select min(name) from sys.databases where name not in ('master','model','msdb','tempdb') and name > @databasename);
+end
+
+----------
+
+go
+
+with cte as 
+(
+select convert(nvarchar, GETDATE(), 120) as 't'
+
+)
+
+select replace(t,' ','_') from cte;
+
+
+----
+
+select replace(replace(replace(convert(nvarchar, GETDATE(),120),' ', '_'),':',' '),'-',' ')
+
+-----
+
+Declare @databasename as nvarchar(128), @timecomponent as nvarchar(50),@sqlCommand as nvarchar(1000);
+set @databasename = (select min(name) from sys.databases where name not in ('master','model','msdb','tempdb'));
+while @databasename is not null
+begin 
+set @timecomponent = replace(replace(replace(convert(nvarchar, GETDATE(),120),' ', '_'),':',' '),'-',' ');
+set @sqlCommand = 'BACKUP DATABASE ' + @databasename + 'TO DISK = ''C:\Backups\' + @databasename + '_' + @timecomponent + '.bak''';
+print @sqlcommand;
+--Exec (@sqlcommand);
+set @databasename = (select min(name) from sys.databases where name not in ('master', 'model', 'msdb', 'temp') and name > @databasename);
+end;
+go
+
