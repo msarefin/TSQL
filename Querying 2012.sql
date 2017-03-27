@@ -1554,8 +1554,6 @@ sum(val) over (partition by custid order by orderdate, orderid
 rows between 2 preceding and current row) as non
 from sales.OrderValues;
  
-
-<<<<<<< HEAD
  -----------------------------------
 
  select serverproperty('isfulltextinstalled');
@@ -1565,7 +1563,7 @@ from sales.OrderValues;
 -------------
 
 select document_type, path from sys.fulltext_document_types;
-=======
+
 
 ---------------------------
 
@@ -2989,8 +2987,6 @@ where c.country = 'USA'
 order by c.companyname
 for xml path ('Customer') ,root('Customers');
 
-<<<<<<< HEAD
-=======
 -----
 go  
 
