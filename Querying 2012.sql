@@ -3798,3 +3798,15 @@ SELECT * FROM Production.Products WHERE productname = 'Test Product';
 --Removing the data 
 
 delete from Production.Products where productname = 'Test Product';
+
+-------- Attempting to insert invalid data 
+
+EXEC Production.InsertProducts
+@productname = 'Test product',
+@supplierid = 10,
+@categoryid = 1,
+@unitprice = -100,
+@discontinued = 0
+
+-- The table has a check constraint "CHK_Products_unitprice" that prevents negative pricing
+
