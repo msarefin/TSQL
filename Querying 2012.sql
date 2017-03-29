@@ -3810,3 +3810,86 @@ EXEC Production.InsertProducts
 
 -- The table has a check constraint "CHK_Products_unitprice" that prevents negative pricing
 
+-- version 2 with error handleing 
+
+if OBJECT_ID('Production.InsertProducts','P') is not null 
+drop proc Production.InsertProducts
+go 
+
+create procedure Production.InsertProducts
+@productname as varchar(40),
+@supplierid as int,
+@categoryid as int,
+@unitprice as money = 0,
+@discontinued as bit = 0
+as begin 
+begin try
+insert Production.Products(productname, supplierid, categoryid, unitprice, discontinued)
+				values(@productname, @supplierid, @categoryid, @unitprice, @discontinued);
+end try
+begin catch
+THROW;
+Return;
+end catch 
+end 
+
+---
+
+exec Production.InsertProducts
+@productname = 'Test Product',
+@supplierid = 10,
+@categoryid = 1,
+@unitprice = -100,
+@discontinued = 0;
+
+-- Version 3 With parametres
+go
+if object_id('Production.InsertProducts','p') is not null 
+drop proc Production.InsertProducts
+go 
+
+create proc	Production.InsertProducts
+@productname as nvarchar(40),
+@supplierid as int,
+@categoryid as int,
+@unitprice as money = 0,
+@discontinued as money = 0
+as 
+begin 
+	declare @clientmessage nvarchar(100);
+	begin try
+		-- Test parametre
+		IF not exists (select 1 from Production.Suppliers where supplierid = @supplierid)
+		Begin 
+			set @clientmessage = 'Supplier id ' + CAST(@supplierid as nvarchar) + ' is invalid';
+			throw 50000, @clientmessage, 0;
+		end;
+
+		IF not exists (select 1 from Production.Categories where categoryid	= @categoryid)
+		Begin 
+			set @clientmessage = 'Category id ' + CAST(@categoryid as nvarchar) + ' is invalid';
+			throw 50000, @clientmessage, 0;
+		end 
+
+		IF not(@unitprice >=0)
+		begin 
+			set @clientmessage = 'unitprice ' + CAST(@unitprice as nvarchar) + ' is not valid. Must be >=0';
+			throw 50000, @clientmessage, 0;
+		end 
+
+		--Insert data 
+		Insert Production.Products(productname, supplierid, categoryid, unitprice, discontinued)
+		values(@productname, @supplierid, @categoryid, @unitprice, @discontinued);
+	end try 
+	Begin Catch 
+	throw;
+	end catch;
+end	
+go
+
+exec Production.InsertProducts
+@productname = 'Test Product',
+@supplierid = 10,
+@categoryid = 1,
+@unitprice = -100,
+@discontinued = 0;
