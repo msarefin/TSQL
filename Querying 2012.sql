@@ -3689,14 +3689,14 @@ select replace(replace(replace(convert(nvarchar, GETDATE(),120),' ', '_'),':',' 
 
 Declare @databasename as nvarchar(128), @timecomponent as nvarchar(50),@sqlCommand as nvarchar(1000);
 set @databasename = (select min(name) from sys.databases where name not in ('master','model','msdb','tempdb'));
-while @databasename is not null
-begin 
-set @timecomponent = replace(replace(replace(convert(nvarchar, GETDATE(),120),' ', '_'),':',' '),'-',' ');
-set @sqlCommand = 'BACKUP DATABASE ' + @databasename + 'TO DISK = ''C:\Backups\' + @databasename + '_' + @timecomponent + '.bak''';
-print @sqlcommand;
---Exec (@sqlcommand);
-set @databasename = (select min(name) from sys.databases where name not in ('master', 'model', 'msdb', 'temp') and name > @databasename);
-end;
+	while @databasename is not null
+		begin 
+			set @timecomponent = replace(replace(replace(convert(nvarchar, GETDATE(),120),' ', '_'),':',' '),'-',' ');
+			set @sqlCommand = 'BACKUP DATABASE ' + @databasename + 'TO DISK = ''C:\Backups\' + @databasename + '_' + @timecomponent + '.bak''';
+			print @sqlcommand;
+			--Exec (@sqlcommand);
+			set @databasename = (select min(name) from sys.databases where name not in ('master', 'model', 'msdb', 'temp') and name > @databasename);
+		end;
 go
 
 
@@ -3760,4 +3760,41 @@ exec dbo.BackupDatabase 'system';
 exec dbo.BackupDatabase 'unknown';
 
 
+---- Develop and incert stored procedure for the data access layer
 
+go 
+--version 1 a sample stored procedure 
+use tsql2012;
+go 
+if object_id ('Production.InsertProducts','P') is not null 
+DROP PROC Production.InsertProducts
+go 
+
+CREATE PROC Production.InsertProducts
+@productname as nvarchar(40),
+@supplierid as int,
+@categoryid as int,
+@unitprice as money = 0,
+@discontinued as bit = 0
+as 
+BEGIN 
+INSERT Production.Products (productname, supplierid, categoryid, unitprice, discontinued)
+					VALUES (@productname, @supplierid, @categoryid, @unitprice, @discontinued);
+					RETURN;
+END ;
+GO 
+
+EXECUTE Production.InsertProducts
+@productname ='Test Product',
+@supplierid = 10,
+@categoryid = 1,
+@unitprice = 100,
+@discontinued = 0;
+
+go
+-- Inspect the result
+SELECT * FROM Production.Products WHERE productname = 'Test Product';
+
+--Removing the data 
+
+delete from Production.Products where productname = 'Test Product';
