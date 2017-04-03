@@ -3893,3 +3893,4 @@ exec Production.InsertProducts
 @categoryid = 1,
 @unitprice = -100,
 @discontinued = 0;
+
