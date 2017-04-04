@@ -3896,6 +3896,7 @@ exec Production.InsertProducts
 
 -- Triggers 
 -- After Triggers
+------------------------------------------------------------------------
 go 
 select * from Sales.OrderDetails;
 go 
@@ -3910,3 +3911,25 @@ as
 begin 
 set nocount on 
 end 
+
+go 
+
+IF OBJECT_ID('Sales.tr_SalesOrderDetailsDML','tr') is not null 
+drop trigger Sales.tr_SalesOrderDetailsDML
+
+go 
+
+create trigger Sales.tr_SalesOrderDetailsDML 
+on Sales.OrderDetails
+after DELETE, INSERT, UPDATE
+AS 
+BEGIN 
+	if @@ROWCOUNT = 0 return;
+	set nocount on;
+	select count(*) as InsertedCount from inserted;
+	select count(*) as DeletedCounted from deleted;
+END;
+
+go 
+
+
