@@ -3894,3 +3894,19 @@ exec Production.InsertProducts
 @unitprice = -100,
 @discontinued = 0;
 
+-- Triggers 
+-- After Triggers
+go 
+select * from Sales.OrderDetails;
+go 
+
+IF OBJECT_ID('Sales.tr_SalesOrderDetailsDML','TR') is not null 
+	Drop trigger Sales.tr_SalesOrderDetailsDML;
+go 
+create trigger Sales.tr_SalesOrderDetailsDML
+on Sales.OrderDetails
+for Delete, Insert, Update
+as 
+begin 
+set nocount on 
+end 
