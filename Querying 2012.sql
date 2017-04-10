@@ -3933,3 +3933,52 @@ END;
 go 
 
 
+select * from Production.Categories;
+
+---------------
+
+
+IF OBJECT_ID('Production.tr_ProductionCategory_categoryname','tr') is not null 
+drop trigger Production.tr_ProductionCategory_categoryname;
+
+go 
+create trigger Production.tr_ProductionCategory_categoryname
+on Production.Categories
+After insert, update 
+as 
+Begin 
+if @@ROWCOUNT = 0 return;
+set nocount on; 
+if exists (select count(*) from inserted as i 
+join Production.Categories as c 
+on i.categoryname = c.categoryname 
+group by i.categoryname
+having count(*) > 1)
+begin 
+throw 50000, 'Duplicate fategory name not allowed', 0;
+end;
+end;
+go 
+
+----------- the following insert statement works ony once, the second time it will throw an error
+
+insert into Production.Categories (categoryname, description)
+values('TestCategory1','Test1 description v1');
+
+-- updating the table 
+
+update Production.Categories 
+set categoryname = 'Beverages' where categoryname = 'TestCategory1';
+
+-- delete data 
+
+delete from Production.Categories where categoryname = 'TestCategory1';
+
+
+-- nested after trigger 
+
+-- If the nested trigger is in a Circular form (Table A trigger fires table B fires Table C Then Table C fires Table A), once the level has reached 32 executions the process will stop. 
+
+-- Test Stored procedure nesting 
+
+exec sp_configure 'nested trigger'
