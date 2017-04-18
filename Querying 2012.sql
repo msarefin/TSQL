@@ -3982,3 +3982,24 @@ delete from Production.Categories where categoryname = 'TestCategory1';
 -- Test Stored procedure nesting 
 
 exec sp_configure 'nested trigger'
+
+
+-- User defined functions
+
+--scalar functions
+
+IF OBJECT_ID('Sales.fn_extension','FN') is not null 
+DROP FUNCTION  Sales.fn_extension
+GO 
+CREATE FUNCTION Sales.fn_extension
+(
+@unitprice as money, 
+@qty as int
+)
+RETURNS MONEY 
+AS 
+BEGIN
+return @unitprice * @qty
+END;
+GO 
+
