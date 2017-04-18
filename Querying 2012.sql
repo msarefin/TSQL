@@ -3987,6 +3987,8 @@ exec sp_configure 'nested trigger'
 -- User defined functions
 
 --scalar functions
+use TSQL2012;
+go 
 
 IF OBJECT_ID('Sales.fn_extension','FN') is not null 
 DROP FUNCTION  Sales.fn_extension
@@ -4003,3 +4005,11 @@ return @unitprice * @qty
 END;
 GO 
 
+-- 
+
+use TSQL2012;
+go 
+
+select d.unitprice, d.qty, Sales.fn_extension(d.unitprice, d.qty) as 'Sales.fn_extension'
+from Sales.OrderDetails as d
+for xml auto, root('sales') ;
