@@ -4040,3 +4040,16 @@ where qty between @lowqty and @highqty
 );
 go 
 
+-- 
+
+select * from Sales.fn_FilteredExtension(10,20);
+
+select 
+e.orderid, 
+e.unitprice, 
+e.qty,
+Sales.fn_extension(unitprice, qty) as 'extension'
+--Sales.fn_FilteredExtension(12,15) test -- cannot call table valued function in columns
+ 
+from Sales.fn_FilteredExtension(10,20) as e;
+
