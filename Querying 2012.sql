@@ -4006,6 +4006,10 @@ END;
 GO 
 
 -- 
+--
+--FN - SQL scalar fucntion 
+--IF - SQL inline Table-Valued function 
+--TF - SQL Table-Valued-Function
 
 use TSQL2012;
 go 
@@ -4013,3 +4017,26 @@ go
 select d.unitprice, d.qty, Sales.fn_extension(d.unitprice, d.qty) as 'Sales.fn_extension'
 from Sales.OrderDetails as d
 for xml auto, root('sales') ;
+
+
+-----------------------Table valued function----------------
+go 
+use TSQL2012;
+go 
+
+IF OBJECT_ID('Sales.fn_FilteredExtension','IF') is not null 
+drop function Sales.fn_FilteredExtension;
+go 
+Create function Sales.fn_FilteredExtension
+(
+@lowqty as smallint,
+@highqty as smallint
+)
+returns table as return
+(
+select orderid, unitprice, qty
+from Sales.OrderDetails
+where qty between @lowqty and @highqty
+);
+go 
+
