@@ -3986,7 +3986,7 @@ exec sp_configure 'nested trigger'
 
 -- User defined functions
 
---scalar functions
+-----------------------------------scalar functions
 use TSQL2012;
 go 
 
@@ -4020,6 +4020,9 @@ for xml auto, root('sales') ;
 
 
 -----------------------Table valued function----------------
+
+-----------------------Inline Table-Valued function--------------
+
 go 
 use TSQL2012;
 go 
@@ -4052,4 +4055,69 @@ Sales.fn_extension(unitprice, qty) as 'extension'
 --Sales.fn_FilteredExtension(12,15) test -- cannot call table valued function in columns
  
 from Sales.fn_FilteredExtension(10,20) as e;
+
+---
+go
+use TSQL2012;
+go
+select e.orderid, e.qty, e.unitprice, Sales.fn_extension(e.unitprice, e.qty) as 'Total'
+from sales.fn_FilteredExtension(10,20) as e 
+where Sales.fn_extension(e.unitprice, e.qty) > 2000;
+
+------------------ Multi statement table valued function 
+
+if OBJECT_ID('Sales.fn_FilteredExtension2','TF') is not null
+drop function Sales.fn_FilteredExtension2;
+go 
+create function Sales.fn_FilteredExtension2
+(@lowqty as smallint, @highqty as smallint)
+
+returns @returnable table 
+
+(orderid int, unitprice money, qty smallint)
+
+as 
+begin 
+	insert @returnable
+	select orderid, unitprice, qty
+	from sales.OrderDetails where qty between @lowqty and @highqty
+	return 
+end 
+go 
+
+-- 
+
+select orderid, unitprice, qty
+from Sales.fn_FilteredExtension2(10,20);
+
+-- 
+
+select * from Sales.fn_FilteredExtension(10,20);
+
+--
+go
+if OBJECT_ID('Sales.fn_GetProductSalesTotal','FN') is not null 
+drop function Sales.fn_GetProductSalesTotal
+go 
+
+create function Sales.fn_GetProductSalesTotal
+(@productid int)
+returns money
+as begin 
+declare @SalesTotal as money
+
+select @SalesTotal = SUM(od.unitprice*od.qty) 
+from Sales.orders as d join sales.OrderDetails as od
+on d.orderid = od.orderid
+where d.orderdate=od.orderid
+group by d.orderid
+
+return @salesTotal
+end;
+go
+
+select *, sales.fn_GetProductSalesTotal(12) 'productid' from Sales.Orders;
+
+select * from Sales.Customers;
+
 
