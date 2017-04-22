@@ -1,10 +1,15 @@
-create database TaxiEarnings;
+IF DB_ID('TaxiEarnings') is null
+create database TaxiEarnings
+else print 'Database Already Exists';
+
 go 
 use TaxiEarnings;
 go 
 
-create schema TAXI;
-
+IF not exists (select name from sys.schemas where name = 'TAXI')
+execute('
+create schema TAXI
+')
 go 
 --select * from sys.tables
 
