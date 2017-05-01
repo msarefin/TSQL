@@ -4128,3 +4128,11 @@ from Sales.Customers as c
 join sales.Orders as o 
 on c.custid = o.custid
 order by c.custid, o.orderid;
+
+
+/*
+Next take under Object Explorer navigate to 
+ServerName -> Management -> Extended Events -> Sessions 
+Then right click on the sessions folder and then select New Session Wizard 
+*/
+
