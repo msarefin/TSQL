@@ -4136,3 +4136,4 @@ ServerName -> Management -> Extended Events -> Sessions
 Then right click on the sessions folder and then select New Session Wizard 
 */
 
+
