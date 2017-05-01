@@ -4121,3 +4121,10 @@ select *, sales.fn_GetProductSalesTotal(12) 'productid' from Sales.Orders;
 select * from Sales.Customers;
 
 
+-------------------- Practice using extended events 
+
+select c.custid, c.companyname, o.orderid, o.orderdate
+from Sales.Customers as c 
+join sales.Orders as o 
+on c.custid = o.custid
+order by c.custid, o.orderid;
