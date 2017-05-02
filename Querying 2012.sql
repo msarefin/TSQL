@@ -4137,3 +4137,35 @@ Then right click on the sessions folder and then select New Session Wizard
 */
 
 
+-- Set session option 
+
+dbcc dropcleanbuffers;
+set statistics io on;
+select * from Sales.Customers;
+select * from sales.Orders;
+
+/*
+-- Set Statestics io on;
+This code checks the number of pages the code uses
+*/
+
+------------ Identical Queries with a little difference
+dbcc dropcleanbuffers;
+
+select c.custid, c.companyname, o.orderid, o.orderdate
+from sales.Customers as c inner join sales.Orders as o on c.custid = o.custid;
+
+select c.custid, c.companyname, o.orderid, o.orderdate
+from Sales.Customers as c inner join Sales.Orders as o on c.custid = o.custid
+where o.custid < 5;
+
+----------------------
+go 
+
+set statistics time on;
+dbcc dropcleanbuffers;
+
+select c.custid, c.companyname, o.orderid, o.orderdate
+from sales.Customers as c inner join Sales.Orders  as o on c.custid = o.custid;
+
+
