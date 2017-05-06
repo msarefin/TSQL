@@ -4140,6 +4140,7 @@ Then right click on the sessions folder and then select New Session Wizard
 -- Set session option 
 
 dbcc dropcleanbuffers;
+--set statistics io off;
 set statistics io on;
 select * from Sales.Customers;
 select * from sales.Orders;
@@ -4153,19 +4154,28 @@ This code checks the number of pages the code uses
 dbcc dropcleanbuffers;
 
 select c.custid, c.companyname, o.orderid, o.orderdate
-from sales.Customers as c inner join sales.Orders as o on c.custid = o.custid;
+from sales.Customers as c 
+inner join 
+sales.Orders as o on c.custid = o.custid;
 
 select c.custid, c.companyname, o.orderid, o.orderdate
-from Sales.Customers as c inner join Sales.Orders as o on c.custid = o.custid
+from Sales.Customers as c 
+inner join 
+Sales.Orders as o on c.custid = o.custid
 where o.custid < 5;
 
 ----------------------
 go 
 
+--set statistics time off;
 set statistics time on;
 dbcc dropcleanbuffers;
 
 select c.custid, c.companyname, o.orderid, o.orderdate
-from sales.Customers as c inner join Sales.Orders  as o on c.custid = o.custid;
+from sales.Customers as c 
+inner join 
+Sales.Orders as o 
+on c.custid = o.custid;
 
+----------------------------------------
 
