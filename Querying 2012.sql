@@ -283,7 +283,7 @@ select orderid, orderdate, custid, empid
 from sales.orders
 where shippeddate =  null;
 
--- When you say where condition is null, it simply measn tahat the condition is unknown. so even of the result set exist you will get an empty table becaus its looking for an unknown
+-- When you say where condition is null, it simply means that the condition is unknown. so even of the result set exist you will get an empty table becaus its looking for an unknown
 
 select orderid, orderdate, custid, empid 
 from sales.orders where shippeddate is null;
@@ -4229,4 +4229,52 @@ go
 set statistics xml off;
 
 ----------------------------------------
+
+select c.custid, MIN(c.companyname) as companyname, COUNT(*) as numorders
+from sales.Customers as c 
+inner join Sales.Orders as o 
+on c.custid = o.custid
+where o.custid < 5
+group by c.custid
+having COUNT(*) > 6
+
+
+-- Exercise 1 
+use TSQL2012;
+go 
+select N1.n*100000 + O.orderid as norderid, o.*
+into dbo.NewOrders
+from Sales.Orders as o 
+cross join (values(1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17),(18),(19),(20),(21),(22),(23),(24),(25),(26),(27),(28),(29),(30)) as N1(n);
+
+
+
+select * from dbo.NewOrders;
+
+create nonclustered index idx_nc_orderid on dbo.NewOrders(orderid);
+
+
+go 
+set statistics io on;
+set statistics time on;
+
+go 
+
+select norderid 
+from dbo.NewOrders where norderid = 110248
+order by norderid;
+
+set statistics io off;
+set statistics time off;
+
+select norderid
+from dbo.NewOrders
+where norderid = 110248
+order by norderid; 
+
+create nonclustered index idx_nc_norderid on dbo.NewOrders(norderid);
+
+
+drop table dbo.NewOrders; 
+
 
