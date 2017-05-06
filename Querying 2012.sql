@@ -4166,7 +4166,7 @@ where o.custid < 5;
 
 ----------------------
 go 
-
+set statistics io off;
 --set statistics time off;
 set statistics time on;
 dbcc dropcleanbuffers;
@@ -4176,6 +4176,57 @@ from sales.Customers as c
 inner join 
 Sales.Orders as o 
 on c.custid = o.custid;
+
+----------------------------------------
+-- For estimated plan 
+go 
+set showplan_text on;
+
+go 
+select * from hr.Employees;
+go 
+set showplan_text off;
+go 
+
+
+set showplan_all on;
+go 
+select * from hr.Employees;
+go 
+set showplan_all off;
+
+go 
+
+----------------------------------------
+-- For Actual plan 
+
+set statistics profile on;
+go 
+select * from hr.Employees;
+go 
+set statistics profile off;
+go 
+---------------------------------------
+
+--for estimated plan 
+
+set showplan_xml on;
+go 
+select * from HR.Employees;
+go 
+set showplan_xml off;
+go
+--------------------------------------
+
+-- for actual plan 
+
+set statistics xml on;
+go 
+
+select * from hr.Employees;
+go 
+
+set statistics xml off;
 
 ----------------------------------------
 
