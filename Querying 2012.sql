@@ -4391,3 +4391,42 @@ execution_count,
 
 from sys.dm_exec_query_stats
 
+--------------------exercise -----------------------
+use TSQL2012
+go 
+
+select N1.n*100000 + o.orderid as norderid, o.* 
+into dbo.NewOrders
+from Sales.Orders as o
+cross join (values(1),(2),(3)) as N1(n);
+go 
+create nonclustered index idx_nc_orderid on dbo.NewOrders(orderid);
+go 
+select norderid from dbo.NewOrders where norderid = 110248
+order by norderid; 
+go 
+
+-- Finding missing indexes 
+
+select mid.statement as 'Database.Schema.Table',
+MIC.column_id as 'Column ID',
+MIC.column_name as 'Column Name',
+MIC.column_usage as 'Column Usage',
+MIGS.user_seeks as 'User Seek',
+MIGS.user_scans as 'User Scan',
+MIGS.last_user_seek as 'Last User Seek',
+MIGS.avg_total_user_cost as 'Avarage Query Cost Reduction',
+MIGS.avg_user_impact as 'Avarage PCT Benefit'  
+from sys.dm_db_missing_index_details as MID
+cross apply sys.dm_db_missing_index_columns(MID.index_handle) as MIC
+inner join sys.dm_db_missing_index_groups as MIG 
+on MIG.index_handle = mid.index_handle
+inner join sys.dm_db_missing_index_group_stats as MIGS
+on MIG.index_group_handle = MIGS.group_handle
+order by MIGS.avg_user_impact desc;
+
+
+-- clean up 
+
+drop table dbo.NewOrders
+
