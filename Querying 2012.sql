@@ -4352,3 +4352,37 @@ inner join
 sys.dm_exec_sessions as s 
 on Wt.session_id = s.session_id 
 where s.is_user_process = 1;
+
+
+select 
+	s.login_name, 
+	s.host_name, 
+	s.program_name, 
+	r.command, 
+	t.text, 
+	r.wait_type, 
+	r.wait_time, 
+	r.blocking_session_id
+from sys.dm_exec_requests as r 
+inner join 
+sys.dm_exec_sessions as s 
+on r.session_id = s.session_id 
+outer apply sys.dm_exec_sql_text(r.sql_handle) as T where s.is_user_process = 1;
+
+------------------------------------------------
+
+select top (5) 
+(total_logical_reads+total_logical_writes) as 'Total Logical IO',
+execution_count,
+(total_logical_reads/execution_count) as 'Avarage logical reads',
+(total_logical_writes/execution_count) as 'Avarage logical writes',
+
+(select 
+SUBSTRING(text, statement_start_offset/2 + 1, 
+(case when statement_end_offset = -1 
+then LEN(convert(nvarchar(max), text))*2
+else statement_end_offset
+end - statement_start_offset)/2) 
+from sys.dm_exec_sql_text(sql_handle)) as 'Query Text'
+
+from sys.dm_exec_query_stats
