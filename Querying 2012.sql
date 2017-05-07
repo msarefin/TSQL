@@ -4377,12 +4377,17 @@ execution_count,
 (total_logical_reads/execution_count) as 'Avarage logical reads',
 (total_logical_writes/execution_count) as 'Avarage logical writes',
 
-(select 
-SUBSTRING(text, statement_start_offset/2 + 1, 
-(case when statement_end_offset = -1 
-then LEN(convert(nvarchar(max), text))*2
-else statement_end_offset
-end - statement_start_offset)/2) 
-from sys.dm_exec_sql_text(sql_handle)) as 'Query Text'
+	(select 
+	SUBSTRING
+		(text, statement_start_offset/2 + 1, 
+			(case when statement_end_offset = -1 
+			then LEN
+				(convert(nvarchar(max), text))*2
+			else statement_end_offset
+			end - statement_start_offset)
+		/2) 
+	from sys.dm_exec_sql_text(sql_handle)
+	) as 'Query Text'
 
 from sys.dm_exec_query_stats
+
