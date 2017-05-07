@@ -4277,4 +4277,78 @@ create nonclustered index idx_nc_norderid on dbo.NewOrders(norderid);
 
 drop table dbo.NewOrders; 
 
+-----------------------------------------------------
 
+-- Dynamic Management Object --
+
+select 
+cpu_count as logical_cpu_count,
+cpu_count/ hyperthread_ratio as physical_cpu_count, 
+cast(physical_memory_kb/1024 as int) as physical_memory_mb, 
+sqlserver_start_time
+from sys.dm_os_sys_info;
+
+-----------------------------------------------------
+
+/*
+sys.dm_os_sys_info give you onformation about the system resources
+*/
+
+select cpu_count as 'Logical CPU count',
+cpu_count/hyperthread_ratio as 'Physical CPU count',
+CAST(physical_memory_kb/1024 as int) as 'Physical memory in MB',
+sqlserver_start_time as 'SQL Server Startup time'
+from sys.dm_os_sys_info;
+
+---------------------------------------------------------------------
+
+select * from sys.dm_os_waiting_tasks;
+select * from sys.dm_exec_sessions;
+
+
+---------------------------------------------------------------------
+/*
+sys.dm_os_waiting_tasks give information about sessions that ara currently witing for something. 
+
+sys.dm_exec_sessions gives information about the user, host and application that are waiting 
+
+*/
+
+
+select s.login_name, 
+s.host_name, 
+s.program_name, 
+wt.session_id, 
+wt.wait_duration_ms, 
+wt.wait_type, 
+wt.blocking_session_id,
+wt.resource_description
+from sys.dm_os_waiting_tasks as wt 
+inner join 
+sys.dm_exec_sessions as s on wt.session_id = s.session_id
+where s.is_user_process = 1;
+
+---------------------------------------------
+
+/*
+sys.dm_exec_exec_requests returns information about currently executing request
+*/
+
+select s.login_name, s.host_name, s.program_name, r.command, t.text, r.wait_type, r.wait_time, r.blocking_session_id
+from sys.dm_exec_requests as r 
+inner join sys.dm_exec_sessions as s on r.session_id = s.session_id
+outer apply sys.dm_exec_sql_text(R.sql_handle) as T where s.is_user_process =1;
+
+select s.login_name, 
+s.host_name, 
+s.program_name, 
+wt.session_id, 
+wt.wait_duration_ms, 
+wt.wait_type, 
+wt.blocking_session_id,
+wt.resource_description
+from sys.dm_os_waiting_tasks as wt 
+inner join 
+sys.dm_exec_sessions as s 
+on Wt.session_id = s.session_id 
+where s.is_user_process = 1;
