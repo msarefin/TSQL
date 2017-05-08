@@ -4524,4 +4524,28 @@ from sys.dm_db_index_physical_stats(DB_ID(N'TSQL2012'), object_id(N'dbo.TestStru
 
 exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
 
+insert into dbo.TestStructure(id, filter1, filter2)
+values(31,'a','b');
+
+go 
+declare @i as int = 31;
+while @i < 240 
+begin 
+	set @i = @i + 1;
+	insert into dbo.TestStructure(id, filter1, filter2)
+	values(@i, 'a','b');
+
+end  
+
+
+select index_type_desc, page_count, record_count, avg_page_space_used_in_percent
+from sys.dm_db_index_physical_stats(DB_ID(N'TSQL2012'), object_id(N'dbo.TestStructure'), null, null, 'detailed');
+
+exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
+
+
+ insert into dbo.TestStructure(id, filter1, filter2)
+ values(241, 'a','b')
+
+
 
