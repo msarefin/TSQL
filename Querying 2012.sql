@@ -4430,3 +4430,98 @@ order by MIGS.avg_user_impact desc;
 
 drop table dbo.NewOrders
 
+/* Chapter 15 */
+
+use TSQL2012;
+go 
+
+if OBJECT_ID('dbo.TestStructure','U') is not null 
+drop table dbo.TestStructure
+go 
+
+create table dbo.TestStructure
+(
+id int  not null,
+filter1 char(36) not null,
+filter2 char(216) not null
+);
+
+if OBJECT_ID('dbo.TestStructure','U') is not null 
+select * from dbo.TestStructure
+go 
+
+select OBJECT_NAME(object_id) as Table_name, 
+name as index_name,type, type_desc 
+from sys.indexes
+where object_id = object_id(N'dbo.TestStructure',N'U');
+
+/*
+When Tables are create without clustered or nonclustered indexes the entire table is put on the heap which contains a number of pages. 
+When SQL Server querys the table it needs to search the entire heap to find the data!
+*/
+
+/*
+Table_name		Index_Name	Type	Type_desc
+------------	----------	----	---------
+TestStructure	NULL		0		HEAP
+
+The type column stores
+0  for heap 
+1  for clustered index 
+2  for nonclusterd index
+*/
+
+
+-------------- Heap allocation check------------
+
+go 
+select index_type_desc, page_count, record_count, avg_page_space_used_in_percent
+from sys.dm_db_index_physical_stats 
+(DB_ID(N'TSQL2012'), OBJECT_ID(N'dbo.TestStructure'), null, null, 'detailed'
+);
+exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
+
+
+---------------------------------
+
+insert into dbo.TestStructure(id, filter1, filter2)
+values (1,'a','b');
+
+
+select index_type_desc,
+page_count, 
+record_count, avg_page_space_used_in_percent 
+from sys.dm_db_index_physical_stats
+(DB_ID(N'TSQL2012'), OBJECT_ID(N'dbo.TestStructure'), null, null, 'detailed');
+exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
+
+
+--select index_type_desc, page_count, record_count, avg_page_space_used_in_percent
+--from sys.dm_db_index_physical_stats
+--(DB_ID(N'TaxiEarnings'), OBJECT_ID(N'Taxi.TaxiJournal'), null,null,'detailed');
+--exec dbo.sp_spaceused @objname = N'TaxiEarnings.Taxi.TaxiJournal', @updateusage = true;
+
+
+--select * from TaxiEarnings.TAXI.TaxiJournal;
+
+
+
+/*The follwing while loop will simply populate the dbo.TestStructure table with dummy data*/
+
+declare @i as int = 1;
+while @i <30
+begin
+set @i= @i + 1;
+insert into dbo.TestStructure(id, filter1,filter2)
+values
+(@i,'a','b');
+end;
+
+select * from dbo.TestStructure;
+
+select index_type_desc, page_count, record_count, avg_page_space_used_in_percent
+from sys.dm_db_index_physical_stats(DB_ID(N'TSQL2012'), object_id(N'dbo.TestStructure'), null, null, 'detailed');
+
+exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
+
+
