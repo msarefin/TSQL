@@ -4547,5 +4547,7 @@ exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
  insert into dbo.TestStructure(id, filter1, filter2)
  values(241, 'a','b')
 
+ --- Clustered index 
+
 
 
