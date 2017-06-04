@@ -4450,6 +4450,9 @@ if OBJECT_ID('dbo.TestStructure','U') is not null
 select * from dbo.TestStructure
 go 
 
+
+-- General information about the table 
+
 select OBJECT_NAME(object_id) as Table_name, 
 name as index_name,type, type_desc 
 from sys.indexes
@@ -4475,10 +4478,15 @@ The type column stores
 -------------- Heap allocation check------------
 
 go 
-select index_type_desc, page_count, record_count, avg_page_space_used_in_percent
+select 
+index_type_desc, 
+page_count, 
+record_count, 
+avg_page_space_used_in_percent
 from sys.dm_db_index_physical_stats 
 (DB_ID(N'TSQL2012'), OBJECT_ID(N'dbo.TestStructure'), null, null, 'detailed'
 );
+
 exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
 
 
@@ -4547,7 +4555,33 @@ exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
  insert into dbo.TestStructure(id, filter1, filter2)
  values(241, 'a','b')
 
+select index_type_desc, page_count, record_count, avg_page_space_used_in_percent 
+from sys.dm_db_index_physical_stats(DB_ID(N'TSQL2012'),OBJECT_ID(N'dbo.TestStructure'),null, null, 'detailed');
+
+exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
+go 
+
  --- Clustered index 
 
+truncate table dbo.TestStructure;
+create clustered index idx_cl_id on dbo.TestStructure(id);
+
+select OBJECT_NAME(object_id) as Table_Nmae, name as Index_name, type, type_desc
+from sys.indexes 
+where object_id = object_id(N'TestStructure', N'U');
+
+
+declare @i as int = 0;
+while @i < 18630
+begin 
+set @i = @i + 1;
+insert into dbo.TestStructure(id, filter1, filter2)
+values (@i, 'a','b');
+end; 
+
+-- Clustere index allocation check 
+
+select index_type_desc, index_depth,index_level, page_count, record_count, avg_page_space_used_in_percent
+from sys.dm_db_index_physical_stats(db_id(N'TSQL2012'), object_id(N'TestStructure'),null,null, 'Detailed');
 
 
