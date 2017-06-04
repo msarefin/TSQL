@@ -4585,3 +4585,71 @@ select index_type_desc, index_depth,index_level, page_count, record_count, avg_p
 from sys.dm_db_index_physical_stats(db_id(N'TSQL2012'), object_id(N'TestStructure'),null,null, 'Detailed');
 
 
+insert into dbo.TestStructure (id, filter1, filter2)
+values (18631 , 'a','b');
+
+select index_type_desc, index_depth, index_level, page_count, record_count, avg_page_space_used_in_percent
+from sys.dm_db_index_physical_stats(DB_ID(N'TSQL2012'), object_id(N'TestStructure'), null, null, 'Detailed');
+
+
+go 
+truncate table dbo.TestStructure;
+declare @i as int = 0;
+while @i <8908
+begin 
+set @i = @i +1;
+insert into dbo.TestStructure(id, filter1, filter2)
+values (@i % 100, 'a','b');
+end;
+
+select index_type_desc, index_depth, index_level, page_count, record_count, avg_page_space_used_in_percent
+from sys.dm_db_index_physical_stats(db_id(N'TSQL2012'), OBJECT_ID(N'TestStructure'), null, null, 'Detailed');
+
+select * from dbo.TestStructure;
+
+insert into dbo.TestStructure(id, filter1, filter2)
+values (8909 % 100, 'a', 'b');
+
+
+select index_type_desc, index_depth, index_level, page_count, record_count, avg_page_space_used_in_percent
+from sys.dm_db_index_physical_stats(db_id(N'TSQL2012'),OBJECT_ID(N'TestStructure'), null, null, 'Detailed');
+
+go
+truncate table dbo.TestStructure;
+
+drop index idx_cl_id on dbo.TestStructure;
+create clustered index  idx_cl_filter1 on dbo.TestStructure(filter1);
+
+declare @i as int = 0;
+while @i < 9000
+begin
+set @i = @i+1;
+insert into dbo.TestStructure(id, filter1, filter2)
+values(@i,FORMAT(@i, '00000'), 'b')
+end 
+
+select * from dbo.TestStructure;
+
+select index_level,page_count, avg_page_space_used_in_percent, avg_fragmentation_in_percent
+from sys.dm_db_index_physical_stats(db_id(N'TSQL2012'), object_id(N'TestStructure'), null, null, 'Detailed')
+
+
+go 
+
+truncate table dbo.TestStructure;
+Declare @i as int  = 0;
+while @i <9000
+begin 
+set @i = @i +1;
+insert into dbo.TestStructure(id, filter1, filter2)
+values (@i, cast(NEWID() as char(36)), 'b');
+end;
+
+select * from dbo.TestStructure;
+
+
+select index_level, page_count, avg_page_space_used_in_percent, avg_fragmentation_in_percent
+from sys.dm_db_index_physical_stats(db_id(N'TSQL2012'),object_id(N'TestStructure'), null, null, 'Detailed');
+
+
+
