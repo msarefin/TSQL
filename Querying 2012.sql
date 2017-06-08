@@ -4653,3 +4653,4 @@ from sys.dm_db_index_physical_stats(db_id(N'TSQL2012'),object_id(N'TestStructure
 
 
 
+
