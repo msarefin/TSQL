@@ -4652,5 +4652,19 @@ select index_level, page_count, avg_page_space_used_in_percent, avg_fragmentatio
 from sys.dm_db_index_physical_stats(db_id(N'TSQL2012'),object_id(N'TestStructure'), null, null, 'Detailed');
 
 
+go 
 
+/*
+Chapter 15 - Implementing Indexes and Statestics
+=================================================
+*Lesson 1: Implementing Indexes
+-------------------------------
 
+SQL server internally organizes data files in PAGES which 8 KB each and belongs to single object. Pages are further arranges into EXTENTS which are 8 consecutive PAGES in length.
+
+An EXTENT with PAGES belonging to multiple objects is known as a Mixed Extent
+An Extent with pages belonging to single object is known as Uniform Extent.
+
+SQL Server stores the first 8 pages of an Object in a mixed extent. When the object exceedes the first 8 pages then SQL Server allocates additional Uniform Extents. 
+
+*/
