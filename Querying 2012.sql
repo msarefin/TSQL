@@ -4667,4 +4667,5 @@ An Extent with pages belonging to single object is known as Uniform Extent.
 
 SQL Server stores the first 8 pages of an Object in a mixed extent. When the object exceedes the first 8 pages then SQL Server allocates additional Uniform Extents. 
 
+
 */
