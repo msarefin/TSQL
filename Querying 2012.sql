@@ -4667,5 +4667,12 @@ An Extent with pages belonging to single object is known as Uniform Extent.
 
 SQL Server stores the first 8 pages of an Object in a mixed extent. When the object exceedes the first 8 pages then SQL Server allocates additional Uniform Extents. 
 
+SQL Server stores data either as a Heap or Balanced Tree. Tables stored as Balanced Tree is also knows as Clustered Table or Clustered Index. 
+
+indexes are always Table Data organized as Balanced tree
+
+Clustered indexes are balanced tree that do not contain data, rather they contain pointers to tables and rows on the heap.
 
 */
+
+
