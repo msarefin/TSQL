@@ -4671,8 +4671,10 @@ SQL Server stores data either as a Heap or Balanced Tree. Tables stored as Balan
 
 indexes are always Table Data organized as Balanced tree
 
-Clustered indexes are balanced tree that do not contain data, rather they contain pointers to tables and rows on the heap.
+--------------Clustered index--------------
 
+Tables are organized as a balanced tree
+ 
 */
 
 
