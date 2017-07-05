@@ -148,3 +148,14 @@ from sys.dm_db_index_physical_stats(DB_ID(N'tempdb'), OBJECT_ID(N'dbo.TestStruct
 
 exec dbo.sp_spaceused @objname = N'dbo.TestStructure', @updateusage = true;
 
+select * from dbo.TestStructure;
+
+go 
+
+declare @i int = 0 
+while @i <100
+begin 
+set @i = @i + 1
+print @i % 2
+end
+;
