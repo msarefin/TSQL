@@ -4686,3 +4686,14 @@ indexes are always Table Data organized as Balanced tree
 Tables are organized as a balanced tree
  
 */
+
+
+/*
+You can get rid of fragmantation if you Rebuild and reorganize the index
+Reorganizing an index is slower but less intrusive than rebuilding an index
+You should 
+reorganize index if the extrenal fragmantation is less than 30% 
+and 
+rebuild index if the external fragmantation is greater than 30%
+
+*/
