@@ -4697,3 +4697,15 @@ and
 rebuild index if the external fragmantation is greater than 30%
 
 */
+
+alter index idx_cl_filter1 on dbo.teststructure rebuild;
+
+select 
+	index_level, 
+	page_count,
+	avg_page_space_used_in_percent,
+	avg_fragmentation_in_percent 
+from sys.dm_db_index_physical_stats(DB_ID(N'TSQL2012'), OBJECT_ID(N'dbo.teststructure'), null, null, 'detailed');
+
+
+
