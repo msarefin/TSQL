@@ -102,7 +102,7 @@ begin
 	insert into dbo.TestStructure(ID, Filter1, Filter2)
 	values 
 	(@i, 'a', 'b')
-end 
+end;
 
 select * from dbo.TestStructure;
 
@@ -120,7 +120,7 @@ exec dbo.sp_spaceused @objname =N'dbo.TestStructure', @updateusage = true;
 go 
 truncate table dbo.TestStructure;
 declare @i as int = 0 
-while @i <8909
+while @i <8908
 begin 
 set @i = @i + 1;
 insert into dbo.TestStructure(ID, Filter1, Filter2)
@@ -159,3 +159,54 @@ set @i = @i + 1
 print @i % 2
 end
 ;
+
+go 
+truncate table dbo.TestStructure;
+go 
+--Drop Clustered index
+
+drop index idx_cl_id on dbo.TestStructure;
+
+create clustered index idx_cl_filter1 on dbo.teststructure(filter1);
+go
+declare @i int = 0;
+while @i <9000
+begin 
+set @i = @i+1;
+insert into dbo.TestStructure(ID, Filter1, Filter2)
+values(@i,format(@i,'0000'),'b');
+end;
+
+select * from dbo.TestStructure;
+
+
+select 
+	index_level,
+	page_count, avg_page_space_used_in_percent,	
+	avg_fragmentation_in_percent
+from sys.dm_db_index_physical_stats(db_id(N'TempDB'), object_id(N'dbo.TestStructure'), null, null, 'detailed');
+
+
+------------
+go 
+truncate table dbo.Teststructure;
+go
+
+declare @i int = 0 
+while @i <9000
+begin
+set @i = @i+1;
+insert into dbo.TestStructure(ID, Filter1, Filter2)
+values
+(@i, cast(newid() as char(36)),'b');
+end;
+
+
+select * from dbo.TestStructure;
+ 
+select 
+	index_level, 
+	page_count,
+	avg_page_space_used_in_percent as 'percentage of pages filled', 
+	avg_fragmentation_in_percent as 'External fragmantation'
+from sys.dm_db_index_physical_stats(DB_ID(N'Tempdb'), OBJECT_ID(N'dbo.TestStructure'), null,null, 'detailed');

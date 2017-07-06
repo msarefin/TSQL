@@ -4570,6 +4570,13 @@ select OBJECT_NAME(object_id) as Table_Nmae, name as Index_name, type, type_desc
 from sys.indexes 
 where object_id = object_id(N'TestStructure', N'U');
 
+/*The result is as follows
+
+Table_name		Index_name	type	Type_desc
+----------------------------------------------
+TestStructure	idx_cl_ID	1		CLUSTERED
+*/
+
 
 declare @i as int = 0;
 while @i < 18630
@@ -4648,7 +4655,10 @@ end;
 select * from dbo.TestStructure;
 
 
-select index_level, page_count, avg_page_space_used_in_percent, avg_fragmentation_in_percent
+select index_level, 
+page_count, 
+avg_page_space_used_in_percent as 'Percentage of pages Filled', 
+avg_fragmentation_in_percent 'Percentages of exetrnal fragmentation'
 from sys.dm_db_index_physical_stats(db_id(N'TSQL2012'),object_id(N'TestStructure'), null, null, 'Detailed');
 
 
@@ -4676,5 +4686,3 @@ indexes are always Table Data organized as Balanced tree
 Tables are organized as a balanced tree
  
 */
-
-
