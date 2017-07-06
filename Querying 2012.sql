@@ -4708,4 +4708,28 @@ select
 from sys.dm_db_index_physical_stats(DB_ID(N'TSQL2012'), OBJECT_ID(N'dbo.teststructure'), null, null, 'detailed');
 
 
+/*
+Nonclustered index 
+------------------
+
+Non-clusterd indexes are similar to clustered index. The only difference is the leaf level. The conteat of the leaf level depends on the underlying table, wherther the table is organized as a heap or as a balanced tree.
+
+A a table can have only upto 999 non clustered indexes
+
+the leaf level of a nonclustered index contains the index keys and row locators which points to a row in the underlying table. If the table is a heap the row locator is called row identifier(RID)
+
+RIDs are 8 byte pointer that contains the Database file ID and page ID of the target row ID on th page. 
+
+The operation of retriving the row from the HEAP is called RID Look up 
+ RID Lookup is very efficient if the query is very selective and searches for one row or a small num of rows
+
+But when the number of rows the query retreives increases,the RID Lookup becomes more expensive, becasue the cost of RID lookup is one page per row. 
+
+If the table is organized as a balanced tree, then the row locator is a clustering key. In this situation the when SQL Server seeks a row, it has to go through all levels of the non-clustered index and also the clustered index. This is kmown as Key Lookup 
+
+The clustering key is not unique and therefore a uniquifier is added to the repeating values. 
+
+
+*/
+
 

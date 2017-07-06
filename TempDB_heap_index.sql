@@ -210,3 +210,5 @@ select
 	avg_page_space_used_in_percent as 'percentage of pages filled', 
 	avg_fragmentation_in_percent as 'External fragmantation'
 from sys.dm_db_index_physical_stats(DB_ID(N'Tempdb'), OBJECT_ID(N'dbo.TestStructure'), null,null, 'detailed');
+
+
