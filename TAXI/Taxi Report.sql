@@ -164,7 +164,7 @@ count(v.[Month Number]) as 'No. of days worked',
 SUM([Profit (Loss)]) as 'Total Profit'
 from TAXI.vTaxiWorkSheet as v where v.Year = YEAR(GETDATE())
 group by grouping sets  (v.[Month Number],v.Year)
-order by v.[Month Number] desc
+order by v.[Month Number] 
 
 
 

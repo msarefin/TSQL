@@ -4732,4 +4732,173 @@ The clustering key is not unique and therefore a uniquifier is added to the repe
 
 */
 
+----------------- Search argument ---------------
+use TSQL2012;
+go
 
+select OBJECT_NAME(s.object_id) as Table_Name,
+i.name as Index_name,
+s.user_seeks, 
+s.user_scans, s.user_lookups
+from sys.dm_db_index_usage_stats as s 
+inner join 
+sys.indexes as i 
+on s.object_id = i.object_id
+and s.index_id = i.index_id
+where s.object_id = object_id(N'sales.orders', N'U');
+
+----
+
+select orderid, custid,shipcity 
+from sales.Orders;
+
+
+select 
+	d.orderid, 
+	d.custid, 
+	d.shipcity 
+from sales.Orders as d
+where d.shipcity = N'Vancouver';
+
+---------------------------------------------------
+
+select 
+shipregion,
+count(*) as num_regions 
+from sales.Orders
+group by shipregion;
+
+---------------
+
+select 
+shipregion
+from sales.Orders
+order by shipregion;
+---------------------
+
+
+select orderid, custid, orderdate, shipname
+from Sales.orders
+where DATEDIFF(day, '20060709', orderdate) <= 2 
+and DATEDIFF(day, '20060709', orderdate) >0;
+
+select orderid, custid, orderdate, shipname 
+from sales.orders
+where DATEADD(day, 2, '20060709') >= orderdate
+and '20060709' < orderdate;
+
+----------------------
+
+select orderid, custid,orderdate ,shipname 
+ from Sales.orders 
+ where orderdate in ('20060710','20060711');
+
+ select orderid, custid, orderdate, shipname 
+ from sales.Orders
+ where orderdate = '20060710' 
+ or orderdate = '20060711'
+
+ ---------------------------
+
+select OBJECT_NAME(s.object_id) as 'Table Name',
+i.name as 'Index Name',
+s.user_seeks, s.user_scans, s.user_lookups 
+from sys.dm_db_index_usage_stats as s 
+inner join 
+sys.indexes as i 
+on s.index_id = i.index_id
+where s.object_id= object_id(N'sales.orders', N'U');
+
+
+select d.orderid, d.custid, d.shipcity
+from sales.Orders as d
+order by d.orderid;
+
+select orderid, custid, shipcity
+from sales.orders as d 
+where shipcity = N'Vancouver';
+
+select shipregion, COUNT(*) as num_regions
+from sales.Orders
+group by shipregion
+;
+
+select shipregion
+from sales.Orders
+order by shipregion
+
+create nonclustered index idx_nc_shipregion on sales.orders(Shipregion);
+
+select shipregion, count(*) as num_region
+from sales.Orders
+group by shipregion;
+-------------
+select shipregion
+from sales.Orders
+order by shipregion
+
+
+	select OBJECT_NAME(s.object_id) as 'Table Name',
+	i.name as 'Index Name',
+	s.user_seeks, s.user_scans, s.user_lookups 
+	from sys.dm_db_index_usage_stats as s 
+	inner join 
+	sys.indexes as i 
+	on s.index_id = i.index_id
+	where s.object_id= object_id(N'sales.orders', N'U');
+
+
+	drop index idx_nc_shipregion on sales.orders;
+
+
+
+-----------Search Argument ------------
+
+select orderid, custid, shipname
+from sales.Orders
+where DATEDIFF(day, '20060709',  orderdate) <=2
+and DATEDIFF(day, '20060709', orderdate) > 0;
+
+-- In the following query the orderdate is a search argument
+
+select * 
+from sales.Orders
+where DATEADD(day, 2,'20060709') >= orderdate
+and '20060709' < orderdate;
+
+
+select orderid, custid,orderdate, shipname 
+from sales.orders 
+where orderdate in ('20060710','20060711');
+
+
+select d.orderid, d.custid, d.orderdate, d.shipname
+from sales.Orders as d 
+where d.orderdate = '20060710'
+or d.orderdate = '20060711'
+;
+
+
+
+ ------------------------ Exerceise 
+
+use TSQL2012;
+go 
+
+create nonclustered index idx_nc_shipcity on sales.orders(shipcity);
+
+select orderid, custid, shipcity 
+from sales.orders
+where shipcity = N'Vancouver';
+
+---------------------
+
+select object_name(s.object_id) as table_name, 
+i.name as index_name,
+s.user_seeks, s.user_scans, s.user_lookups
+from sys.dm_db_index_usage_stats as s 
+inner join 
+sys.indexes as i 
+on s.object_id = i.object_id
+and s.index_id = i.index_id
+where s.object_id = object_id(N'Sales.Orders', N'U')
