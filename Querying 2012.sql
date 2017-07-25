@@ -4887,18 +4887,163 @@ go
 
 create nonclustered index idx_nc_shipcity on sales.orders(shipcity);
 
+
+use TSQL2012;
+go 
 select orderid, custid, shipcity 
 from sales.orders
 where shipcity = N'Vancouver';
 
 ---------------------
 
-select object_name(s.object_id) as table_name, 
+select 
+OBJECT_NAME(s.object_id) as Table_name,
+i.name as index_name,
+s.user_seeks, s.user_scans, s.user_lookups 
+from sys.dm_db_index_usage_stats as s inner join sys.indexes as i 
+on s.object_id = i.object_id and s.index_id = i.index_id
+where s.object_id = object_id(N'Sales.orders', N'U') and i.name = N'idx_nc_shipcity';
+
+
+select d.orderid, d.custid, d.shipcity
+from sales.Orders as d
+where d.custid = 42;
+
+
+select orderid, custid, shipcity 
+from sales.Orders as d 
+where custid = 42 or shipcity = N'Vancouver';
+-----------
+
+
+select OBJECT_NAME(s.object_id) as Table_name,
 i.name as index_name,
 s.user_seeks, s.user_scans, s.user_lookups
-from sys.dm_db_index_usage_stats as s 
-inner join 
-sys.indexes as i 
-on s.object_id = i.object_id
-and s.index_id = i.index_id
-where s.object_id = object_id(N'Sales.Orders', N'U')
+from sys.dm_db_index_usage_stats as s inner join sys.indexes as i 
+on s.object_id = i.object_id and s.index_id = i.index_id
+where s.object_id = object_id(N'Sales.orders', N'U') and i.name = N'idx_nc_shipcity';
+
+-----------------------
+
+----- Exerceise 2 
+
+select orderid, custid, shipcity
+from sales.Orders 
+where custid = 42
+and shipcity  = N'Vancouver';
+
+------------------------------
+
+drop index idx_nc_shipcity on sales.Orders;
+
+--------------
+
+/*created nonclustered index on shipcity and include custid*/
+
+create nonclustered index
+idx_nc_shipcity_i_custid on 
+sales.orders(shipcity)
+include (custid);
+
+-------------
+
+select orderid, custid, shipcity
+from sales.orders
+where custid = 42
+or shipcity = N'Vancouver';
+
+-- This gives nonclustered indexe scan 
+
+select orderid, custid, shipcity
+from sales.Orders
+where custid = 42 and shipcity =N'Vancouver';
+
+-- This generates nonclustered index seek 
+
+
+drop index idx_nc_shipcity_i_custid	on sales.orders;
+
+
+----Auto-created Statistics----
+
+
+go 
+-----------------------------------------------------------------------
+use TSQL2012;
+go 
+
+declare @statistics_name as nvarchar(128), @ds as nvarchar(1000);
+declare acs_cursor cursor for 
+select name as statistics_name 
+from sys.stats
+where object_id = object_id(N'sales.orders', N'U')
+and auto_created = 1;
+
+open acs_cursor; 
+fetch next from acs_cursor into @statistics_name;
+while @@FETCH_STATUS = 0
+begin 
+set @ds = N'drop statistics sales.orders.' + @statistics_name +';'
+;
+exec(@ds);
+fetch next from acs_cursor into @statistics_name;
+end 
+close acs_cursor;
+deallocate acs_cursor;
+------------------------------------------------------------------------
+
+select OBJECT_NAME(OBJECT_ID) AS table_name,
+name as statistics_name, auto_created 
+from sys.stats
+where object_id = object_id(N'sales.orders', N'U');
+
+---- rebuilding index
+
+alter index idx_nc_empid on sales.orders rebuild;
+
+dbcc show_statistics(N'sales.orders', N'idx_nc_empid') with histogram;
+
+dbcc show_statistics(N'sales.orders', N'idx_nc_empid') with stat_header;
+
+create nonclustered index idx_nc_custid_shipcity on 
+sales.orders(custid, shipcity);
+------------------------------------
+
+select orderid, custid, shipcity
+from sales.Orders
+where custid = 42;
+
+
+-------The following query generates no rows indicating that there are no auto created statistics-------------
+
+select OBJECT_NAME(object_id) as table_name,
+name as statistics_name
+from sys.stats 
+where object_id = object_id(N'sales.orders', N'U')
+and auto_created = 1
+-----------------
+
+
+select orderid, custid, shipcity
+from sales.orders 
+where shipcity = N'Vancouver'
+
+
+select OBJECT_NAME(s.object_id) as table_name,
+s.name as statistics_name, c.name as column_name  
+from sys.stats as s 
+inner join sys.stats_columns as sc 
+on s.stats_id = sc.stats_id
+inner join sys.columns as c 
+on s.object_id = c.object_id and sc.column_id = c.column_id
+where s.object_id = object_id(N'sales.orders', N'U')
+and auto_created = 1;
+
+--------------
+
+drop index idx_nc_custid_shipcity on sales.orders;
+
+
+--- manually maintain statistics
+
+
