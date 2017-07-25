@@ -5047,3 +5047,83 @@ drop index idx_nc_custid_shipcity on sales.orders;
 --- manually maintain statistics
 
 
+
+go
+use TSQL2012;
+go
+
+
+declare @statistics_name as nvarchar(128), @ds as nvarchar(1000);
+declare asc_cursor cursor for 
+select name as statistics_name 
+from sys.stats
+where object_id = OBJECT_ID(N'sales.orders', N'U')
+and auto_created = 1; 
+open asc_cursor; 
+fetch next from asc_cursor into 
+@statistics_name;
+while @@FETCH_STATUS = 0
+begin 
+set @ds = N'drop statistics sales.orders.'+ @statistics_name + ';';
+exec(@ds)
+fetch next from asc_cursor into 
+@statistics_name;
+end;
+close asc_cursor;
+deallocate asc_cursor;
+
+
+--------- diable statistics auto creation----
+
+alter database TSQL2012
+set auto_create_statistics off with no_wait;
+
+------------------
+
+
+create nonclustered index idx_nc_custid_shipcity on sales.orders(custid, shipcity);
+
+-------------
+
+select * 
+from Sales.orders
+where shipcity = N'Vancouver';
+
+------------
+
+/*
+Check whether auto check statustucs exist for the sales.orders table by using the following query. 
+*/
+
+select OBJECT_NAME(object_id) as table_name, name as statistics_name 
+from sys.stats
+where object_id = OBJECT_ID(N'sales.orders', N'U') and auto_created = 1;
+
+-------------
+
+---manually creating the missing stats 
+
+
+create statistics st_shipcity on 
+sales.orders(shipcity);
+dbcc freeproccache;
+----------------
+
+
+select orderid, custid, shipcity
+from sales.Orders
+where shipcity = N'Vancouver';
+
+---
+/*
+Reset the database to create statistics automatically
+
+*/
+
+alter database tsql2012 
+set auto_create_statistics on with no_wait;
+exec sys.sp_updatestats;
+drop statistics sales.orders.st_shipcity;
+drop index idx_nc_custid_shipcity on shales.orders;
+
+
