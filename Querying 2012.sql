@@ -5127,3 +5127,25 @@ drop statistics sales.orders.st_shipcity;
 drop index idx_nc_custid_shipcity on shales.orders;
 
 
+-- chapter 16 
+
+use TSQL2012;
+go 
+
+if OBJECT_ID('Sales.ProcessCustomer') is not null 
+drop proc Sales.ProcessCustomer;
+
+go 
+
+create proc Sales.ProcessCustomer
+(
+@custid as int 
+)
+as 
+print 'Processing Customer ' + cast(@custid as varchar(10));
+go 
+
+exec sales.ProcessCustomer 25 ;
+
+
+
