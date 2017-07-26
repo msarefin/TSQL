@@ -5147,5 +5147,40 @@ go
 
 exec sales.ProcessCustomer 25 ;
 
+go
+
+set nocount on;
+
+declare @curcustid as int;
+
+declare cust_cursor cursor fast_forward for 
+select custid
+from sales.Customers;
+
+open cust_cursor;
+fetch next from cust_cursor into @curcustid;
+while @@FETCH_STATUS = 0
+begin 
+exec Sales.ProcessCustomer @custid  =@curcustid;
+fetch next from cust_cursor into @curcustid;
+end;  
+
+close cust_cursor;
+deallocate cust_cursor;
+go 
+
+----------------------
+
+set nocount on;
+declare @curcustid as int;
+set @curcustid = (select top(1) custid from Sales.Customers order by custid);
+
+while @curcustid is not null 
+begin
+exec Sales.ProcessCustomer @custid = @curcustid;
+set @curcustid = (select top (1) custid from Sales.Customers where custid > @curcustid order by custid);
+
+end;
+go
 
 
