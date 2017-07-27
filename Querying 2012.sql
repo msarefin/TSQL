@@ -5146,27 +5146,44 @@ print 'Processing Customer ' + cast(@custid as varchar(10));
 go 
 
 exec sales.ProcessCustomer 25 ;
+---------------------------------------------
+
+------ Cursor Step by step 
+/*
+Declare the Cursor 
+Open Cursor 
+Fetch record row by row 
+Close cursor 
+Deallocate Cursor
+*/
+
 
 go
 
 set nocount on;
 
-declare @curcustid as int;
+declare @curcustid as int; -- declaring a scalar variable with INT data type
 
-declare cust_cursor cursor fast_forward for 
+declare cust_cursor cursor fast_forward for -- Declaring the Cursor
 select custid
 from sales.Customers;
 
-open cust_cursor;
-fetch next from cust_cursor into @curcustid;
-while @@FETCH_STATUS = 0
+open cust_cursor;							-- Open the cursor
+fetch next from cust_cursor into @curcustid;-- Fetch record row by row into the scalar variable
+
+while @@FETCH_STATUS = 0					-- While loop 				
+/*
+	 0 : Previous fetch successful
+	-1 : The Row is beyond the result set 
+	-2 : The row fetched is missing 
+ */
 begin 
-exec Sales.ProcessCustomer @custid  =@curcustid;
-fetch next from cust_cursor into @curcustid;
+exec Sales.ProcessCustomer @custid  =@curcustid; -- implement the value of @curcustid to @custid
+fetch next from cust_cursor into @curcustid; -- Fetch record row by row into the scalar bariable
 end;  
 
-close cust_cursor;
-deallocate cust_cursor;
+close cust_cursor;  -- Close the cursor 
+deallocate cust_cursor; -- Deallocate the cursor
 go 
 
 ----------------------
