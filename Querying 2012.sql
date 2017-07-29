@@ -5199,5 +5199,52 @@ set @curcustid = (select top (1) custid from Sales.Customers where custid > @cur
 
 end;
 go
+-----------------------------------------
+
+go
+
+if OBJECT_ID('dbo.GetNums', 'IF') is not null drop function dbo.GetNums;
+go 
+create function dbo.GetNums(@low as bigint, @high as bigint) returns table
+as return 
+with 
+L0 as (select c from (values(1),(1)) as D(c)),
+L1 as (select 1 as c from L0 as A cross join L0 as B), 
+L2 as (select 1 as c from L1 as A cross join L1 as B),
+L3 as (Select 1 as c from L2 as A cross join L2 as B),
+L4 as (select 1 as c from L3 as A cross join L3 as B), 
+L5 as (select 1 as c from L4 as A cross join L4 as B), 
+nums as (select row_number() over (order by (select null)) as rownum from L5)
+
+select @low + rownum - 1 as n from nums
+order by rownum
+offset 0 rows fetch first @high - @low + 1 rows only ;
+go 
 
 
+------------------------
+
+if object_id('dbo.transactions', 'U') is not null 
+drop table dbo.transactions;
+go 
+
+create table dbo.transactions 
+(
+actid int not null,
+tranid int not null,
+val money not null, 
+constraint PK_transactions primary key(actid, tranid)
+);
+
+declare @num_partition as int = 100,
+		@rows_per_Partition as int = 10000;
+truncate table dbo.transactions;
+
+insert into dbo.transactions with(tablock)(actid, tranid, val)
+select np.n, rpp.n,
+(ABS(CHECKSUM(newid())%2)*2-1)*(1+ ABS(checksum(newid())%5))
+from dbo.GetNums(1, @num_partition) as np cross join dbo.GetNums(1, @rows_per_partition) as rpp; 
+go
+
+
+select * from dbo.transactions;
