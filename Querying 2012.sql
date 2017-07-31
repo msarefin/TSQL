@@ -5248,3 +5248,50 @@ go
 
 
 select * from dbo.transactions;
+
+
+use TSQL2012;
+go 
+
+declare @result as Table 
+(
+	actid	int, 
+	tranid	int, 
+	val		money,
+	balance	money
+);
+
+declare
+	@actid		as int, 
+	@prvactid	as int, 
+	@tranid		as int, 
+	@val		as money,
+	@balance	as money;
+	
+declare c cursor fast_forward for 
+	select actid, tranid, val 
+	from dbo.transactions
+	order by actid, tranid; 
+
+open c
+
+fetch next from c into @actid, @tranid, @val;
+select @prvactid = @actid, @balance = 0; 
+
+while @@fetch_status = 0
+begin 
+	if @actid <> @prvactid
+		select @prvactid = @actid, @balance = 0; 
+
+	set @balance = @balance + @val;
+
+	insert into @result values(@actid, @tranid, @val, @balance);
+
+	fetch next from c into @actid, @tranid , @val; 
+
+end
+ 
+close c; 
+deallocate c;  
+
+
