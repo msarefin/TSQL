@@ -5249,9 +5249,12 @@ go
 
 select * from dbo.transactions;
 
+------------------------------------------------
+go 
 
 use TSQL2012;
 go 
+--Table variable
 
 declare @result as Table 
 (
@@ -5294,4 +5297,5 @@ end
 close c; 
 deallocate c;  
 
+select * from @result
 
