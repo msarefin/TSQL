@@ -5299,3 +5299,15 @@ deallocate c;
 
 select * from @result
 
+--------------------------------
+select actid, tranid, val, 
+sum(val) over (partition by actid 
+				order by tranid 
+				rows unbounded preceding) as balance
+from dbo.transactions;
+
+select t1.actid, t2.actid, t1.val, SUM(t2.val) as balance
+from 
+dbo.transactions as t1 join dbo.transactions t2 
+on t2.actid = t1.actid and t2.tranid <=t1.tranid
+group by t1.actid, t1.tranid, t1.val
