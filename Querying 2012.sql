@@ -5306,8 +5306,299 @@ sum(val) over (partition by actid
 				rows unbounded preceding) as balance
 from dbo.transactions;
 
+---------------------
+
 select t1.actid, t2.actid, t1.val, SUM(t2.val) as balance
-from 
-dbo.transactions as t1 join dbo.transactions t2 
+from dbo.transactions as t1 
+join dbo.transactions t2 
 on t2.actid = t1.actid and t2.tranid <=t1.tranid
 group by t1.actid, t1.tranid, t1.val
+
+
+select t1.actid, t1.tranid, t1.val, SUM(t2.val) as balance
+from dbo.transactions as t1
+join dbo.transactions as t2 
+on t2.actid = t1.actid and t2.tranid <=t1.tranid
+group by t1.actid,t1.tranid, t1.val;
+
+
+----------------Practice------------------------
+go 
+
+use TSQL2012;
+go 
+
+create index idx_actid_val on dbo.transactions(actid, val);
+
+go 
+
+set nocount on;
+declare @result  as table 
+(
+actid int, 
+mx money
+);
+
+declare 
+@actid as int, 
+@val as money, 
+@prevactid as int, 
+@prevval as money; 
+
+declare tx_cursor cursor fast_forward for 
+select actid, val from dbo.transactions
+order by actid, val; 
+
+open tx_cursor
+fetch next from tx_cursor into @actid, @val;
+
+select @prevactid = @actid, @prevval = @val;
+
+while @@FETCH_STATUS = 0 
+begin 
+	
+	if @actid <> @prevactid
+	insert into @result(actid,mx)
+	values (@prevactid, @prevval);
+
+	select @prevactid = @actid, @prevval= @val; 
+	fetch next from tx_cursor into @actid, @val;
+	 
+end; 
+
+
+close tx_cursor;
+deallocate tx_cursor; 
+
+select actid, mx from @result; 
+go 
+
+select actid, max(val) as mx 
+from dbo.transactions 
+group by actid
+
+
+
+
+---------Scope----------
+
+
+
+go 
+
+use TSQL2012;
+go 
+
+create table #t1
+(
+col1 int not null
+);
+
+exec('select col1 from #t1;');
+go 
+
+select col1 from #t1; 
+go 
+drop table #t1;
+go 
+
+-------------
+/*the dollowing code demonstrates that the table bariables are not visible to inner levels*/
+declare @t1 as table (col1 int not null);
+
+insert into @t1(col1) values (10);
+exec ('select col1 from @t1;');
+go 
+/*The code doesnt execute sucessfully*/
+
+----------------------
+/*The folloeing code demonstrates that the varibles are not visible across batches in the same level*/
+
+declare @t1 as table (col1 int not null);
+
+insert into @t1(col1) values (10);
+go 
+select col1 from @t1; 
+go 
+
+
+------------------
+
+create table #t1
+(
+col1 int not null, 
+col2 int not null, 
+col3 int not null, 
+constraint PK_#T1 primary key(col1)
+);
+
+/*The first executipn attemp suceeds but the second one fails*/
+
+drop table #t1
+
+
+---------------------------
+create table #t1 
+(
+col1 int not null, 
+col2 int not null, 
+col3 int not null, 
+primary key(col1)
+);
+
+/*the code execute without fail in different sessions*/
+--------------------------------------
+
+create unique nonclustered index idx_col2 on #t1(col2);
+
+/*like any other datebase object you can add contraints to the columns*/
+
+drop table #t1;
+
+
+-----------------------
+
+
+declare @t1 as table 
+(
+col1 int not null, 
+col2 int not null, 
+col3 int not null, 
+constraint pk_@t1 primary key(col1)
+);
+
+/*you are not allowed to name constraints constaints in a table variable */
+go 
+
+declare @t1 as table 
+(
+col1 int not null, 
+col2 int not null, 
+col3 int not null, 
+primary key (col1)
+);
+
+---------------------
+
+/*sql server doesnt allow the creation of indexes on table variable after the table variable has been created*/
+
+
+---------------------
+
+go 
+
+declare @t1 as table 
+(
+col1 int not null, 
+col2 int not null,
+col3 int not null, 
+primary key(col1), 
+unique(col2)
+);
+
+------------physical reprensetaion in tempdb--------------
+
+go 
+use TSQL2012;
+go 
+
+create table #t1
+(
+col1 int not null
+);
+
+insert into #t1(col1) values (10); 
+
+select name from tempdb.sys.objects where name like '#%';
+
+drop table #t1; 
+go 
+
+-------------------
+
+go 
+declare @t1 as table 
+(col1 int not null);
+
+insert into @t1(col1) values (10);
+select name from tempdb.sys.objects
+where name like '#%';
+
+-------------Transacrtions---------------
+
+create table #t1 
+(
+col1 int not null 
+);
+
+begin tran 
+insert into #t1(col1) values (10); 
+rollback tran
+
+select col1 from #t1;
+
+
+/*the transsactions can be either commited or rolled back just like regular table*/
+
+
+drop table #t1; 
+go
+
+declare @t1 as table 
+(
+col1 int not null 
+);
+begin tran 
+
+insert into @t1 (col1) values (10);
+ROLLBACK TRAN 
+SELECT COL1 FROM @t1; 
+
+
+drop table #t1;
+
+
+/*Table variable doesn't have the capability to rollback data inserter int to them*/
+go 
+
+drop table #t1;
+
+set statistics io on; 
+
+create table #t1
+(
+col1 int not null, 
+col2 int not null, 
+col3 date not null,
+primary key(col1),
+unique (col2)
+) ;
+
+insert into #t1(col1, col2,col3)
+select n,n*2,cast (SYSDATETIME() as date)
+from dbo.GetNums(1,1000000);
+
+select col1, col2, col3
+from #t1
+where col2 <= 5;
+
+--------------------
+
+
+declare @t1 as table 
+(
+col1 int not null, 
+col2 int not null, 
+col3 date not null, 
+primary key (col1), unique (col2)
+);
+insert into @t1(col1, col2, col3)
+select n, n*2, cast(SYSDATETIME()as date)
+from dbo.GetNums(1,1000000);
+
+select col1, col2, col3 
+from @t1
+where col2<=5;
+go 
+
+
