@@ -5600,5 +5600,81 @@ select col1, col2, col3
 from @t1
 where col2<=5;
 go 
+set statistics io off; 
+
+
+-----Exercise 1
+
+select YEAR(orderdate) as orderyear, COUNT(*) as numorders 
+from sales.Orders
+group by YEAR(orderdate);
+
+-------------------------
+
+
+with yearlyCounts as 
+(
+select YEAR(orderdate) as orderyear, COUNT(*) as numorders
+from sales.Orders group by YEAR(orderdate)
+)
+
+select c.orderyear, c.numorders, c.numorders- p.numorders as diff
+from yearlyCounts as c inner join 
+yearlyCounts as p on c.orderyear = p.orderyear +1; 
+
+
+--------------------
+
+declare @yearlyCounts as table 
+(
+orderyear int not null, 
+numorders int not null, 
+primary key(orderyear)
+);
+
+insert into @yearlyCounts(orderyear, numorders)
+select YEAR(orderdate) as orderyear, COUNT(*) as numorders
+from sales.Orders
+group by YEAR(orderdate)
+
+select c.orderyear, c.numorders, c.numorders-d.numorders as diff
+from @yearlyCounts as c inner join @yearlyCounts as d on c.orderyear = d.orderyear +1;
+
+
+------------------------------ Chapter 17----------------
+go 
+use TSQL2012
+go 
+select orderid, productid, unitprice, qty, discount
+into sales.orderdetailsheap
+from sales.orderdetails;
+
+
+--------------Access method----------------------
+/*The table sales.orderdetailsheap has no indexes and hence the table data are all in the heap */
+
+--- Table scan 
+
+
+/*
+SQl server uses an allocation order scan if 
+- query does not request any specific order
+- the isolation level is read uncommited
+- or if you are working in a read only environment
+*/
+
+select orderid, productid
+from sales.orderdetailsheap
+where orderid = 10248 and productid = 11; 
+
+
+select orderid, productid
+from sales.orderdetails; 
+
+
+
+
+
+	
 
 
