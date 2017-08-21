@@ -5709,7 +5709,25 @@ select orderid, productid, unitprice, qty
 from sales.orderdetailsheap
 where qty = 52; 
 
-	
+------------
+
+create nonclustered index idx_nc_qty on 
+sales.orderdetails(qty); 
+
+select orderid, productid, unitprice, qty
+from sales.orderdetails 
+where qty = 52; 
+
+
+select orderid, productid, unitprice, qty from sales.orderdetailsheap where qty = 52; 
+select orderid, productid, unitprice, qty from Sales.OrderDetails where qty = 52; 
+
+
+DROP index idx_nc_qtyheap on sales.orderdetails; 
+drop index idx_nc_qty on sales.orderdetails; 
+drop table sales.orderdetailsheap; 
+
+
 
 
 
