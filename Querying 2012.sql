@@ -5657,19 +5657,37 @@ from sales.orderdetails;
 
 
 /*
-SQl server uses an allocation order scan if 
+SQl server uses an allocation order scan for a clusterd table if 
 - query does not request any specific order
 - the isolation level is read uncommited
 - or if you are working in a read only environment
 */
 
+use TSQL2012;
+go
+
+--heap table
 select orderid, productid
 from sales.orderdetailsheap
 where orderid = 10248 and productid = 11; 
 
-
+-- Clustered table 
 select orderid, productid
 from sales.orderdetails; 
+
+----
+
+select orderid, productid
+from sales.orderdetails
+order by productid
+
+----------
+
+
+select orderid, productid, unitprice
+from sales.orderdetails
+where orderid between 10250 and 10390
+order by orderid, productid; 
 
 
 
