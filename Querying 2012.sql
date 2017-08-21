@@ -5700,8 +5700,17 @@ from sales.orderdetails
 where productid between 10 and 30 
 order by productid; 
 
+----------------
 
+create nonclustered index idx_nc_qtyheap on 
+sales.orderdetailsheap(qty);
+
+select orderid, productid, unitprice, qty
+from sales.orderdetailsheap
+where qty = 52; 
 
 	
+
+
 
 
