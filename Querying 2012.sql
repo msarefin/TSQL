@@ -5691,6 +5691,15 @@ order by orderid, productid;
 
 
 
+---------------
+
+
+
+select orderid, productid
+from sales.orderdetails
+where productid between 10 and 30 
+order by productid; 
+
 
 
 	
