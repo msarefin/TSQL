@@ -5727,7 +5727,20 @@ DROP index idx_nc_qtyheap on sales.orderdetails;
 drop index idx_nc_qty on sales.orderdetails; 
 drop table sales.orderdetailsheap; 
 
+--------------------------------
 
+
+
+go 
+use tsql2012;
+go 
+
+select o.custid, o.orderdate, od.orderid, od.productid, od.qty
+from sales.orders as o 
+inner join 
+sales.orderdetails as od 
+on o.orderid=od.orderid
+where o.orderid <10250; 
 
 
 
