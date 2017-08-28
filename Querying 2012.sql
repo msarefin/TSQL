@@ -5735,6 +5735,13 @@ go
 use tsql2012;
 go 
 
+/*
+The following query uses the Nested Loop itirator to join sales.orders and sales.ordersdetail tables
+The query filters orders to create smaller inputs; without the where clasue, SQL Server would use the merge join algotitham.
+
+ 
+*/
+
 select o.custid, o.orderdate, od.orderid, od.productid, od.qty
 from sales.orders as o 
 inner join 
