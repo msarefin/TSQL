@@ -5741,7 +5741,9 @@ The query filters orders to create smaller inputs; without the where clasue, SQL
 
  
 */
-
+go 
+use TSQL2012;
+go 
 select o.custid, o.orderdate, od.orderid, od.productid, od.qty
 from sales.orders as o 
 inner join 
@@ -5749,6 +5751,40 @@ sales.orderdetails as od
 on o.orderid=od.orderid
 where o.orderid <10250; 
 
+----------------Merge Join ---------------
+
+/*
+In a one to one and one to many senario,the merge scans both inputs only once. 
+It starts by finding the first rows on both sides. 
+if the end of the input is not reached, 
+the merge join checks the join predicate to determine whether the rows match.
+
+*/
+
+
+select o.custid, o.orderdate, od.orderid, od.productid, od.qty
+from sales.orders as o 
+inner join 
+sales.orderdetails as od
+on o.orderid=od.orderid;
 
 
 
+-- Hash Join algoritham 
+
+select orderid, productid, unitprice, qty, discount into sales.orderdetailsheap from sales.orderdetails; 
+select orderid, custid, orderdate into sales.ordersheap from sales.Orders; 
+
+select * from sales.orderdetailsheap; 
+select * from sales.ordersheap; 
+
+-- hash join algorithm 
+
+select o.custid, o.orderdate, od.orderid, od.productid, od.qty
+from sales.ordersheap as o
+inner join 
+sales.orderdetailsheap as od
+on o.orderid= od.orderid; 
+
+drop table sales.ordersheap; 
+drop table sales.orderdetailsheap; 
