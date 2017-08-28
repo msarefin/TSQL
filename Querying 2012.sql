@@ -5801,3 +5801,18 @@ go
 select orderid
 from sales.orderdetails 
 order by qty; 
+
+------------------- Algorithms use for aggrigation 
+
+--Stream Aggrigate
+
+
+
+select productid, COUNT(*) as num
+from sales.OrderDetails
+group by productid;
+
+
+select qty,count(*) as num
+from sales.orderdetails group by qty;
+
