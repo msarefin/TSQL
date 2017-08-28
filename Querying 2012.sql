@@ -5881,4 +5881,20 @@ where qt.text like N'%orders%'
 and qt.text not like N'%qs.execurion_count%' 
 order by qs.execution_count; 
 
-
+use TSQL2012; 
+go
+-- one row 
+select * 
+from sales.Orders
+where custid = 13; 
+go 
+-- two rows
+select * 
+from sales.orders
+where custid = 33;
+go 
+-- 31 rows
+select * 
+from sales.Orders
+where custid = 71; 
+go
