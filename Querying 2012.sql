@@ -5788,3 +5788,16 @@ on o.orderid= od.orderid;
 
 drop table sales.ordersheap; 
 drop table sales.orderdetailsheap; 
+
+-----------------Sorting Algorithm 
+
+/*
+
+*/
+
+go 
+use TSQL2012;
+go 
+select orderid
+from sales.orderdetails 
+order by qty; 
