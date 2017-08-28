@@ -5813,6 +5813,72 @@ from sales.OrderDetails
 group by productid;
 
 
+select COUNT(*) as num from Sales.OrderDetails; 
+
 select qty,count(*) as num
 from sales.orderdetails group by qty;
+
+-- Exercises----
+
+select c.custid, c.companyname, c.address, c.city, o.orderid, o.orderdate
+from sales.customers as c 
+inner join sales.orders as o 
+on c.custid=o.custid; 
+
+----
+
+select c.custid, c.companyname, c.address, c.city, o.orderid 
+from sales.customers as c 
+inner join 
+sales.orders as o 
+on c.custid=o.custid; 
+
+
+--Exercise the execution plan
+
+select c.custid, c.companyname, c.address, c.city, o.orderid, o.orderdate
+from Sales.Customers as c inner join sales.orders as o 
+on c.custid=o.custid
+where c.city= N'Berlin';
+
+
+-----
+
+select c.city, min(o.orderid) as minorderid
+from sales.customers as c 
+inner join 
+sales.Orders as o 
+on c.custid= o.custid
+group by c.city; 
+
+
+-- Parameterized queries
+
+--parameter int 
+
+select orderid, custid, empid, orderdate
+from sales.Orders
+where orderid = 10248; 
+
+-- Parameter int 
+
+select orderid, custid,empid, orderdate
+from sales.Orders
+where orderid = 10249; 
+
+-- parameter decimal 
+
+select orderid, custid, empid, orderdate
+from Sales.orders
+where orderid = 10250.0;
+
+
+select qs.execution_count as cnt, qt.text
+from sys.dm_exec_query_stats as qs
+cross apply 
+sys.dm_exec_sql_text(qs.sql_handle) as qt
+where qt.text like N'%orders%' 
+and qt.text not like N'%qs.execurion_count%' 
+order by qs.execution_count; 
+
 
