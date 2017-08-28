@@ -5878,23 +5878,34 @@ from sys.dm_exec_query_stats as qs
 cross apply 
 sys.dm_exec_sql_text(qs.sql_handle) as qt
 where qt.text like N'%orders%' 
-and qt.text not like N'%qs.execurion_count%' 
+and qt.text not like N'%qs.execution_count%' 
 order by qs.execution_count; 
+
+
+---------------------------------------
+
 
 use TSQL2012; 
 go
 -- one row 
-select * 
+select orderid, custid, empid, orderdate
 from sales.Orders
 where custid = 13; 
 go 
 -- two rows
-select * 
+select orderid, custid, empid, orderdate 
 from sales.orders
 where custid = 33;
 go 
 -- 31 rows
-select * 
+select orderid,custid, empid, orderdate
 from sales.Orders
 where custid = 71; 
 go
+
+select qs.execution_count as cnt, qt.text
+from sys.dm_exec_query_stats as qs
+cross apply 
+sys.dm_exec_sql_text(qs.sql_handle) as qt
+where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%'
+order by qs.execution_count; 
