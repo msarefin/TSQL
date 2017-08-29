@@ -5987,3 +5987,80 @@ from sys.dm_exec_query_stats as qs cross apply sys.dm_exec_sql_text(qs.sql_handl
 where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%' order by qs.execution_count; 
 
 drop proc Sales.GetOrder;
+
+
+
+-- Batch Processing
+
+--Data distribution settiongs for DW
+-----------------------------------------------------------------------------
+
+declare 
+	@dim1row as int = 100, 
+	@dim2row as int = 50, 
+	@dim3row as int = 200;
+
+-- first dimension 
+create table dbo.Dim1
+( 
+key1 int not null constraint pk_Dim1 primary key, 
+attr1 int not null, 
+filter binary(100) not null default (0x)
+);
+
+-- Second Dimension 
+
+create table dbo.Dim2
+(
+key2 int not null constraint pk_Dim2 primary key, 
+attr1 int not null, 
+filter binary(100) not null default (0x)
+);
+
+-- Third Dimension 
+create table dbo.Dim3 
+(
+key3 int not null constraint pk_Dim3 primary key, 
+attr1 int not null, 
+filter binary(100) not null default (0x)
+);
+
+-- fact table 
+
+create table dbo.Fact 
+(
+key1 int not null constraint fk_fact_Dim1 foreign key references dbo.Dim1,
+key2 int not null constraint fk_fact_Dim2 foreign key references dbo.Dim2, 
+key3 int not null constraint fk_fact_Dim3 foreign key references dbo.Dim3, 
+measure1 int not null, 
+measure2 int not null, 
+measure3 int not null, 
+filter binary(100) not null default(0x), 
+constraint pk_fact_primary primary key (key1, key2, key3)
+);
+
+-- populating the first dimension
+
+insert into dbo.Dim1(key1, attr1)
+select n, ABS(CHECKSUM(NEWID())) % 20 +1 from GetNums(1,@dim1row);
+
+--populating second dimension 
+insert into dbo.Dim2(key2, attr1)
+select n, ABS(CHECKSUM(newid())) % 10 +1 from GetNums(1,@dim2row);
+
+--populating third dimension 
+insert into dbo.Dim3(key3, attr1)
+select n, ABS(CHECKSUM(newid())) % 40 +1 from GetNums(1, @dim3row);
+
+-- populating the fact table 
+
+insert into dbo.Fact with (tablock)
+(key1, key2, key3, measure1, measure2, measure3)
+select n1.n, n2.n, n3.n, 
+ABS(CHECKSUM(newid())) % 1000000 +1,
+ABS(CHECKSUM(newid())) % 1000000 +1,
+ABS(CHECKSUM(newid())) % 1000000 +1
+from GetNums(1,@dim1row) as n1
+cross join GetNums(1, @dim3row) as n2
+cross join GetNums(1,@dim3row) as n3;
+
