@@ -5909,3 +5909,8 @@ cross apply
 sys.dm_exec_sql_text(qs.sql_handle) as qt
 where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%'
 order by qs.execution_count; 
+
+
+------
+
+
