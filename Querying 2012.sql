@@ -5909,3 +5909,81 @@ cross apply
 sys.dm_exec_sql_text(qs.sql_handle) as qt
 where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%'
 order by qs.execution_count; 
+
+
+--query that was parameterized 
+
+ use TSQL2012; 
+ go 
+ select orderid, custid, empid, orderdate
+ from sales.orders where orderid = 10248;
+
+-- changing a set option
+set concat_null_yields_null off;
+
+-- query that could use same plan
+select orderid,custid,empid, orderdate
+from sales.Orders
+where orderid = 10249; 
+
+--restoring the set option 
+set concat_null_yields_null on; 
+
+select qs.execution_count as cnt , qt.text
+from sys.dm_exec_query_stats as qs
+cross apply
+sys.dm_exec_sql_text(qs.sql_handle) as qt
+where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%'
+order by qs.execution_count;
+
+--
+
+-- Test the use of execution plan by using sys.sp_executesql to execute table variable
+
+go
+
+declare @v int; 
+declare @s nvarchar(500); 
+declare @p nvarchar(500); 
+
+--Build the SQL string
+
+set @s =N'
+select orderid, custid, empid, orderdate 
+from Sales.Orders
+where orderid = @orderid';
+
+set @p =N'@orderid int'; 
+
+--parameter integer
+
+set @v = 10248; 
+execute sys.sp_executesql @s, @p, @orderid = @v; 
+
+--parameter Decimal
+
+set @v  = 10249.0; 
+execute sys.sp_executesql @s, @p, @orderid = @v;  
+
+--
+select qs.execution_count as cnt, qt.text 
+from sys.dm_exec_query_stats as qs cross apply  sys.dm_exec_sql_text(qs.sql_handle) as qt
+where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%' order by qs.execution_count; 
+
+-- using stored procedure to test re-use of execution plan
+go
+
+create procedure sales.GetOrder(@orderid int) 
+as 
+select * 
+from sales.orders
+where orderid= @orderid; 
+
+exec Sales.getorder @orderid = 10248; 
+exec sales.getorder @orderid = 10249.0;
+
+select qs.execution_count as cnt, qt.text 
+from sys.dm_exec_query_stats as qs cross apply sys.dm_exec_sql_text(qs.sql_handle)  as qt
+where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%' order by qs.execution_count; 
+
+drop proc Sales.GetOrder;
