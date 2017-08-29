@@ -5994,6 +5994,12 @@ drop proc Sales.GetOrder;
 
 --Data distribution settiongs for DW
 -----------------------------------------------------------------------------
+go 
+
+drop table dbo.dim1
+drop table dbo.dim2
+drop table dbo.dim3
+drop table dbo.fact
 
 declare 
 	@dim1row as int = 100, 
@@ -6057,10 +6063,27 @@ select n, ABS(CHECKSUM(newid())) % 40 +1 from GetNums(1, @dim3row);
 insert into dbo.Fact with (tablock)
 (key1, key2, key3, measure1, measure2, measure3)
 select n1.n, n2.n, n3.n, 
-ABS(CHECKSUM(newid())) % 1000000 +1,
-ABS(CHECKSUM(newid())) % 1000000 +1,
-ABS(CHECKSUM(newid())) % 1000000 +1
+ABS(CHECKSUM(newid())) % 1000000 + 1,
+ABS(CHECKSUM(newid())) % 1000000 + 1,
+ABS(CHECKSUM(newid())) % 1000000 + 1
 from GetNums(1,@dim1row) as n1
-cross join GetNums(1, @dim3row) as n2
+cross join GetNums(1, @dim2row) as n2
 cross join GetNums(1,@dim3row) as n3;
+
+
+select * from dbo.Dim1
+select * from dbo.dim2
+select * from dbo.dim3
+select * from dbo.Fact
+
+
+
+
+
+
+
+
+
+
+
 
