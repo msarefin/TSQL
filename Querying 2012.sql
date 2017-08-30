@@ -6086,20 +6086,14 @@ set statistics IO on;
 set statistics time on; 
 
 -- Query  demonstrating star join 
-select * from dbo.Fact as f 
-inner join dbo.Dim1 as d1
-on f.key1=d1.key1
-inner join dbo.dim2 as d2
-on f.key2=d2.key2
-inner join dbo.dim3 as d3
-on f.key3=d3.key3
+
+select d1.attr1 as x, d2.attr1 as y, d3.attr1 as z, COUNT(*) as cnt, SUM(f.measure1) as total 
+from dbo.Fact as f 
+inner join dbo.dim1 as d1 on f.key1=d1.key1
+inner join dbo.dim2 as d2 on f.key2=d2.key2
+inner join dbo.dim3 as d3 on f.key3=d3.key3
 where d1.attr1<=10 and d2.attr1<=15 and d3.attr1<=10
-group by d1.attr1,d2.attr1, d3.attr1; 
- 
-
-
-
-
+group by d1.attr1, d2.attr1, d3.attr1;
 
 
 
