@@ -5911,6 +5911,195 @@ where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%'
 order by qs.execution_count; 
 
 
+<<<<<<< HEAD
 ------
+=======
+--query that was parameterized 
+
+ use TSQL2012; 
+ go 
+ select orderid, custid, empid, orderdate
+ from sales.orders where orderid = 10248;
+
+-- changing a set option
+set concat_null_yields_null off;
+
+-- query that could use same plan
+select orderid,custid,empid, orderdate
+from sales.Orders
+where orderid = 10249; 
+
+--restoring the set option 
+set concat_null_yields_null on; 
+
+select qs.execution_count as cnt , qt.text
+from sys.dm_exec_query_stats as qs
+cross apply
+sys.dm_exec_sql_text(qs.sql_handle) as qt
+where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%'
+order by qs.execution_count;
+
+--
+
+-- Test the use of execution plan by using sys.sp_executesql to execute table variable
+
+go
+
+declare @v int; 
+declare @s nvarchar(500); 
+declare @p nvarchar(500); 
+
+--Build the SQL string
+
+set @s =N'
+select orderid, custid, empid, orderdate 
+from Sales.Orders
+where orderid = @orderid';
+
+set @p =N'@orderid int'; 
+
+--parameter integer
+
+set @v = 10248; 
+execute sys.sp_executesql @s, @p, @orderid = @v; 
+
+--parameter Decimal
+
+set @v  = 10249.0; 
+execute sys.sp_executesql @s, @p, @orderid = @v;  
+
+--
+select qs.execution_count as cnt, qt.text 
+from sys.dm_exec_query_stats as qs cross apply  sys.dm_exec_sql_text(qs.sql_handle) as qt
+where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%' order by qs.execution_count; 
+
+-- using stored procedure to test re-use of execution plan
+go
+
+create procedure sales.GetOrder(@orderid int) 
+as 
+select * 
+from sales.orders
+where orderid= @orderid; 
+
+exec Sales.getorder @orderid = 10248; 
+exec sales.getorder @orderid = 10249.0;
+
+select qs.execution_count as cnt, qt.text 
+from sys.dm_exec_query_stats as qs cross apply sys.dm_exec_sql_text(qs.sql_handle)  as qt
+where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%' order by qs.execution_count; 
+
+drop proc Sales.GetOrder;
+
+
+
+-- Batch Processing
+
+--Data distribution settiongs for DW
+-----------------------------------------------------------------------------
+go 
+
+drop table dbo.dim1
+drop table dbo.dim2
+drop table dbo.dim3
+drop table dbo.fact
+
+declare 
+	@dim1row as int = 100, 
+	@dim2row as int = 50, 
+	@dim3row as int = 200;
+
+-- first dimension 
+create table dbo.Dim1
+( 
+key1 int not null constraint pk_Dim1 primary key, 
+attr1 int not null, 
+filter binary(100) not null default (0x)
+);
+
+-- Second Dimension 
+
+create table dbo.Dim2
+(
+key2 int not null constraint pk_Dim2 primary key, 
+attr1 int not null, 
+filter binary(100) not null default (0x)
+);
+
+-- Third Dimension 
+create table dbo.Dim3 
+(
+key3 int not null constraint pk_Dim3 primary key, 
+attr1 int not null, 
+filter binary(100) not null default (0x)
+);
+
+-- fact table 
+
+create table dbo.Fact 
+(
+key1 int not null constraint fk_fact_Dim1 foreign key references dbo.Dim1,
+key2 int not null constraint fk_fact_Dim2 foreign key references dbo.Dim2, 
+key3 int not null constraint fk_fact_Dim3 foreign key references dbo.Dim3, 
+measure1 int not null, 
+measure2 int not null, 
+measure3 int not null, 
+filter binary(100) not null default(0x), 
+constraint pk_fact_primary primary key (key1, key2, key3)
+);
+
+-- populating the first dimension
+
+insert into dbo.Dim1(key1, attr1)
+select n, ABS(CHECKSUM(NEWID())) % 20 +1 from GetNums(1,@dim1row);
+
+--populating second dimension 
+insert into dbo.Dim2(key2, attr1)
+select n, ABS(CHECKSUM(newid())) % 10 +1 from GetNums(1,@dim2row);
+
+--populating third dimension 
+insert into dbo.Dim3(key3, attr1)
+select n, ABS(CHECKSUM(newid())) % 40 +1 from GetNums(1, @dim3row);
+
+-- populating the fact table 
+
+insert into dbo.Fact with (tablock)
+(key1, key2, key3, measure1, measure2, measure3)
+select n1.n, n2.n, n3.n, 
+ABS(CHECKSUM(newid())) % 1000000 + 1,
+ABS(CHECKSUM(newid())) % 1000000 + 1,
+ABS(CHECKSUM(newid())) % 1000000 + 1
+from GetNums(1,@dim1row) as n1
+cross join GetNums(1, @dim2row) as n2
+cross join GetNums(1,@dim3row) as n3;
+
+
+select * from dbo.Dim1
+select * from dbo.dim2
+select * from dbo.dim3
+select * from dbo.Fact
+
+
+go 
+use TSQL2012;
+go 
+
+--measuring IOand time 
+set statistics IO on; 
+set statistics time on; 
+
+-- Query  demonstrating star join 
+
+select d1.attr1 as x, d2.attr1 as y, d3.attr1 as z, COUNT(*) as cnt, SUM(f.measure1) as total 
+from dbo.Fact as f 
+inner join dbo.dim1 as d1 on f.key1=d1.key1
+inner join dbo.dim2 as d2 on f.key2=d2.key2
+inner join dbo.dim3 as d3 on f.key3=d3.key3
+where d1.attr1<=10 and d2.attr1<=15 and d3.attr1<=10
+group by d1.attr1, d2.attr1, d3.attr1;
+
+
+
+>>>>>>> 4c8db69ceb7457977313b6929c58a9ff04c0457f
 
 
