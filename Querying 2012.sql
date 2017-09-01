@@ -5998,11 +5998,12 @@ drop proc Sales.GetOrder;
 --Data distribution settiongs for DW
 -----------------------------------------------------------------------------
 go 
-
-drop table dbo.dim1
-drop table dbo.dim2
-drop table dbo.dim3
-drop table dbo.fact
+use TSQL2012; 
+go 
+if OBJECT_ID('dbo.dim1', N'U') is not null drop table dbo.Dim1;
+if OBJECT_ID('dbo.dim2', N'U') is not null drop table dbo.dim2;
+if OBJECT_ID('dbo.dim3', N'U') is not null drop table dbo.dim3;
+if OBJECT_ID('dbo.fact', N'U') is not null drop table dbo.fact;
 
 declare 
 	@dim1row as int = 100, 
@@ -6062,6 +6063,13 @@ insert into dbo.Dim3(key3, attr1)
 select n, ABS(CHECKSUM(newid())) % 40 +1 from GetNums(1, @dim3row);
 
 -- populating the fact table 
+go 
+
+declare 
+	@dim1row as int = 100, 
+	@dim2row as int = 50, 
+	@dim3row as int = 200;
+
 
 insert into dbo.Fact with (tablock)
 (key1, key2, key3, measure1, measure2, measure3)
@@ -6100,7 +6108,9 @@ group by d1.attr1, d2.attr1, d3.attr1;
 
 
 
---
+-- adding column stor index 
+
+
 use TSQL2012;
 go
 
@@ -6108,3 +6118,16 @@ select * from dbo.Fact
 
 create columnstore index idx_cs_fact 
 on dbo.fact(key1, key2, key3, measure1, measure2, measure3);
+
+select d1.attr1 as x, d2.attr1 as y , d3.attr1 as z, COUNT(*) as cnt, SUM(f.measure1) as total 
+from dbo.fact as f 
+inner join dbo.dim1 as d1
+on f.key1 = d1.key1
+inner join dbo.dim2 as d2 
+on f.key2=d2.key2
+inner join dbo.dim3 as d3
+on f.key3=d3.key3
+where d1.attr1<=10 and d2.attr1<=15 and d3.attr1<=10
+group by d1.attr1, d2.attr1, d3.attr1;
+
+
