@@ -6100,6 +6100,11 @@ group by d1.attr1, d2.attr1, d3.attr1;
 
 
 
->>>>>>> 4c8db69ceb7457977313b6929c58a9ff04c0457f
+--
+use TSQL2012;
+go
 
+select * from dbo.Fact
 
+create columnstore index idx_cs_fact 
+on dbo.fact(key1, key2, key3, measure1, measure2, measure3);
