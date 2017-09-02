@@ -6140,4 +6140,48 @@ if OBJECT_ID('dbo.dim2', N'U') is not null drop table dbo.dim2;
 if OBJECT_ID('dbo.dim3', N'U') is not null drop table dbo.dim3; 
 
 
+---Exercise 
+go 
+use TSQL2012; 
+go 
+
+if OBJECT_ID('Sales.GetcustomerOrders', N'P') is not null drop procedure Sales.GetcustomerOrders; 
+go 
+
+create procedure Sales.GetcustomerOrders(@custid int)
+as 
+select orderid, custid, empid, orderdate
+from sales.orders
+where custid =@custid; 
+
+dbcc freeproccache
+
+execute sales.GetcustomerOrders @custid = 13;
+execute sales.getcustomerorders @custid = 71; 
+
+select qs.execution_count as cnt, qt.text
+from sys.dm_exec_query_stats as qs cross apply sys.dm_exec_sql_text(qs.sql_handle) as qt
+where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%' order by qs.execution_count; 
+
+GO 
+use TSQL2012;
+go 
+
+alter procedure sales.GetcustomerOrders(@custid int) with recompile 
+as 
+select orderid, custid, empid, orderdate 
+from sales.orders
+where custid = @custid
+
+exec sales.getcustomerorders @custid=13; 
+exec Sales.getcustomerorders @custid=71; 
+
+select qs.execution_count as cnt,  qt.text 
+from sys.dm_exec_query_stats as qs 
+cross apply 
+sys.dm_exec_sql_text(qs.sql_handle) as qt
+where qt.text like N'%orders%' and qt.text not like N'%qs.execution_count%' 
+order by qs.execution_count;
+
+
 
