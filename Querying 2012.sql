@@ -6185,3 +6185,25 @@ order by qs.execution_count;
 
 
 
+-- Optimizer hints and plan
+
+--Guide
+
+--Optimizer hint
+
+/*
+Optimizer hints are directives for the query execution. 
+It can be used in the select statement and the data modification language statement. 
+There are three kinds of hints;
+table hint, 
+query hints, and 
+join hints. 
+*/
+
+--- Hash Match Aggrigate 
+
+go 
+use TSQL2012; 
+go
+
+
