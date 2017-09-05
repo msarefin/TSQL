@@ -6207,3 +6207,54 @@ use TSQL2012;
 go
 
 
+-- hash match aggrigate
+
+select qty, count(*) as num
+from sales.OrderDetails
+group by qty;  
+
+--forcing stream aggrigate 
+
+select qty, COUNT(*) as num	
+from sales.OrderDetails
+group by qty
+option (order group);
+
+-- clustered index scan 
+
+use TSQL2012;
+go 
+ 
+
+select orderid, productid, qty
+from sales.OrderDetails
+where productid between 10 and 30 
+order by productid; 
+
+-- Forcing a nonclustered index usage 
+
+select orderid, productid, qty
+from sales.OrderDetails with (index(idx_nc_productid))
+where productid between 10 and 30 
+order by productid; 
+
+-- nested loop 
+use TSQL2012;
+go
+select o.custid, o.orderdate, od.orderid,od.productid, od.qty
+from sales.orders as o inner join sales.orderdetails as od 
+on o.orderid = od.orderid
+where o.orderid <10250; 
+
+--Forced Merger
+
+select o.custid, o.orderdate, od.orderid, od.productid, od.qty
+from sales.Orders as o inner merge join sales.orderdetails as od 
+on o.orderid = od.orderid
+where o.orderid <=10250
+
+
+
+-- Plan guuide
+
+
