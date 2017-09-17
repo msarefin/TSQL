@@ -32,3 +32,15 @@ order by country, yearhired desc;
 
 
 
+----
+
+use TSQL2012;
+go 
+select e.empid, e.firstname, e.lastname,e.city,e.region, e.birthdate 
+from hr.Employees as e
+where region is not null
+group by e.empid, e.firstname, e.lastname,e.city,e.region, e.birthdate  
+having  DATEDIFF(year, e.birthdate, GETDATE()) >40
+order by e.birthdate desc;
+
+
