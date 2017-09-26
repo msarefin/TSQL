@@ -22,3 +22,5 @@ select * from vEmployeesWithSales;
 
 go 
 
+create view 
+
