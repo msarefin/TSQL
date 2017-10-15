@@ -19,7 +19,7 @@ select
 	e.phone
 from hr.Employees as e 
 where e.region is not null
-order by e.empid, city desc
+order by e.empid, city desc, Age
 offset (@rownum-1)*@pagenum rows
 fetch next @pagenum rows only
 ; 
