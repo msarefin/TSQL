@@ -72,6 +72,14 @@ on s.supplierid=p.supplierid
 inner join Production.Categories as c 
 on s.country=N'Japan';
 
+---
 
+select * 
+from Production.Suppliers as s 
+left outer join
+(Production.Products as p inner join
+production.categories as c on c.categoryid=p.supplierid) 
+on s.supplierid=p.supplierid
+where s.country=N'japan'
 
 
