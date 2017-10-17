@@ -18,3 +18,21 @@ inner join Production.Products as p
 on s.supplierid=p.supplierid
 where s.country = N'Japan'
 
+select top 3 * from sales.orders; 
+select top 3 * from sales.customers; 
+select top 3 * from sales.orderdetailsheap;
+select top 3 * from sales.orderdetails; 
+
+---------
+
+select s.companyname as supplier, s.country, p.productid, p.productname, p.unitprice
+from Production.Suppliers as s inner join Production.Products as p 
+on s.supplierid=p.supplierid and s.country =N'Japan'
+
+
+select e.empid, CONCAT(e.firstname,' ',e.lastname) as emp, 
+CONCAT(m.firstname,' ',m.lastname) as mgr
+from hr.employees as e inner join HR.Employees as m 
+on e.mgrid=m.empid
+order by e.empid;
+
