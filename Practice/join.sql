@@ -36,3 +36,21 @@ from hr.employees as e inner join HR.Employees as m
 on e.mgrid=m.empid
 order by e.empid;
 
+--outer join 
+
+
+select s.companyname as supplier, s.country, 
+p.productid, p.productname, p.unitprice 
+from production.suppliers as s
+left outer join 
+production.products as p 
+on s.supplierid=p.supplierid
+where s.country =N'Japan'
+;
+
+select s.companyname as supplier, s.country, 
+p.productid, p.productname, p.unitprice
+from Production.Suppliers as s inner join production.products as p 
+on s.supplierid=p.supplierid
+where s.country=N'Japan'
+;
