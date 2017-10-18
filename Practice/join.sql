@@ -82,4 +82,58 @@ production.categories as c on c.categoryid=p.supplierid)
 on s.supplierid=p.supplierid
 where s.country=N'japan'
 
+---- multi-join
+
+
+use TSQL2012;
+go 
+
+select s.companyname as supplies, 
+s.country, p.productid, p.productname,p.unitprice, c.categoryname
+from production.Suppliers as s 
+left outer join 
+production.Products as p 
+on s.supplierid=p.supplierid
+inner join 
+Production.Categories as c
+on c.categoryid	=p.categoryid
+where s.country = N'Japan'
+;
+
+
+use Northwind; 
+go 
+
+select s.CompanyName as suppliers, 
+s.Country, p.ProductID, p.ProductName, p.UnitPrice, c.CategoryName
+from 
+dbo.Suppliers as s left outer join dbo.Products as p 
+on s.SupplierID=p.SupplierID
+inner join 
+dbo.Categories as c on c.CategoryID=p.CategoryID
+where s.Country =N'Japan'
+
+---
+select s.CompanyName as suppliers,
+s.Country,p.ProductID, p.ProductName, p.UnitPrice, c.CategoryName
+from dbo.Suppliers as s left outer join (dbo.Products as p --on s.SupplierID=p.SupplierID
+inner join dbo.Categories as c on c.CategoryID=p.CategoryID) on s.SupplierID=p.SupplierID
+where s.Country=N'Japan'
+;
+
+
+use TSQL2012; 
+go 
+
+-- subqueries 
+
+select productid, productname, unitprice
+from Production. Products
+where unitprice = (select min(unitprice) from production.Products);
+
+select productid, productname, unitprice
+from Production.Products 
+where supplierid in (select supplierid from Production.Suppliers where country=N'japan')
+
+
 
