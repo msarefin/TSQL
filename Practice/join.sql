@@ -122,31 +122,3 @@ where s.Country=N'Japan'
 ;
 
 
-use TSQL2012; 
-go 
-
--- subqueries 
-
-select productid, productname, unitprice
-from Production. Products
-where unitprice = (select min(unitprice) from production.Products);
-
-select productid, productname, unitprice
-from Production.Products 
-where supplierid in (select supplierid from Production.Suppliers where country=N'japan')
-
---Not Exist 
-
-select custid, companyname
-from sales.Customers as c where not exists (select * from sales.Orders as o where o.custid=c.custid and o.orderid='20070212'); 
-
--- exists 
-
-select custid, companyname
-from sales.Customers as c where exists(select * from sales.orders as o where o.custid= c.custid and o.orderid='20070212');
-
-
-
-
-
-
