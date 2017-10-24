@@ -79,3 +79,21 @@ group by grouping sets
 ()
 )
 ;
+
+--
+
+select shipperid, year(shippeddate) as shipyear, count(*) as numorders from sales.Orders
+group by grouping sets
+(
+(shipperid, year(shippeddate)),(shipperid),(year(shippeddate)),()
+)
+;
+
+select 
+	shipperid, 
+	YEAR(shippeddate) as shipyear, 
+	COUNT(*) as numorders,
+	GROUPING(shippeddate)
+from Sales.Orders
+group by cube(shipperid, YEAR(shippeddate))
+;
