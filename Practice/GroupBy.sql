@@ -12,19 +12,35 @@ from sales.orders
 group by shipperid;
 
 
+
 select COUNT(*) as [Number of orders]
 from sales.orders
 group by shipperid; 
 
+---- The NUmberOf Orders in both queries yiels the same numbers
+
+
 select shipperid, YEAR(shippeddate) as [Shipped Date], COUNT(*) as [Number of orders]
 from Sales.orders
-group by shipperid, YEAR(shippeddate)
+group by shipperid, YEAR(shippeddate);
+
+----------------
+
 
 select shipperid, YEAR(shippeddate) as 'Shipped Date', COUNT(*) as 'Number Of Orders'
 from Sales.Orders
 where shippeddate is not null 
 group by shipperid, year(shippeddate)
 having COUNT(*) <100;
+
+------------------------------------------------
+
+select shipperid, YEAR(shippeddate) as 'Shipped Date', COUNT(*) as 'Number Of Orders'
+from Sales.Orders
+group by shipperid, year(shippeddate)
+having year(shippeddate) is not null and COUNT(*) <100;
+
+-------------------------------------------------
 
 select shipperid, 
 COUNT(*) as 'numoforders',
@@ -35,16 +51,20 @@ SUM(val) as 'TotalValue'
 from sales.OrderValues
 group by shipperid; 
 
+-- The shippedorders colum doesnt match the num of orders because there are orders that didn't ship yet.
+
 
 select shipperid, COUNT(distinct shippeddate) as numshippindate
 from Sales.Orders group by shipperid; 
+
+
 
 --
 
 select s.shipperid, s.companyname, COUNT(*) as numorders
 from Sales.Shippers as s join sales.orders as o 
 on s.shipperid=o.shipperid
-group by s.shipperid, companyname
+group by s.shipperid, s.companyname
 
 
 --
@@ -88,12 +108,35 @@ group by grouping sets
 (shipperid, year(shippeddate)),(shipperid),(year(shippeddate)),()
 )
 ;
+go
+with cte
+as
+(
+select 
+	shipperid, 
+	GROUPING(shipperid) as 'gshipperid',
+	YEAR(shippeddate) as shipyear, 
+	GROUPING(YEAR(shippeddate)) as 'gshipyear',
+	COUNT(*) as numorders,
+	GROUPING_ID(shipperid, YEAR(shippeddate)) as 'grpid'
+from Sales.Orders
+group by cube(shipperid, YEAR(shippeddate))
+)
 
 select 
 	shipperid, 
-	YEAR(shippeddate) as shipyear, 
-	COUNT(*) as numorders,
-	GROUPING(shippeddate)
-from Sales.Orders
-group by cube(shipperid, YEAR(shippeddate))
-;
+	gshipperid,
+	shipyear, 
+	gshipyear,
+	CONCAT(gshipperid, gshipyear), 
+	grpid
+from cte;
+
+/*
+grouping accepts one element in the grouping set. 
+If the output is 0 then the element is part of the grouping set. 
+If the output is 1 then the element is not part of the grouping set.
+--------------------------------------------------------------------
+
+
+*/
