@@ -36,7 +36,11 @@ from hr.employees as e inner join HR.Employees as m
 on e.mgrid=m.empid
 order by e.empid;
 
+<<<<<<< HEAD
 --outer join
+=======
+--outer join 
+>>>>>>> e69f94dfbf7d63ce9512eed7ba1b0315aecc4160
 
 
 select s.companyname as supplier, s.country, 
@@ -54,6 +58,7 @@ from Production.Suppliers as s inner join production.products as p
 on s.supplierid=p.supplierid
 where s.country=N'Japan'
 ;
+<<<<<<< HEAD
 
 
 select s.companyname as supplier, s.country, 
@@ -150,3 +155,5 @@ from sales.Customers as c where exists(select * from sales.orders as o where o.c
 
 
 
+=======
+>>>>>>> e69f94dfbf7d63ce9512eed7ba1b0315aecc4160
