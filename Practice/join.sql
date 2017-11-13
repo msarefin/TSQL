@@ -36,7 +36,11 @@ from hr.employees as e inner join HR.Employees as m
 on e.mgrid=m.empid
 order by e.empid;
 
+<<<<<<< HEAD
 --outer join
+=======
+--outer join 
+>>>>>>> 82211e9326e5a3f11b266258b4ba67123241e6a9
 
 
 select s.companyname as supplier, s.country, 
@@ -54,6 +58,7 @@ from Production.Suppliers as s inner join production.products as p
 on s.supplierid=p.supplierid
 where s.country=N'Japan'
 ;
+<<<<<<< HEAD
 
 
 select s.companyname as supplier, s.country, 
@@ -122,3 +127,5 @@ where s.Country=N'Japan'
 ;
 
 
+=======
+>>>>>>> 82211e9326e5a3f11b266258b4ba67123241e6a9
