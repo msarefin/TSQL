@@ -40,7 +40,11 @@ order by e.empid;
 --outer join
 =======
 --outer join 
+<<<<<<< HEAD
 >>>>>>> e69f94dfbf7d63ce9512eed7ba1b0315aecc4160
+=======
+>>>>>>> 82211e9326e5a3f11b266258b4ba67123241e6a9
+>>>>>>> 2b650e85d589e217811b3f4746ab3a549359360e
 
 
 select s.companyname as supplier, s.country, 
@@ -127,6 +131,7 @@ where s.Country=N'Japan'
 ;
 
 
+<<<<<<< HEAD
 use TSQL2012; 
 go 
 
@@ -157,3 +162,7 @@ from sales.Customers as c where exists(select * from sales.orders as o where o.c
 
 =======
 >>>>>>> e69f94dfbf7d63ce9512eed7ba1b0315aecc4160
+=======
+=======
+>>>>>>> 82211e9326e5a3f11b266258b4ba67123241e6a9
+>>>>>>> 2b650e85d589e217811b3f4746ab3a549359360e

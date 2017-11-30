@@ -121,6 +121,7 @@ select
 	GROUPING_ID(shipperid, YEAR(shippeddate)) as 'grpid'
 from Sales.Orders
 group by cube(shipperid, YEAR(shippeddate))
+<<<<<<< HEAD
 )
 
 select 
@@ -140,3 +141,23 @@ If the output is 1 then the element is not part of the grouping set.
 
 
 */
+=======
+;
+
+
+--- 
+
+use TSQL2012;
+go 
+
+
+select shipperid, year(shippeddate) as shipyear, count(*) as numorders
+from sales.orders
+group by grouping sets 
+(
+(shipperid, year(shippeddate)),
+(shipperid),
+(YEAR(shippeddate)),
+()
+)
+>>>>>>> 2b650e85d589e217811b3f4746ab3a549359360e
