@@ -15,3 +15,9 @@ pivot(sum(freight) for shipperid in ([1],[2],[3])) as p
 
 select * from Sales.FreightTotals order by custid
 
+--- unpivoting 
+
+select custid, shipperid, freight
+from sales.FreightTotals as t 
+unpivot(freight for shipperid in ([1],[2],[3])) as u
+order by custid, shipperid; 
