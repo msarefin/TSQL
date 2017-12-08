@@ -62,13 +62,13 @@ from Sales.Orders
 )
 
 select custid,freight from pt
-pivot(sum(freight) for shipperid in ('+@shipperid+')) as pvt
+pivot(sum(freight) for shipperid in ('+@shipperid+')) as pvt 
 '
 
 exec sp_executesql @Sql;
 
 --- Pivot table with derived table--
-
+go 
 use TSQL2012;
 go 
 

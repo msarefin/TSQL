@@ -20,11 +20,11 @@ declare @sql nvarchar(max);
 set @sql='
 with pt as 
 (
-select d.empid, d.shipperid,d.freight
+select d.custid, d.shipperid,d.freight
 from Sales.Orders as d 
 )
-select empid ,'+@shipperid+' from pt
-pivot (sum(freight) for shipperid in ('+@shipperid+'))as p;
+select custid ,'+@shipperid+' from pt
+pivot (sum(freight) for shipperid in ('+@shipperid+'))as p order by custid;
 '
 print @sql
 exec sp_executesql @sql;
