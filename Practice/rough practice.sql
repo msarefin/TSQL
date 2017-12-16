@@ -49,5 +49,7 @@ pivot (sum(freight) for shipperid in ('+@s+')) as pvt'
 exec sp_executesql @sql;
 print @sql;
 
+Insert into Sales.FreightTotals Exec sp_executesql @sql;
+--exec ('select * into Sales.FreightTotals from '+@sql); ---- Why will this not work??
 
-exec ('select * into Sales.FreightTotals from '+@sql); ---- Why will this not work??
+select * from Sales.FreightTotals

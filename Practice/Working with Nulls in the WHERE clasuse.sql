@@ -46,9 +46,11 @@ from sales.orders where shippeddate is null;
 
 select orderid, orderdate, custid, empid
 from Sales.Orders
-where orderdate between '20080211' and '20080212 23:59:59.999' ; 
+where orderdate between '20080211' and '20080212 23:59:59.999' 
+order by orderdate desc; 
 
 
 select orderid, orderdate, custid, empid
 from sales.orders 
 where orderdate >= '20080211' and orderdate < '20080213'
+order by orderdate desc;
