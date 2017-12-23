@@ -1,6 +1,7 @@
 -- Querying full text data
-
-select serverproperty('Isfulltextinstalled')
+use TSQL2012;
+go 
+select serverproperty('Isfulltextinstalled') as 'Is full text search enable?'
 
 
 
