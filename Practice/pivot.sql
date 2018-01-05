@@ -62,8 +62,21 @@ from Sales.Orders
 )
 
 select custid,freight from pt
-pivot(sum(freight) for shipperid in ('+@shipperid+')) as pvt
+pivot(sum(freight) for shipperid in ('+@shipperid+')) as pvt 
 '
 
 exec sp_executesql @Sql;
 
+--- Pivot table with derived table--
+go 
+use TSQL2012;
+go 
+
+select name, [USA], [UK]
+from
+(select
+	e.empid, CONCAT(e.firstname,' ',e.lastname) as [name], DATEDIFF(year,e.birthdate, SYSDATETIME()) as [Age], e.country
+from hr.Employees as e
+) as d 
+pivot(max(age) for country in ([USA],[UK])) as pvt
+order by USA desc;
