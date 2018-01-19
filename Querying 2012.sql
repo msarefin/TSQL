@@ -57,7 +57,7 @@ order by e.country
 
 
 ----
-select custid, MAX(orderid) maxorderid
+select custid,MAX(orderid) maxorderid
 from Sales.Orders
 group by custid;
 

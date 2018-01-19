@@ -17,6 +17,7 @@ exec sys.sp_fulltext_service 'load_os_resources',1;
 
 
 -- Check which languages are supported in SQL Server 
+
 select lcid, name
 from sys.fulltext_languages order by name; 
 
